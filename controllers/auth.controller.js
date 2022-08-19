@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const { privateKey, tokenExpireInSeconds } = require("../config/config");
-const { sequelize, Sequelize } = require("../db");
-const UsuarioModel = require("../models/usuario.model");
+const db = require("../models/index");
+
 const bcrypt = require("bcrypt");
 const response = require("../helpers/response");
 
@@ -17,35 +17,37 @@ const response = require("../helpers/response");
  */
 
 async function authenticate(req, res) {
-    const Usuario = UsuarioModel(sequelize, Sequelize);
-    const data = await Usuario.findOne(
-        { where: { nom_usuario: req.body.usuario } }
-    );
+  const data = await db["t_usuario"].findOne({
+    where: { nom_usuario: req.body.usuario },
+  });
 
-    if (data === null) {
-        response.sendUnauthorized(res, 'Authentication failed.');
-        return;
-    }
-    const hash = data.pass_usuario.replace('$2y$', '$2a$');
-    const result = bcrypt.compareSync(req.body.clave, hash);
+  if (data === null) {
+    response.sendUnauthorized(res, "Authentication failed.");
+    return;
+  }
+  const hash = data.pass_usuario.replace("$2y$", "$2a$");
+  const result = bcrypt.compareSync(req.body.clave, hash);
 
-    if (result == false) {
-        response.sendUnauthorized(res, 'Authentication failed.');
-        return;
-    }
+  if (result == false) {
+    response.sendUnauthorized(res, "Authentication failed.");
+    return;
+  }
 
-    res.json({
-        success: true,
-        message: 'Token created.',
-        token: jwt.sign({
-            id: data.id_usuario
-        }, privateKey, {
-            expiresIn: tokenExpireInSeconds
-        })
-    });
-
+  res.json({
+    success: true,
+    message: "Token created.",
+    token: jwt.sign(
+      {
+        id: data.id_usuario,
+      },
+      privateKey,
+      {
+        expiresIn: tokenExpireInSeconds,
+      }
+    ),
+  });
 }
 
 module.exports = {
-    authenticate
+  authenticate,
 };

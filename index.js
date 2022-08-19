@@ -3,6 +3,7 @@ const { httpPort, appVersion } = require("./config/config");
 const path = require("path");
 const app = express();
 const response = require("./helpers/response");
+const { sequelize , Sequelize } = require("./models/index")
 
 app.use(express.static("doc"));
 app.use(express.json());
@@ -25,3 +26,11 @@ app.use(function (err, req, res, next) {
 });
 
 app.listen(httpPort, () => console.log(`http://127.0.0.1:${httpPort}`));
+sequelize
+.authenticate()
+.then(() => {
+  console.log("Conexión database éxito.");
+})
+.catch((err) => {
+  console.error("Error database:", err);
+});

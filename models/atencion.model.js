@@ -1,18 +1,17 @@
 module.exports = (sequelize, type) => {
-    return sequelize.define(
-        "paciente",
-        {
-            id_paciente: {
-                type: type.INTEGER,
-                primaryKey: true
-            },
-            documento: type.STRING,
-            nombres: type.STRING,
-            f_nacimiento: type.DATEONLY
-        },
-        {
-            timestamps: false,
-            freezeTableName: true
-        },
-    );
+  return sequelize.define(
+    "paciente",
+    {
+      id_atencion: {
+        type: type.INTEGER,
+        primaryKey: true,
+      },
+      observacion: type.STRING,
+    },
+    {
+      timestamps: false,
+      freezeTableName: true,
+      schema: 'datahis'
+    }
+  );
 };
