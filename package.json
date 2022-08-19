@@ -1,0 +1,37 @@
+{
+  "name": "express-sequelize",
+  "version": "1.0.0",
+  "description": "Sketelon structure for Node, Express, MySQL and Sequelize",
+  "main": "index.js",
+  "engines": {
+    "node": ">=8.3.0"
+  },
+  "scripts": {
+    "start": "npm run docs && nodemon index.js",
+    "start-local": "nodemon index.js --exec",
+    "lint": "eslint --ignore-path .gitignore .",
+    "lint-fix": "eslint --ignore-path .gitignore --fix .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "docs": "apidoc -i ./ -e node_modules/ -t ./node_modules/apidoc-contenttype-plugin/template/ --parse-parsers apicontenttype=./node_modules/apidoc-contenttype-plugin/api_content_type.js"
+  },
+  "author": "Sanket Subhash Hande",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "apidoc": "^0.17.7",
+    "apidoc-contenttype-plugin": "^0.1.0",
+    "bcrypt": "^5.0.1",
+    "express": "^4.18.1",
+    "express-async-errors": "^3.1.1",
+    "joi": "^14.3.0",
+    "joi-date-extensions": "^1.2.0",
+    "jsonwebtoken": "^8.4.0",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^4.41.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.10.0",
+    "eslint-plugin-node": "^8.0.0",
+    "nodemon": "^1.18.7"
+  }
+}
