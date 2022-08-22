@@ -3,11 +3,10 @@ const router = express.Router();
 
 //const EmployeeValidationRules = require("../validation-rules/employee.rule");
 //const validateMiddleware = require("../middlewares/validate.middleware"); */
-//const CatalogoController = require("../controllers/demo.controller");
+const AtencionController = require("../controllers/atencion.controller");
 
 require("express-async-errors");
 
-router.get("/atencion", require("../controllers/atencion.controller").index);
-
+router.get("/atencion", AtencionController.getAtencion);
 
 module.exports = router;

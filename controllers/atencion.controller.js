@@ -6,19 +6,21 @@ class AtencionController {
    * @api {get} /v1/atencion/ Obtener lista de pacientes
    * @apiGroup Atencion
    * @apiName GetAllAtenciones
-   *
+   * @apiContentType application/json
    * @apiHeader {String} token JWT token generated from /login
    *
    */
-  index(req, res) {
+
+  getAtencion(req, res) {
     db["his_hoja_atencion"]
       .findAll({
-        include: [{ model: db["his_turno"] }],
+        include: [{ model: db["his_turno"] }, { model: db["t_usuario"] }],
       })
       .then((val) => {
         response.sendData(res, val, "success");
       }).catch((errro) =>{
-        response.sendBadRequest(res, errro, "error");
+        console.log(errro);
+        response.sendForbidden(res, errro);
       })
 
       

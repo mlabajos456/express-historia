@@ -21,6 +21,9 @@ module.exports = (sequelize, type) => {
     Atencion.belongsTo(models.his_turno, {
       foreignKey: "id_turno",
     });
+    Atencion.belongsTo(models.t_usuario, {
+      foreignKey: "id_responsable",
+    });
   };
 
   return Atencion;
