@@ -1,17 +1,27 @@
+const turnoModel = require("./turno.model");
+
 module.exports = (sequelize, type) => {
-  return sequelize.define(
-    "paciente",
+  var Atencion = sequelize.define(
+    "his_hoja_atencion",
     {
-      id_atencion: {
+      id_hoja_atencion: {
         type: type.INTEGER,
         primaryKey: true,
       },
-      observacion: type.STRING,
+      id_turno: type.INTEGER,
     },
     {
       timestamps: false,
       freezeTableName: true,
-      schema: 'datahis'
+      schema: "datahis",
     }
   );
+
+  Atencion.associate = function (models) {
+    Atencion.belongsTo(models.his_turno, {
+      foreignKey: "id_turno",
+    });
+  };
+
+  return Atencion;
 };

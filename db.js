@@ -13,7 +13,7 @@ const sequelize = new Sequelize(
     host: config.db.host,
     dialect: config.db.dialect,
     operatorsAliases: false,
-    timezone: "+00:00", // set time zone to UTC
+    timezone: "+05:00", // set time zone to UTC
     port: config.db.port,
   }
 );

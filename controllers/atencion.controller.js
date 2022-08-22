@@ -1,30 +1,27 @@
-const { sequelize, Sequelize } = require("../db");
-const AtencionModel = require("../models/atencion.model");
+const db = require("../models/index");
 const response = require("../helpers/response");
-/**
- * @api {get} /v1/atencion/ Get all atenciones list
- * @apiGroup Atencion
- * @apiName GetAllAtenciones
- *
- * @apiHeader {String} token JWT token geneated from /login
- *
- */
-async function index(req, res) {
 
-  const Atencion = AtencionModel(sequelize, Sequelize);
-  const data = await Atencion.findAll({
-    offset: 5, 
-    limit: 5,
-    order: [
-      ['id_paciente', 'DESC']
-    ],
-  })
+class AtencionController {
+  /**
+   * @api {get} /v1/atencion/ Obtener lista de pacientes
+   * @apiGroup Atencion
+   * @apiName GetAllAtenciones
+   *
+   * @apiHeader {String} token JWT token generated from /login
+   *
+   */
+  index(req, res) {
+    db["his_hoja_atencion"]
+      .findAll({
+        include: [{ model: db["his_turno"] }],
+      })
+      .then((val) => {
+        response.sendData(res, val, "success");
+      }).catch((errro) =>{
+        response.sendBadRequest(res, errro, "error");
+      })
 
-  response.sendData(res, {
-    data: data
-  }, 'success')
+      
+  }
 }
-
-module.exports = {
-  index
-}
+module.exports = new AtencionController();
