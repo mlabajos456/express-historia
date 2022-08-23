@@ -18,12 +18,18 @@ class AtencionController {
       })
       .then((val) => {
         response.sendData(res, val, "success");
-      }).catch((errro) =>{
+      })
+      .catch((errro) => {
         console.log(errro);
         response.sendForbidden(res, errro);
-      })
+      });
+  }
 
-      
+  postAtencion(req, res) {
+    console.log("hola")
+    response.sendForbidden(res, "errro");
+    /* insert atencionModel*/
+ /*    db["his_hoja_atencion"].create({}); */
   }
 }
 module.exports = new AtencionController();
