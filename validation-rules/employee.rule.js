@@ -19,4 +19,9 @@ module.exports = {
       id_turno: Joi.number().required().label("Ingrese un id de turno válido"),
     }),
   },
+  findOne: {
+    params: {
+      id: Joi.string().required().label("id de atención"),
+    },
+  },
 };

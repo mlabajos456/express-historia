@@ -1,9 +1,9 @@
 const db = require("../models/index");
 const response = require("../helpers/response");
 
-class AtencionController {
+class DetalleDiagnosticoController {
   /**
-   * @api {get} /v1/atencion/ Obtener lista de pacientes
+   * @api {get} /v1/detalle-diagnostico/ Obtener lista de pacientes
    * @apiGroup Atencion
    * @apiName GetAllAtenciones
    * @apiContentType application/json
@@ -11,30 +11,56 @@ class AtencionController {
    *
    */
 
-  async getAtencion(req, res) {
-    console.log("okale")
-    console.log(req.params.id)
+  async getAllDetalleDiagnostico(req, res) {
     try {
-      await db["his_hoja_atencion"]
+      await db["his_detalle_diagnostico"]
         .findAll({
-         /*  order: [["id_turno", "ASC"]], */
-         /*  limit: 10,
-          offset: 0, */
+          order: [["id_cie10", "DESC"]],
+          limit: 10,
+          offset: 0,
           /*   where:{id_turno: 1,}, */
 
-          include: [
+          /* include: [
             { model: db["his_turno"] },
             {
               model: db["t_usuario"],
               attributes: { exclude: ["pass_usuario"] },
               as: "responsable",
             },
-          ],
+          ], */
         })
         .then((val) => {
           response.sendData(res, val, "success");
         })
         .catch((errro) => {
+          console.log(errro);
+          response.sendForbidden(res, errro);
+        });
+    } catch (error) {
+      response.sendBadRequest(res, error.message);
+    }
+  }
+
+  async getOneDetalleDiagnostico(req, res) {
+    try {
+      await db["his_detalle_diagnostico"]
+        .findOne({
+          order: [["id_cie10", "DESC"]],
+          where: { id_detalle: req.body.id_detalle },
+          /*  include: [
+            { model: db["his_turno"] },
+            {
+              model: db["t_usuario"],
+              attributes: { exclude: ["pass_usuario"] },
+              as: "responsable",
+            },
+          ], */
+        })
+        .then((val) => {
+          response.sendData(res, val, "success");
+        })
+        .catch((errro) => {
+          console.log(errro);
           response.sendForbidden(res, errro);
         });
     } catch (error) {
@@ -54,6 +80,7 @@ class AtencionController {
       await t.commit();
       response.sendCreated(res, newTurno);
     } catch (error) {
+      console.log(error);
       await t.rollback();
       response.sendBadRequest(res, error.message);
     }
@@ -75,6 +102,7 @@ class AtencionController {
       response.sendBadRequest(res, await beforeTurno.save());
       /* response.sendCreated(res, newTurno); */
     } catch (error) {
+      console.log(error);
       response.sendBadRequest(res, "Error de consulta, contactese con OGTES");
     }
   }
@@ -90,4 +118,4 @@ class AtencionController {
     }
   }
 }
-module.exports = new AtencionController();
+module.exports = new DetalleDiagnosticoController();
