@@ -1,3 +1,5 @@
+const moment = require("moment");
+
 module.exports = (sequelize, type) => {
   var Atencion = sequelize.define(
     "his_hoja_atencion",
@@ -10,15 +12,20 @@ module.exports = (sequelize, type) => {
       /*  id_digitador: type.INTEGER,
       id_responsable: type.INTEGER, */
       fecha_apertura: type.DATE,
-      fecha_cierre: type.DATE,
+      fechaCierre: { type: type.DATE, field: "fecha_cierre" },
       fecha: {
         type: type.DATE,
-       /*  get: function () {
-          // or use get(){ }
-          return this.getDataValue("fecha").toLocaleString("en-GB", {
-            timeZone: "UTC",
-          });
-        }, */
+        get: function () {
+          return moment(this.getDataValue("fecha")).format("DD-MM-YYYY");
+        },
+      },
+      nomObservacion: {
+        type: type.VIRTUAL,
+        get() {
+          return `${this.getDataValue("fecha")} ${this.getDataValue(
+            "fechaCierre"
+          )}`;
+        },
       },
     },
     {

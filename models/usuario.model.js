@@ -1,5 +1,5 @@
 module.exports = (sequelize, type) => {
-   var Usuario = sequelize.define(
+  var Usuario = sequelize.define(
     "t_usuario",
     {
       id_usuario: {
@@ -8,11 +8,20 @@ module.exports = (sequelize, type) => {
       },
       pass_usuario: type.STRING,
       nom_usuario: type.STRING,
-      estado_usuario: type.ENUM("A", "I"),
+      estado_usuario: {
+        type: type.STRING,
+        get() {
+          const estado = this.getDataValue("estado_usuario");
+          return estado === "1" ? "Activo" : "Inactivo";
+        },
+      },
     },
     {
       timestamps: false,
       freezeTableName: true,
+      defaultScope: {
+        attributes: { exclude: ["pass_usuario"] },
+      },
     }
   );
   Usuario.associate = function (models) {
