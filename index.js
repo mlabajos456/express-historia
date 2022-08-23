@@ -23,7 +23,7 @@ app.use("/" + appVersion + "/", require("./routes/main.route"));
 
 app.use(function (err, req, res, next) {
   res.status(500).send({
-    error: ["Unexpected error occurred [index]"],
+    error: ["Ruta no definida"],
   });
 });
 

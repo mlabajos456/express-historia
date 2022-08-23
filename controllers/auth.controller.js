@@ -1,7 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { privateKey, tokenExpireInSeconds } = require("../config/config");
 const db = require("../models/index");
-
 const bcrypt = require("bcrypt");
 const response = require("../helpers/response");
 

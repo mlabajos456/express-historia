@@ -19,9 +19,9 @@ module.exports = (sequelize, type) => {
     {
       timestamps: false,
       freezeTableName: true,
-      defaultScope: {
+   /*    defaultScope: {
         attributes: { exclude: ["pass_usuario"] },
-      },
+      }, */
     }
   );
   Usuario.associate = function (models) {

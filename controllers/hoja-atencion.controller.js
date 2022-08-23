@@ -15,6 +15,10 @@ class AtencionController {
     try {
       await db["his_hoja_atencion"]
         .findAll({
+          order: [["id_turno", "ASC"]],
+          limit: 10,
+          offset: 1,
+          /*   where:{id_turno: 1,}, */
           include: [{ model: db["his_turno"] }, { model: db["t_usuario"] }],
         })
         .then((val) => {
@@ -30,13 +34,19 @@ class AtencionController {
   }
 
   async postAtencion(req, res) {
+    const t = await db.sequelize.transaction();
     try {
-      /* var turno = await db["his_turno"].build(req.body);
+      /*  var turno = await db["his_turno"].build(req.body);
       await turno.save(); */
-      const newTurno = await db["his_turno"].create(req.body);
+      /* Corta */
+      var newTurno = await db["his_turno"].create(req.body, {
+        transaction: t,
+      });
+      await t.commit();
       response.sendCreated(res, newTurno);
     } catch (error) {
       console.log(error);
+      await t.rollback();
       response.sendBadRequest(res, error.message);
     }
   }
@@ -45,7 +55,15 @@ class AtencionController {
       var beforeTurno = await db["his_turno"].findOne({
         where: { id_turno: req.body.id_turno },
       });
-      beforeTurno.nombre_turno = req.body.nombre_turno;
+      /*  if (typeof beforeTurno === 'null') {
+        return response.sendBadRequest(
+          res,
+          "NO existe el id: " + req.body.id_turno
+        );
+      } 
+      beforeTurno = req.body;      
+      */
+
       response.sendBadRequest(res, await beforeTurno.save());
       /* response.sendCreated(res, newTurno); */
     } catch (error) {

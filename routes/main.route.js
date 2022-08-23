@@ -3,25 +3,25 @@ const router = express.Router();
 
 const EmployeeValidationRules = require("../validation-rules/employee.rule");
 const validateMiddleware = require("../middlewares/validate.middleware");
-const AtencionController = require("../controllers/atencion.controller");
+const HojaAtencionController = require("../controllers/hoja-atencion.controller");
 
 require("express-async-errors");
 
-router.get("/atencion", AtencionController.getAtencion);
+router.get("/hoja-atencion", HojaAtencionController.getAtencion);
 router.post(
-  "/atencion",
+  "/hoja-atencion",
   validateMiddleware(EmployeeValidationRules.create),
-  AtencionController.postAtencion
+  HojaAtencionController.postAtencion
 );
 router.put(
-  "/atencion",
+  "/hoja-atencion",
   validateMiddleware(EmployeeValidationRules.edit),
-  AtencionController.putAtencion
+  HojaAtencionController.putAtencion
 );
 router.delete(
-  "/atencion",
+  "/hoja-atencion",
   validateMiddleware(EmployeeValidationRules.delete),
-  AtencionController.deleteAtencion
+  HojaAtencionController.deleteAtencion
 );
 
 module.exports = router;

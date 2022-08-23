@@ -1,4 +1,3 @@
-
 module.exports = (sequelize, type) => {
   var Turno = sequelize.define(
     "his_turno",

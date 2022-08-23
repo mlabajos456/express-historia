@@ -19,6 +19,16 @@ module.exports = (sequelize, type) => {
           return moment(this.getDataValue("fecha")).format("DD-MM-YYYY");
         },
       },
+      ipress: {
+        type: type.STRING,
+        field: "codigo_unico_ipress",
+      },
+      estado: {
+        type: type.STRING,
+        get() {
+          return this.getDataValue("estado") === "1" ? "Activo" : "Inactivo";
+        },
+      },
       nomObservacion: {
         type: type.VIRTUAL,
         get() {
@@ -39,6 +49,7 @@ module.exports = (sequelize, type) => {
     Atencion.belongsTo(models.his_turno, {
       foreignKey: "id_turno",
     });
+
     Atencion.belongsTo(models.t_usuario, {
       foreignKey: "id_responsable",
     });
