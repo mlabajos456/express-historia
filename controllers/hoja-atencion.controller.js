@@ -17,9 +17,18 @@ class AtencionController {
         .findAll({
           order: [["id_turno", "ASC"]],
           limit: 10,
-          offset: 1,
+          offset: 0,
           /*   where:{id_turno: 1,}, */
-          include: [{ model: db["his_turno"] }, { model: db["t_usuario"] }],
+
+          include: [
+            { model: db["his_turno"] },
+            {
+              model: db["t_usuario"],
+              attributes: { exclude: ["pass_usuario"] },
+
+              as: "responsable",
+            },
+          ],
         })
         .then((val) => {
           response.sendData(res, val, "success");

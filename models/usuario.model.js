@@ -27,6 +27,7 @@ module.exports = (sequelize, type) => {
   Usuario.associate = function (models) {
     Usuario.hasOne(models.his_hoja_atencion, {
       foreignKey: "id_responsable",
+   
     });
   };
   return Usuario;
