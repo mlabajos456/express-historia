@@ -1,5 +1,3 @@
-const turnoModel = require("./turno.model");
-
 module.exports = (sequelize, type) => {
   var Atencion = sequelize.define(
     "his_hoja_atencion",
@@ -9,6 +7,19 @@ module.exports = (sequelize, type) => {
         primaryKey: true,
       },
       id_turno: type.INTEGER,
+      /*  id_digitador: type.INTEGER,
+      id_responsable: type.INTEGER, */
+      fecha_apertura: type.DATE,
+      fecha_cierre: type.DATE,
+      fecha: {
+        type: type.DATE,
+       /*  get: function () {
+          // or use get(){ }
+          return this.getDataValue("fecha").toLocaleString("en-GB", {
+            timeZone: "UTC",
+          });
+        }, */
+      },
     },
     {
       timestamps: false,

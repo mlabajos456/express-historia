@@ -1,4 +1,3 @@
-const atencionModel = require("./atencion.model");
 
 module.exports = (sequelize, type) => {
   var Turno = sequelize.define(
@@ -6,6 +5,7 @@ module.exports = (sequelize, type) => {
     {
       id_turno: {
         type: type.INTEGER,
+        autoIncrement: true,
         primaryKey: true,
       },
       nombre_turno: type.STRING,
