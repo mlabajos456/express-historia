@@ -19,7 +19,7 @@ router.put(
   HojaAtencionController.putAtencion
 );
 router.delete(
-  "/hoja-atencion",
+  "/hoja-atencion/",
   validateMiddleware(EmployeeValidationRules.delete),
   HojaAtencionController.deleteAtencion
 );

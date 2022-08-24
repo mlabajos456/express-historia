@@ -3,11 +3,12 @@ const response = require("../helpers/response");
 
 class AtencionController {
   /**
-   * @api {get} /v1/atencion/ Obtener lista de pacientes
+   * @api {get} /v1/atencion/hoja-atencion/:id Obtener hoja de atencion
    * @apiGroup Atencion
    * @apiName GetAllAtenciones
    * @apiContentType application/json
-   * @apiHeader {String} token JWT token generated from /login
+   * @apiHeader {String} Authorization JWT Authorization generated from /login
+   * @apiParams {String} id String id
    *
    */
 
@@ -24,11 +25,11 @@ class AtencionController {
 
           include: [
             { model: db["his_turno"] },
-            {
-              model: db["t_usuario"],
-              attributes: { exclude: ["pass_usuario"] },
-              as: "responsable",
-            },
+            // {
+            //   model: db["t_usuario"],
+            //   attributes: { exclude: ["pass_usuario"] },
+            //   as: "responsable",
+            // },
           ],
         })
         .then((val) => {

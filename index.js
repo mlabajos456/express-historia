@@ -18,7 +18,7 @@ app.get("/docs", function (req, res) {
 app.use("/" + appVersion + "/auth", require("./routes/auth.route"));
 app.use(require("./middlewares/jwt.middleware"));
 
-app.use("/" + appVersion + "/", require("./routes/main.route"));
+app.use("/" + appVersion + "/atencion", require("./routes/main.route"));
 app.use("/" + appVersion + "/support/", require("./routes/supports.route"));
 
 app.use(function (err, req, res, next) {

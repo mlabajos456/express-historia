@@ -3,14 +3,16 @@ const response = require("../helpers/response");
 
 class SupportController {
   /**
-   * @api {get} /v1/support/:id Obtener lista de pacientes
-   * @apiGroup Atencion
-   * @apiName GetAllAtenciones
+   * @api {get} /v1/support/turno/:id Obtener turno por id
+   * @apiGroup Support
+   * @apiName getOneTurno
    * @apiContentType application/json
-   * @apiHeader {String} token JWT token generated from /login
+   * @apiHeader {String} Authorization JWT Authorization generated from /login
+   * @apiParams {String} id String id
    *
    */
 
+  
   async getOneTurno(req, res) {
     try {
       await db["his_turno"]
@@ -27,7 +29,14 @@ class SupportController {
       response.sendBadRequest(res, error.message);
     }
   }
-
+ /**
+   * @api {get} /v1/support/turno Obtener lista de turnos
+   * @apiGroup Support
+   * @apiName getAllTurnos
+   * @apiContentType application/json
+   * @apiHeader {String} Authorization JWT Authorization generated from /login
+   *
+   */
   async getAllTurnos(req, res) {
     try {
       await db["his_turno"]
