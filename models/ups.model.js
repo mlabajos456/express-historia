@@ -1,21 +1,12 @@
 module.exports = (sequelize, type) => {
-    var Usuario = sequelize.define(
-      "t_usuario",
+    var Ups = sequelize.define(
+      "maestro_his_ups",
       {
-        id_usuario: {
-          type: type.INTEGER,
+        id_ups: {
+          type: type.STRING,
           primaryKey: true,
         },
-        pass_usuario: type.STRING,
-        nom_usuario: type.STRING,
-        dni: type.STRING,
-        estado_usuario: {
-          type: type.STRING,
-          get() {
-            const estado = this.getDataValue("estado_usuario");
-            return estado === "1" ? "Activo" : "Inactivo";
-          },
-        },
+        descripcion_ups: type.STRING,
       },
       {
         timestamps: false,
@@ -25,13 +16,13 @@ module.exports = (sequelize, type) => {
         }, */
       }
     );
-    Usuario.associate = function (models) {
-     /*  Usuario.hasOne(models.his_hoja_atencion, {
+    Ups.associate = function (models) {
+      Ups.hasOne(models.his_hoja_atencion, {
         foreignKey: {
-          name: "id_responsable",
+          name: "id_ups",
         },
-      }); */
+      });
     };
-    return Usuario;
+    return Ups;
   };
   
