@@ -1,37 +1,35 @@
 module.exports = (sequelize, type) => {
-    var Usuario = sequelize.define(
-      "t_usuario",
-      {
-        id_usuario: {
-          type: type.INTEGER,
-          primaryKey: true,
-        },
-        pass_usuario: type.STRING,
-        nom_usuario: type.STRING,
-        dni: type.STRING,
-        estado_usuario: {
-          type: type.STRING,
-          get() {
-            const estado = this.getDataValue("estado_usuario");
-            return estado === "1" ? "Activo" : "Inactivo";
-          },
-        },
+  var Ubigeo = sequelize.define(
+    "maestro_his_ubigeo_inei_reniec",
+    {
+      id: {
+        type: type.STRING,
+        primaryKey: true,
+        field: "id_ubigueo_inei",
       },
-      {
-        timestamps: false,
-        freezeTableName: true,
-        /*    defaultScope: {
-          attributes: { exclude: ["pass_usuario"] },
-        }, */
-      }
-    );
-    Usuario.associate = function (models) {
-     /*  Usuario.hasOne(models.his_hoja_atencion, {
-        foreignKey: {
-          name: "id_responsable",
-        },
-      }); */
-    };
-    return Usuario;
+      departamento: type.STRING,
+      provincia: type.STRING,
+      distrito: type.STRING,
+      codDep: { type: type.STRING, field: "codigo_departamento_inei" },
+      codProv: { type: type.STRING, field: "codigo_provincia_inei" },
+      codDist: { type: type.STRING, field: "codigo_distrito_inei" },
+    },
+    {
+      timestamps: false,
+      freezeTableName: true,
+    }
+  );
+  Ubigeo.associate = function (models) {
+    Ubigeo.hasOne(models.his_atencion, {
+      foreignKey: {
+        name: "ubigeo",
+      },
+    });
+    Ubigeo.hasOne(models.paciente, {
+      foreignKey: {
+        name: "id_ubigeo",
+      },
+    });
   };
-  
+  return Ubigeo;
+};
