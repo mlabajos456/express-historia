@@ -4,10 +4,11 @@ module.exports = (sequelize, type) => {
   var DetalleUsuario = sequelize.define(
     "his_detalle_usuario",
     {
-      id_usuario: {
+      id_detalle_usuario: {
         type: type.INTEGER,
         primaryKey: true,
       },
+      id_usuario: type.INTEGER,
       estado: type.BOOLEAN,        
       id_personal: type.INTEGER,
       id_rol: type.INTEGER,
@@ -21,10 +22,6 @@ module.exports = (sequelize, type) => {
   );
 
   DetalleUsuario.associate = function (models) {
-
-    
-   
-    
 
   };
 
