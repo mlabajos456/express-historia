@@ -16,7 +16,7 @@ module.exports = (sequelize, type) => {
       ubigeo: type.STRING,
       peso: type.STRING,
 
-      id_financiador: type.INTEGER /* INNER JOIN */,
+      id_financiador: type.STRING /* INNER JOIN */,
       edad_año: type.STRING,
       edad_mes: type.STRING,
       edad_dias: type.STRING,

@@ -19,7 +19,7 @@ module.exports = (sequelize, type) => {
           return moment(this.getDataValue("f_nacimiento")).format("DD-MM-YYYY");
         },
       },
-      tipodoc: {
+      tipoDoc: {
         type: type.STRING,
         field: "id_tipo_documento",
       },
@@ -29,11 +29,11 @@ module.exports = (sequelize, type) => {
       nombres: {
         type: type.STRING,
       },
-      ape_paterno: {
-        type: type.STRING,
+      paterno: {
+        type: type.STRING,field:'ape_paterno'
       },
-      ape_materno: {
-        type: type.STRING,
+      materno: {
+        type: type.STRING,field:'ape_materno'
       },
       sexo: {
         type: type.STRING,
