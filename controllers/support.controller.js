@@ -3,7 +3,7 @@ const response = require("../helpers/response");
 
 class SupportController {
   /**
-   * @api {get} /v1/atencion/ Obtener lista de pacientes
+   * @api {get} /v1/support/:id Obtener lista de pacientes
    * @apiGroup Atencion
    * @apiName GetAllAtenciones
    * @apiContentType application/json
@@ -31,6 +31,197 @@ class SupportController {
   async getAllTurnos(req, res) {
     try {
       await db["his_turno"]
+        .findAll()
+        .then((val) => {
+          response.sendData(res, val, "success");
+        })
+        .catch((errro) => {
+          response.sendForbidden(res, errro);
+        });
+    } catch (error) {
+      response.sendBadRequest(res, error.message);
+    }
+  }
+
+  async getOneUPS(req, res) {
+    try {
+      await db["maestro_his_ups"]
+        .findOne({
+          where: { id: req.params.id },
+        })
+        .then((val) => {
+          response.sendData(res, val, "success");
+        })
+        .catch((errro) => {
+          response.sendForbidden(res, errro);
+        });
+    } catch (error) {
+      response.sendBadRequest(res, error.message);
+    }
+  }
+
+  async getAllUPS(req, res) {
+    try {
+      await db["maestro_his_ups"]
+        .findAll()
+        .then((val) => {
+          response.sendData(res, val, "success");
+        })
+        .catch((errro) => {
+          response.sendForbidden(res, errro);
+        });
+    } catch (error) {
+      response.sendBadRequest(res, error.message);
+    }
+  }
+
+  async getOneUPS(req, res) {
+    try {
+      await db["maestro_his_ups"]
+        .findOne({
+          where: { id: req.params.id },
+        })
+        .then((val) => {
+          response.sendData(res, val, "success");
+        })
+        .catch((errro) => {
+          response.sendForbidden(res, errro);
+        });
+    } catch (error) {
+      response.sendBadRequest(res, error.message);
+    }
+  }
+
+  async getAllUPS(req, res) {
+    try {
+      await db["maestro_his_ups"]
+        .findAll()
+        .then((val) => {
+          response.sendData(res, val, "success");
+        })
+        .catch((errro) => {
+          response.sendForbidden(res, errro);
+        });
+    } catch (error) {
+      response.sendBadRequest(res, error.message);
+    }
+  }
+  async getOnePerfil(req, res) {
+    try {
+      await db["perfil"]
+        .findOne({
+          where: { id_perfil: 1 },
+        })
+        .then((val) => {
+          response.sendData(res, val, "success");
+        })
+        .catch((errro) => {
+          response.sendForbidden(res, errro);
+        });
+    } catch (error) {
+      response.sendBadRequest(res, error.message);
+    }
+  }
+
+  async getAllPerfil(req, res) {
+    try {
+      await db["perfil"]
+        .findAll()
+        .then((val) => {
+          response.sendData(res, val, "success");
+        })
+        .catch((errro) => {
+          response.sendForbidden(res, errro);
+        });
+    } catch (error) {
+      response.sendBadRequest(res, error.message);
+    }
+  }
+
+  async getOneCie(req, res) {
+    try {
+      await db["maestro_his_cie_cpms"]
+        .findOne({
+          where: { id: req.params.id },
+        })
+        .then((val) => {
+          response.sendData(res, val, "success");
+        })
+        .catch((errro) => {
+          response.sendForbidden(res, errro);
+        });
+    } catch (error) {
+      response.sendBadRequest(res, error.message);
+    }
+  }
+
+  async getAllCie(req, res) {
+    try {
+      await db["maestro_his_cie_cpms"]
+        .findAll()
+        .then((val) => {
+          response.sendData(res, val, "success");
+        })
+        .catch((errro) => {
+          response.sendForbidden(res, errro);
+        });
+    } catch (error) {
+      response.sendBadRequest(res, error.message);
+    }
+  }
+
+  async getOneFinanciador(req, res) {
+    try {
+      await db["maestro_his_financiador"]
+        .findOne({
+          where: { id: req.params.id },
+        })
+        .then((val) => {
+          response.sendData(res, val, "success");
+        })
+        .catch((errro) => {
+          response.sendForbidden(res, errro);
+        });
+    } catch (error) {
+      response.sendBadRequest(res, error.message);
+    }
+  }
+
+  async getAllFinanciador(req, res) {
+    try {
+      await db["maestro_his_financiador"]
+        .findAll()
+        .then((val) => {
+          response.sendData(res, val, "success");
+        })
+        .catch((errro) => {
+          response.sendForbidden(res, errro);
+        });
+    } catch (error) {
+      response.sendBadRequest(res, error.message);
+    }
+  }
+
+  async getOneCentroPoblado(req, res) {
+    try {
+      await db["maestro_his_centro_poblado"]
+        .findOne({
+          where: { id: req.params.id },
+        })
+        .then((val) => {
+          response.sendData(res, val, "success");
+        })
+        .catch((errro) => {
+          response.sendForbidden(res, errro);
+        });
+    } catch (error) {
+      response.sendBadRequest(res, error.message);
+    }
+  }
+
+  async getAllCentroPoblado(req, res) {
+    try {
+      await db["maestro_his_centro_poblado"]
         .findAll()
         .then((val) => {
           response.sendData(res, val, "success");
