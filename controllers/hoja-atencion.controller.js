@@ -12,8 +12,6 @@ class AtencionController {
    */
 
   async getAtencion(req, res) {
-    console.log("okale")
-    console.log(req.params.id)
     try {
       await db["his_hoja_atencion"]
         .findAll({
@@ -48,7 +46,7 @@ class AtencionController {
       /*  var turno = await db["his_turno"].build(req.body);
       await turno.save(); */
       /* Corta */
-      var newTurno = await db["his_turno"].create(req.body, {
+      var newTurno = await db["his_atencion"].create(req.body, {
         transaction: t,
       });
       await t.commit();
