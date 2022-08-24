@@ -22,6 +22,7 @@ app.use("/" + appVersion + "/", require("./routes/main.route"));
 app.use("/" + appVersion + "/support/", require("./routes/supports.route"));
 
 app.use(function (err, req, res, next) {
+  console.log(req);
   res.status(500).send({
     error: ["Ruta no definida"],
   });

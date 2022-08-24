@@ -7,7 +7,7 @@ module.exports = (sequelize, type) => {
         autoIncrement: true,
         primaryKey: true,
       },
-      nombre_turno: type.STRING,
+      nombre: {type: type.STRING, field:'nombre_turno'}
     },
     {
       timestamps: false,

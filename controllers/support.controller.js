@@ -15,7 +15,7 @@ class SupportController {
     try {
       await db["his_turno"]
         .findOne({
-          where: { id_turno: 1 },
+          where: { id_turno: req.params.id },
         })
         .then((val) => {
           response.sendData(res, val, "success");
@@ -63,23 +63,8 @@ class SupportController {
   async getAllUPS(req, res) {
     try {
       await db["maestro_his_ups"]
-        .findAll()
-        .then((val) => {
-          response.sendData(res, val, "success");
-        })
-        .catch((errro) => {
-          response.sendForbidden(res, errro);
-        });
-    } catch (error) {
-      response.sendBadRequest(res, error.message);
-    }
-  }
-
-  async getOneUPS(req, res) {
-    try {
-      await db["maestro_his_ups"]
-        .findOne({
-          where: { id: req.params.id },
+        .findAll({
+          limit: 100,
         })
         .then((val) => {
           response.sendData(res, val, "success");
@@ -92,25 +77,11 @@ class SupportController {
     }
   }
 
-  async getAllUPS(req, res) {
-    try {
-      await db["maestro_his_ups"]
-        .findAll()
-        .then((val) => {
-          response.sendData(res, val, "success");
-        })
-        .catch((errro) => {
-          response.sendForbidden(res, errro);
-        });
-    } catch (error) {
-      response.sendBadRequest(res, error.message);
-    }
-  }
   async getOnePerfil(req, res) {
     try {
       await db["perfil"]
         .findOne({
-          where: { id_perfil: 1 },
+          where: { id_perfil: req.params.id },
         })
         .then((val) => {
           response.sendData(res, val, "success");
@@ -158,7 +129,9 @@ class SupportController {
   async getAllCie(req, res) {
     try {
       await db["maestro_his_cie_cpms"]
-        .findAll()
+        .findAll({
+            limit:100
+        })
         .then((val) => {
           response.sendData(res, val, "success");
         })
@@ -222,7 +195,7 @@ class SupportController {
   async getAllCentroPoblado(req, res) {
     try {
       await db["maestro_his_centro_poblado"]
-        .findAll()
+        .findAll({limit:10})
         .then((val) => {
           response.sendData(res, val, "success");
         })
