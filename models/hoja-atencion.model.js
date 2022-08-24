@@ -46,9 +46,9 @@ module.exports = (sequelize, type) => {
       nomObservacion: {
         type: type.VIRTUAL,
         get() {
-          return `${this.getDataValue("nombre_digitador")} - ${this.getDataValue(
-            "observacion_digitador"
-          )}`;
+          return `${this.getDataValue(
+            "nombre_digitador"
+          )} - ${this.getDataValue("observacion_digitador")}`;
         },
       },
     },
@@ -66,7 +66,7 @@ module.exports = (sequelize, type) => {
 
     Atencion.belongsTo(models.t_usuario, {
       foreignKey: "id_responsable",
-      as: 'responsable'
+      as: "responsable",
     });
   };
 

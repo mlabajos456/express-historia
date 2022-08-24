@@ -14,6 +14,4 @@ module.exports = (sequelize, type) => {
       schema: "datahis",
     }
   );
-  
-
 };
