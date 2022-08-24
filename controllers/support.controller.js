@@ -130,7 +130,7 @@ class SupportController {
     try {
       await db["maestro_his_cie_cpms"]
         .findAll({
-            limit:100
+          limit: 100,
         })
         .then((val) => {
           response.sendData(res, val, "success");
@@ -195,7 +195,7 @@ class SupportController {
   async getAllCentroPoblado(req, res) {
     try {
       await db["maestro_his_centro_poblado"]
-        .findAll({limit:10})
+        .findAll({ limit: 10 })
         .then((val) => {
           response.sendData(res, val, "success");
         })
@@ -208,7 +208,6 @@ class SupportController {
   }
 
   /* UBIGEO */
-
 
   /* UBIGEO */
 }
