@@ -21,7 +21,7 @@ module.exports = (sequelize, type) => {
       edad_mes: type.STRING,
       edad_dias: type.STRING,
       estado_gestante: type.STRING,
-      id_centro_poblado: type.INTEGER,
+      id_centro_poblado: type.STRING,
       condicion_establec: type.STRING,
       condicion_servicio: type.STRING,
       fum: {
