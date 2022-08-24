@@ -9,21 +9,32 @@ module.exports = (sequelize, type) => {
         primaryKey: true,
       },
       id_usuario: type.INTEGER,
-      estado: type.BOOLEAN,        
+      estado: type.BOOLEAN,
       id_personal: type.INTEGER,
-      id_rol: type.INTEGER,
-     
+      id_perfil: type.INTEGER,
     },
     {
       timestamps: false,
       freezeTableName: true,
-      schema: "datahis",
+      schema: "datahis"
     }
   );
 
   DetalleUsuario.associate = function (models) {
+    DetalleUsuario.belongsTo(models.t_usuario, {
+      foreignKey: "id_usuario",
+    });
 
+    DetalleUsuario.belongsTo(models.personal, {
+      foreignKey: "id_personal",
+    });
+
+    DetalleUsuario.belongsTo(models.perfil, {
+      foreignKey: "id_perfil",
+    });
   };
+
+
 
   return DetalleUsuario;
 };
