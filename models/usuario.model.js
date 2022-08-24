@@ -8,6 +8,7 @@ module.exports = (sequelize, type) => {
       },
       pass_usuario: type.STRING,
       nom_usuario: type.STRING,
+      dni: type.STRING,
       estado_usuario: {
         type: type.STRING,
         get() {
@@ -19,16 +20,17 @@ module.exports = (sequelize, type) => {
     {
       timestamps: false,
       freezeTableName: true,
-   /*    defaultScope: {
+      /*    defaultScope: {
         attributes: { exclude: ["pass_usuario"] },
       }, */
     }
   );
   Usuario.associate = function (models) {
-    Usuario.hasOne(models.his_hoja_atencion, {
-      foreignKey: "id_responsable",
-   
-    });
+   /*  Usuario.hasOne(models.his_hoja_atencion, {
+      foreignKey: {
+        name: "id_responsable",
+      },
+    }); */
   };
   return Usuario;
 };

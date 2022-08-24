@@ -1,7 +1,7 @@
 const moment = require("moment");
 
 module.exports = (sequelize, type) => {
-  var Atencion = sequelize.define(
+  var HojaAtencion = sequelize.define(
     "his_hoja_atencion",
     {
       id_hoja_atencion: {
@@ -9,8 +9,8 @@ module.exports = (sequelize, type) => {
         primaryKey: true,
       },
       id_turno: type.INTEGER,
-      /*  id_digitador: type.INTEGER,
-      id_responsable: type.INTEGER, */
+      id_responsable: type.STRING,
+      id_digitador: type.STRING,
       fecha_apertura: {
         type: type.DATE,
         get: function () {
@@ -59,16 +59,16 @@ module.exports = (sequelize, type) => {
     }
   );
 
-  Atencion.associate = function (models) {
-    Atencion.belongsTo(models.his_turno, {
+  HojaAtencion.associate = function (models) {
+    HojaAtencion.belongsTo(models.his_turno, {
       foreignKey: "id_turno",
     });
 
-    Atencion.belongsTo(models.t_usuario, {
+    HojaAtencion.belongsTo(models.t_usuario, {
       foreignKey: "id_responsable",
       as: "responsable",
     });
   };
 
-  return Atencion;
+  return HojaAtencion;
 };
