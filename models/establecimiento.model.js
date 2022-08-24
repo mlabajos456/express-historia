@@ -23,7 +23,7 @@ module.exports = (sequelize, type) => {
       });
       Establecimiento.hasOne(models.personal, {
         foreignKey: {
-          name: "ID_ESTABLECIMIENTO",
+          name: "codigo_unico",
         },
       });
     };

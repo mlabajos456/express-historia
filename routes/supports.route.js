@@ -48,4 +48,15 @@ router.get(
   SupportController.getOneCentroPoblado
 );
 
+
+router.get("/ubigeo/departamento", SupportController.getAllCentroPoblado);
+router.get("/ubigeo/provincia", SupportController.getAllCentroPoblado);
+router.get("/ubigeo/distrito", SupportController.getAllCentroPoblado);
+
+router.get(
+  "/ubigeo/departamento/:id",
+  validateMiddleware(SupportValidationRules.findOne),
+  SupportController.getOneCentroPoblado
+);
+
 module.exports = router;
