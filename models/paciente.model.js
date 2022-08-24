@@ -15,7 +15,6 @@ module.exports = (sequelize, type) => {
       },
       f_nacimiento: {
         type: type.DATE,
-        field: "descripcion_financiador",
         get: function () {
           return moment(this.getDataValue("f_nacimiento")).format("DD-MM-YYYY");
         },
