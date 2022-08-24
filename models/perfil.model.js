@@ -14,7 +14,7 @@ module.exports = (sequelize, type) => {
     }
   );
   Perfil.associate = function (models) {
-    Usuario.hasOne(models.his_detalle_usuario, {
+    Perfil.hasOne(models.his_detalle_usuario, {
       foreignKey: {
         name: "id_rol",
       },
