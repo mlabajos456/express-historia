@@ -87,15 +87,7 @@ class DetalleDiagnosticoController {
       var beforeTurno = await db["his_turno"].findOne({
         where: { id_turno: req.body.id_turno },
       });
-      /*  if (typeof beforeTurno === 'null') {
-        return response.sendBadRequest(
-          res,
-          "NO existe el id: " + req.body.id_turno
-        );
-      } 
-      beforeTurno = req.body;      
-      */
-
+    
       response.sendBadRequest(res, await beforeTurno.save());
       /* response.sendCreated(res, newTurno); */
     } catch (error) {
