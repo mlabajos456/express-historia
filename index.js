@@ -3,8 +3,6 @@ const { httpPort, appVersion } = require("./config/config");
 const path = require("path");
 const app = express();
 const response = require("./helpers/response");
-const jwt = require("./middlewares/jwt.middleware");
-
 app.use(express.static("doc"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -19,7 +17,6 @@ app.get("/docs", function (req, res) {
 app.use("/" + appVersion + "/auth", require("./routes/auth.route"));
 
 app.use(require("./middlewares/jwt.middleware"));
-
 app.use("/" + appVersion + "/support/", require("./routes/supports.route"));
 app.use("/" + appVersion + "/", require("./routes/hoja-atencion.route"));
 
