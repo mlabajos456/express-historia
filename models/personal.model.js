@@ -41,14 +41,9 @@ module.exports = (sequelize, type) => {
   );
 
   Personal.associate = function (models) {
-   /*  Atencion.belongsTo(models.his_turno, {
-      foreignKey: "id_turno",
+    Personal.belongsTo(models.his_detalle_usuario, {
+      foreignKey: "id_personal",
     });
-
-    Atencion.belongsTo(models.t_usuario, {
-      foreignKey: "id_responsable",
-      as: "responsable",
-    }); */
   };
 
   return Personal;
