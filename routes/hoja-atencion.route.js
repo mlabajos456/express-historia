@@ -11,22 +11,22 @@ require("express-async-errors");
 router.post(
   "/hoja-atencion",
   validateMiddleware(HojaAValidationRules.create),
-  HojaAtencionController.postAtencion
+  HojaAtencionController.postHojaAtencion
 );
 router.put(
   "/hoja-atencion",
   validateMiddleware(HojaAValidationRules.edit),
-  HojaAtencionController.putAtencion
+  HojaAtencionController.putHojaAtencion
 );
 router.delete(
-  "/hoja-atencion",
-  validateMiddleware(HojaAValidationRules.delete),
-  HojaAtencionController.deleteAtencion
+  "/hoja-atencion/:id",
+  validateMiddleware(HojaAValidationRules.findOne),
+  HojaAtencionController.deleteHojaAtencion
 );
 router.get(
   "/hoja-atencion/:id",
   validateMiddleware(HojaAValidationRules.findOne),
-  HojaAtencionController.getAtencion
+  HojaAtencionController.getHojaAtencion
 );
 
 module.exports = router;
