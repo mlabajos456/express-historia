@@ -37,7 +37,7 @@ async function authenticate(req, res) {
         ],
     });
 
-    if (data === null) {
+    if (!data) {
         response.sendUnauthorized(res, "Authentication failed.");
         return;
     }
