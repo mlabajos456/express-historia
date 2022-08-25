@@ -10,6 +10,8 @@ module.exports = {
     body: Joi.object().keys({
       id_hoja_atencion: Joi.number().required().label("id hoja de atención"),
       diagnosticos: Joi.array().min(1).items(listaDiagnostico).required().label("lista de diagnosticos"),
+      ficha_familiar: Joi.string().label("id hoja de atención"),
+      ficha_familiar: Joi.string().required().label("id hoja de atención"),
 
 
     }),
