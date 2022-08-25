@@ -15,8 +15,8 @@ class AtencionController {
     try {
       await db["his_hoja_atencion"]
         .findAll({
-         /*  order: [["id_turno", "ASC"]], */
-         /*  limit: 10,
+          /*  order: [["id_turno", "ASC"]], */
+          /*  limit: 10,
           offset: 0, */
           /*   where:{id_turno: 1,}, */
 
@@ -46,31 +46,30 @@ class AtencionController {
       /*  var turno = await db["his_turno"].build(req.body);
       await turno.save(); */
       /* Corta */
-      var newTurno = await db["his_atencion"].create(req.body, {
+      var hoja = await db["his_hoja_atencion"].create(req.body, {
         transaction: t,
       });
       await t.commit();
-      response.sendCreated(res, newTurno);
+      response.sendCreated(res, hoja);
     } catch (error) {
       await t.rollback();
       response.sendBadRequest(res, error.message);
     }
   }
   async putAtencion(req, res) {
+    const t = await db.sequelize.transaction();
     try {
-      var beforeTurno = await db["his_turno"].findOne({
-        where: { id_turno: req.body.id_turno },
+      var hoja = await db["his_hoja_atencion"].findOne({
+        where: { id_hoja_atencion: req.body.id_hoja_atencion },
       });
-      /*  if (typeof beforeTurno === 'null') {
-        return response.sendBadRequest(
+      if (!hoja) {
+        response.sendNotFound(
           res,
-          "NO existe el id: " + req.body.id_turno
+          "No existe la hoja de atención: " + req.body.id_hoja_atencion
         );
-      } 
-      beforeTurno = req.body;      
-      */
+      }
 
-      response.sendBadRequest(res, await beforeTurno.save());
+      response.sendBadRequest(res, await hoja.save());
       /* response.sendCreated(res, newTurno); */
     } catch (error) {
       response.sendBadRequest(res, "Error de consulta, contactese con OGTES");

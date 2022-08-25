@@ -33,7 +33,6 @@ class DetalleDiagnosticoController {
           response.sendData(res, val, "success");
         })
         .catch((errro) => {
-          console.log(errro);
           response.sendForbidden(res, errro);
         });
     } catch (error) {
@@ -60,7 +59,6 @@ class DetalleDiagnosticoController {
           response.sendData(res, val, "success");
         })
         .catch((errro) => {
-          console.log(errro);
           response.sendForbidden(res, errro);
         });
     } catch (error) {
@@ -80,7 +78,6 @@ class DetalleDiagnosticoController {
       await t.commit();
       response.sendCreated(res, newTurno);
     } catch (error) {
-      console.log(error);
       await t.rollback();
       response.sendBadRequest(res, error.message);
     }
@@ -102,7 +99,6 @@ class DetalleDiagnosticoController {
       response.sendBadRequest(res, await beforeTurno.save());
       /* response.sendCreated(res, newTurno); */
     } catch (error) {
-      console.log(error);
       response.sendBadRequest(res, "Error de consulta, contactese con OGTES");
     }
   }
