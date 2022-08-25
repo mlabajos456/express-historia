@@ -19,7 +19,8 @@ const { Op } = require("sequelize");
 async function authenticate(req, res) {
     const data = await db["his_detalle_usuario"].findOne({
         where: {
-            '$t_usuario.nom_usuario$': { [Op.eq]: req.body.usuario }
+            '$t_usuario.nom_usuario$': { [Op.eq]: req.body.usuario },
+            estado : 't'
         },
         include: [
             {
@@ -41,7 +42,7 @@ async function authenticate(req, res) {
         response.sendUnauthorized(res, "Authentication failed.");
         return;
     }
-    const hash = data.dataValues.t_usuario.dataValues.pass_usuario.replace("$2y$", "$2a$");
+    const hash = data.t_usuario.pass_usuario.replace("$2y$", "$2a$");
     const result = bcrypt.compareSync(req.body.clave, hash);
 
     if (result == false) {
