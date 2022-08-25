@@ -1,8 +1,18 @@
 const BaseJoi = require("joi");
 const Extension = require("joi-date-extensions");
 const Joi = BaseJoi.extend(Extension);
-const listaDiagnostico = Joi.object().keys({
+const listaDiagnosticoEdit = Joi.object().keys({
+  id_detalle: Joi.string().required().label("id detalle"),
+  id_atencion: Joi.string().required().label("id atencion"),
+  id_cie: Joi.string().required().label("cie 10"),
   valor_lab: Joi.string().required().label("valor lab"),
+  diagnostico_tipo: Joi.string().required().label("tipo de diagnostico"),
+});
+const listaDiagnostico = Joi.object().keys({
+  id_atencion: Joi.string().required().label("id atencion"),
+  id_cie: Joi.string().required().label("cie 10"),
+  valor_lab: Joi.string().required().label("valor lab"),
+  diagnostico_tipo: Joi.string().required().label("tipo de diagnostico"),
 });
 
 module.exports = {
@@ -22,19 +32,19 @@ module.exports = {
       peso: Joi.number(),
       id_financiador: Joi.number(),
       estado_gestante: Joi.string(),
-      id_centro_poblado: Joi.string(),
+      id_centro_poblado: Joi.string().required().label("id centro poblado"),
       condicion_establec: Joi.string()
-        .max(2)
+        .max(1)
         .required()
         .label("Condición establecimiento"),
       condicion_servicio: Joi.string()
-        .max(2)
+        .max(1)
         .required()
         .label("Condición servicio"),
       fum: Joi.date(),
-      fecha_atencion: Joi.date(),
+      /* fecha_atencion: Joi.date(), */
       talla: Joi.string(),
-      id_paciente: Joi.number(),
+      id_paciente: Joi.number().required().label("id paciente"),
       fecha_hb: Joi.date(),
       condicion: Joi.boolean(),
       num_historia_clinica: Joi.string()
@@ -49,7 +59,7 @@ module.exports = {
       id_hoja_atencion: Joi.number().required().label("id hoja de atención"),
       diagnosticos: Joi.array()
         .min(1)
-        .items(listaDiagnostico)
+        .items(listaDiagnosticoEdit)
         .required()
         .label("lista de diagnosticos"),
       ficha_familiar: Joi.string().label("ficha familiar"),
@@ -80,21 +90,10 @@ module.exports = {
         .label("Número de historia clinica"),
       hemoglobina: Joi.number(),
     }),
-  },
-  /*  edit: {
-    body: Joi.object().keys({
-      nombre_turno: Joi.string().required().label("Nombre de turno"),
-      id_turno: Joi.number().required().label("Ingrese un id de turno válido"),
-    }),
-  },
-  delete: {
-    body: Joi.object().keys({
-      id_turno: Joi.number().required().label("Ingrese un id de turno válido"),
-    }),
-  },
+  },  
   findOne: {
     params: {
       id: Joi.string().required().label("id de atención"),
     },
-  }, */
+  }, 
 };

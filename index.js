@@ -19,6 +19,7 @@ app.use("/" + appVersion + "/auth", require("./routes/auth.route"));
 app.use(require("./middlewares/jwt.middleware"));
 app.use("/" + appVersion + "/support/", require("./routes/supports.route"));
 app.use("/" + appVersion + "/", require("./routes/hoja-atencion.route"));
+app.use("/" + appVersion + "/", require("./routes/atencion.route"));
 
 /* app.use("/" + appVersion + "/", jwt, require("./routes/main.route"));
 app.use("/" + appVersion + "/support/", jwt, require("./routes/supports.route")); */

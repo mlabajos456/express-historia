@@ -12,7 +12,7 @@ router.post(
   "/atencion",
   validateMiddleware(AtencionValidationRules.create),
   AtencionController.postAtencion
-);
+);/* 
 router.put(
   "/atencion",
   validateMiddleware(AtencionValidationRules.edit),
@@ -27,6 +27,6 @@ router.get(
   "/atencion/:id",
   validateMiddleware(AtencionValidationRules.findOne),
   AtencionController.getAtencion
-);
+); */
 
 module.exports = router;

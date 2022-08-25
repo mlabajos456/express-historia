@@ -11,7 +11,7 @@ class AtencionController {
    *
    */
 
-  async getHojaAtencion(req, res) {
+  async getAllAtencion(req, res) {
     try {
       await db["his_atencion"]
         .findAll({
@@ -23,8 +23,7 @@ class AtencionController {
           include: [
             { model: db["his_turno"] },
             {
-              model: db["t_usuario"],
-              attributes: { exclude: ["pass_usuario"] },
+              model: db["personal"],
               as: "responsable",
             },
           ],
@@ -40,17 +39,22 @@ class AtencionController {
     }
   }
 
-  async postHojaAtencion(req, res) {
+  async postAtencion(req, res) {
     const t = await db.sequelize.transaction();
     try {
-      /*  var turno = await db["his_turno"].build(req.body);
-      await turno.save(); */
+      var atencion = await db["his_atencion"].build(req.body);
+      atencion.edad_anio = "9";
+      atencion.edad_mes = "9";
+      atencion.edad_dias = "9";
+      atencion.fecha_atencion = Date.now();
+      await atencion.save({ transaction: t });
       /* Corta */
+      /*       console.log(req.body)
       var hoja = await db["his_atencion"].create(req.body, {
         transaction: t,
-      });
+      }); */
       await t.commit();
-      response.sendCreated(res, hoja);
+      response.sendCreated(res, atencion);
     } catch (error) {
       await t.rollback();
       response.sendBadRequest(res, error.message);
