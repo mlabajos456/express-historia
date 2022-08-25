@@ -47,12 +47,14 @@ class AtencionController {
       atencion.edad_mes = "9";
       atencion.edad_dias = "9";
       atencion.fecha_atencion = Date.now();
-      await atencion.save({ transaction: t });
-      /* Corta */
-      /*       console.log(req.body)
-      var hoja = await db["his_atencion"].create(req.body, {
-        transaction: t,
-      }); */
+      var newAtencion = await atencion.save({ transaction: t });
+
+      for (const detail of req.body.diagnosticos) {
+        var detailDiag = await db["his_detalle_diagnostico"].build(detail);
+        detailDiag.id_atencion = newAtencion.id_atencion;
+        await detailDiag.save({ transaction: t });
+      }
+
       await t.commit();
       response.sendCreated(res, atencion);
     } catch (error) {

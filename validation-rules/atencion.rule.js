@@ -3,15 +3,14 @@ const Extension = require("joi-date-extensions");
 const Joi = BaseJoi.extend(Extension);
 const listaDiagnosticoEdit = Joi.object().keys({
   id_detalle: Joi.string().required().label("id detalle"),
-  id_atencion: Joi.string().required().label("id atencion"),
+  id_atencion: Joi.number().required().label("id atencion"),
   id_cie: Joi.string().required().label("cie 10"),
-  valor_lab: Joi.string().required().label("valor lab"),
+  valor_lab: Joi.string().label("valor lab"),
   diagnostico_tipo: Joi.string().required().label("tipo de diagnostico"),
 });
 const listaDiagnostico = Joi.object().keys({
-  id_atencion: Joi.string().required().label("id atencion"),
   id_cie: Joi.string().required().label("cie 10"),
-  valor_lab: Joi.string().required().label("valor lab"),
+  valor_lab: Joi.string().label("valor lab"),
   diagnostico_tipo: Joi.string().required().label("tipo de diagnostico"),
 });
 

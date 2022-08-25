@@ -26,10 +26,7 @@ app.use("/" + appVersion + "/support/", jwt, require("./routes/supports.route"))
 
 
 app.use(function (err, req, res, next) {
-  console.log(res);
-  res.status(500).send({
-    error: ["Ruta no definida"],
-  });
+  response.sendBadRequest(res, err)
 });
 
 app.listen(httpPort, () => console.log(`http://127.0.0.1:${httpPort}`));
