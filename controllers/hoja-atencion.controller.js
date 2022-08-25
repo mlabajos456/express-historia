@@ -68,11 +68,11 @@ class AtencionController {
           "No existe la hoja de atención: " + req.body.id_hoja_atencion
         );
       }
-
-      response.sendBadRequest(res, await hoja.save());
+      hoja = req.body;
+      response.sendData(res, await hoja.save(),"Se ha actualizado correctamente");
       /* response.sendCreated(res, newTurno); */
     } catch (error) {
-      response.sendBadRequest(res, "Error de consulta, contactese con OGTES");
+      response.sendBadRequest(res, error.message);
     }
   }
   async deleteAtencion(req, res) {
