@@ -41,7 +41,7 @@ async function authenticate(req, res) {
         response.sendUnauthorized(res, "Authentication failed.");
         return;
     }
-    const hash = data.dataValues.t_usuario.dataValues.pass_usuario.replace("$2y$", "$2a$");
+    const hash = data.t_usuario.pass_usuario.replace("$2y$", "$2a$");
     const result = bcrypt.compareSync(req.body.clave, hash);
 
     if (result == false) {
