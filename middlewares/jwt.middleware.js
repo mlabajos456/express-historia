@@ -49,7 +49,7 @@ module.exports = (req, res, next) => {
 
         if (data == null) {
             return response.sendUnauthorized(res, "Access denied.");
-        }
+        }        
         req.detalle_usuario = data.id_detalle_usuario;
         req.id_usuario = data.id_usuario;
         req.id_personal = data.id_personal;
