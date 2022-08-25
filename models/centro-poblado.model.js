@@ -9,7 +9,7 @@ module.exports = (sequelize, type) => {
       },
       descripcion: { type: type.STRING, field: "descripcion_centro_poblado" },
       codigo: { type: type.STRING, field: "id_codigo_centro_poblado" },
-      ubigeo: { type: type.STRING, field: "id_ubigeo_centro_poblado" },
+      ubigeo: { type: type.STRING, field: "id_ubigueo_centro_poblado" },
     },
     {
       timestamps: false,
