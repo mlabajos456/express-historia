@@ -19,7 +19,8 @@ const { Op } = require("sequelize");
 async function authenticate(req, res) {
     const data = await db["his_detalle_usuario"].findOne({
         where: {
-            '$t_usuario.nom_usuario$': { [Op.eq]: req.body.usuario }
+            '$t_usuario.nom_usuario$': { [Op.eq]: req.body.usuario },
+            estado : 't'
         },
         include: [
             {
