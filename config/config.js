@@ -1,5 +1,3 @@
-const prodConfig = require("./config.prod");
-
 const defaultConfig = {
     appVersion: 'v1',
     db: {
@@ -15,6 +13,5 @@ const defaultConfig = {
 };
 
 module.exports = {
-    ...defaultConfig,
-    ...prodConfig
+    ...defaultConfig
 };
