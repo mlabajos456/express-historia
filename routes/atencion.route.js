@@ -1,32 +1,32 @@
 const express = require("express");
 const router = express.Router();
 
-const HojaAValidationRules = require("../validation-rules/hoja-atencion.rule");
+const AtencionValidationRules = require("../validation-rules/atencion.rule");
 const validateMiddleware = require("../middlewares/validate.middleware");
-const HojaAtencionController = require("../controllers/hoja-atencion.controller");
+const AtencionController = require("../controllers/atencion.controller");
 
 require("express-async-errors");
 
-/* router.get("/hoja-atencion", HojaAtencionController.getAtencion); */
+/* router.get("/hoja-atencion", AtencionController.getAtencion); */
 router.post(
   "/atencion",
-  validateMiddleware(HojaAValidationRules.create),
-  HojaAtencionController.postAtencion
+  validateMiddleware(AtencionValidationRules.create),
+  AtencionController.postAtencion
 );
 router.put(
   "/atencion",
-  validateMiddleware(HojaAValidationRules.edit),
-  HojaAtencionController.putAtencion
+  validateMiddleware(AtencionValidationRules.edit),
+  AtencionController.putAtencion
 );
 router.delete(
   "/atencion",
-  validateMiddleware(HojaAValidationRules.delete),
-  HojaAtencionController.deleteAtencion
+  validateMiddleware(AtencionValidationRules.delete),
+  AtencionController.deleteAtencion
 );
 router.get(
   "/atencion/:id",
-  validateMiddleware(HojaAValidationRules.findOne),
-  HojaAtencionController.getAtencion
+  validateMiddleware(AtencionValidationRules.findOne),
+  AtencionController.getAtencion
 );
 
 module.exports = router;

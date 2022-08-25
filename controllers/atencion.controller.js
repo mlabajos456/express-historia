@@ -1,9 +1,9 @@
 const db = require("../models/index");
 const response = require("../helpers/response");
 
-class HojaAtencionController {
+class AtencionController {
   /**
-   * @api {get} /v1/hoja-atencion/ Obtener lista de pacientes
+   * @api {get} /v1/atencion/ Obtener lista de pacientes
    * @apiGroup Atencion
    * @apiName GetAllAtenciones
    * @apiContentType application/json
@@ -13,7 +13,7 @@ class HojaAtencionController {
 
   async getHojaAtencion(req, res) {
     try {
-      await db["his_hoja_atencion"]
+      await db["his_atencion"]
         .findAll({
           /*  order: [["id_turno", "ASC"]], */
           /*  limit: 10,
@@ -46,7 +46,7 @@ class HojaAtencionController {
       /*  var turno = await db["his_turno"].build(req.body);
       await turno.save(); */
       /* Corta */
-      var hoja = await db["his_hoja_atencion"].create(req.body, {
+      var hoja = await db["his_atencion"].create(req.body, {
         transaction: t,
       });
       await t.commit();
@@ -59,7 +59,7 @@ class HojaAtencionController {
   async putHojaAtencion(req, res) {
     const t = await db.sequelize.transaction();
     try {
-      var hoja = await db["his_hoja_atencion"].findOne({
+      var hoja = await db["his_atencion"].findOne({
         where: { id_hoja_atencion: req.body.id_hoja_atencion },
       });
       if (!hoja) {
@@ -81,7 +81,7 @@ class HojaAtencionController {
     var estado = "1";
     var msg = "Se ha restablecido correctamente";
     try {
-      var hoja = await db["his_hoja_atencion"].findOne({
+      var hoja = await db["his_atencion"].findOne({
         where: { id_hoja_atencion: req.params.id },
       });
       if (!hoja) {
@@ -104,4 +104,4 @@ class HojaAtencionController {
     }
   }
 }
-module.exports = new HojaAtencionController();
+module.exports = new AtencionController();
