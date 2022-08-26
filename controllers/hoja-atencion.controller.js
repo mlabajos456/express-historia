@@ -6,7 +6,6 @@ class HojaAtencionController {
    * @api {get} /v1/hoja-atencion/ Obtener lista de pacientes
    * @apiGroup Atencion
    * @apiName GetAllAtenciones
-   * @apiContentType application/json
    * @apiHeader {String} token JWT token generated from /login
    *
    */

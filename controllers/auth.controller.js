@@ -10,10 +10,7 @@ const { Op } = require("sequelize");
  * @apiGroup Auth
  * @apiName Login
  *
- * @apiContentType application/json
  *
- * @apiParam {String} usuario Usuario: dires
- * @apiParam {String} clave Contraseña:12342022*dD
  */
 
 async function authenticate(req, res) {

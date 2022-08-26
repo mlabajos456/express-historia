@@ -1,30 +1,36 @@
 const db = require("../models/index");
 const response = require("../helpers/response");
+const DetalleDiagnosticoController = require("./detalle-diagnostico.controller");
 
 class AtencionController {
   /**
-   * @api {get} /v1/atencion/ Obtener lista de pacientes
-   * @apiGroup Atencion
-   * @apiName GetAllAtenciones
-   * @apiContentType application/json
-   * @apiHeader {String} token JWT token generated from /login
-   *
-   */
+    * @api {get} /v1/atencion/ Obtener lista de pacientes
+    * @apiGroup Atencion
+    * @apiName GetAllAtenciones
+    * @apiHeader {String} token JWT token generated from /login
+    * @apiBody {String} [firstname]       Optional Firstname of the User.
+    * @apiBody {String} lastname          Mandatory Lastname.
+    * @apiBody {String} country="DE"      Mandatory with default value "DE".
+    * @apiBody {Number} [age=18]          Optional Age with default 18.
+ *
+ * @apiBody (Login) {String} pass      Only logged in users can post this.
+ *                                     In generated documentation a separate
+ *                                     "Login" Block will be generated.
+ *
+ * @apiBody {Object} [address]         Optional nested address object.
+ * @apiBody {String} [address[street]] Optional street and number.
+ * @apiBody {String} [address[zip]]    Optional zip code.
+ * @apiBody {String} [address[city]]   Optional city.
+ */
 
   async getAllAtencion(req, res) {
     try {
       await db["his_atencion"]
         .findAll({
-          /*  order: [["id_turno", "ASC"]], */
-          /*  limit: 10,
-          offset: 0, */
-          /*   where:{id_turno: 1,}, */
-
           include: [
-            { model: db["his_turno"] },
             {
-              model: db["personal"],
-              as: "responsable",
+              model: db["his_detalle_diagnostico"],
+          
             },
           ],
         })
@@ -62,21 +68,48 @@ class AtencionController {
       response.sendBadRequest(res, error.message);
     }
   }
-  async putHojaAtencion(req, res) {
+  async putAtencion(req, res) {
     const t = await db.sequelize.transaction();
     try {
-      var hoja = await db["his_atencion"].findOne({
-        where: { id_hoja_atencion: req.body.id_hoja_atencion },
+      var atencion = await db["his_atencion"].findOne({
+        where: { id_atencion: req.body.id_atencion },
       });
-      if (!hoja) {
+
+      if (!atencion) {
         return response.sendNotFound(
           res,
-          "No existe la hoja de atención: " + req.body.id_hoja_atencion
+          "No existe la atención: " + req.body.id_atencion
         );
       }
-      hoja = await hoja.update(req.body, {}, { transaction: t });
+      atencion = await atencion.update(req.body, {}, { transaction: t });
+      for (const detail of req.body.diagnosticos) {
+        if (detail.id_detalle) {
+          var beforeDetail = await db["his_detalle_diagnostico"].findOne({
+            where: { id_detalle: detail.id_detalle },
+          });
+
+          if (!beforeDetail) {
+            response.sendNotFound(
+              res,
+              "No existe el : " + req.body.id_atencion
+            );
+            return t.rollback();
+          }
+
+          beforeDetail = await beforeDetail.update(
+            detail,
+            {},
+            { transaction: t }
+          );
+        } else {
+          var detailDiag = await db["his_detalle_diagnostico"].build(detail);
+          detailDiag.id_atencion = atencion.id_atencion;
+          await detailDiag.save({ transaction: t });
+        }
+      }
+
       t.commit();
-      response.sendData(res, hoja, "Se ha actualizado correctamente");
+      response.sendData(res, atencion, "Se ha actualizado correctamente");
     } catch (error) {
       t.rollback();
       response.sendBadRequest(res, error.message);

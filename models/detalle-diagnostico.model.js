@@ -1,5 +1,5 @@
 module.exports = (sequelize, type) => {
-  return sequelize.define(
+  var DetalleDiag = sequelize.define(
     "his_detalle_diagnostico",
     {
       id_detalle: {
@@ -18,4 +18,19 @@ module.exports = (sequelize, type) => {
       schema: "datahis",
     }
   );
+  DetalleDiag.associate = function (models) {
+    DetalleDiag.belongsTo(models.maestro_his_cie_cpms, {
+      foreignKey: "id_cie",
+      as: "cie",
+    });
+    /*  DetalleDiag.belongsToMany(models.his_atencion, {
+      through: "his_atencion",
+    }); */
+    DetalleDiag.belongsTo(models.his_atencion, {
+      foreignKey: {
+        name: "id_atencion",
+      },
+    });
+  };
+  return DetalleDiag;
 };

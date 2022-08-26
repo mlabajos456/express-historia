@@ -6,7 +6,7 @@ module.exports = (sequelize, type) => {
     {
       id_atencion: {
         type: type.INTEGER,
-        autoIncrement:true,
+        autoIncrement: true,
         primaryKey: true,
       },
       id_hoja_atencion: type.INTEGER,
@@ -66,16 +66,22 @@ module.exports = (sequelize, type) => {
     }
   );
 
- /*  Atencion.associate = function (models) {
-    Atencion.belongsTo(models.his_turno, {
+  Atencion.associate = function (models) {
+      Atencion.hasMany(models.his_detalle_diagnostico, {
+      foreignKey: "id_atencion",
+    });
+    /* Atencion.belongsToMany(models.his_detalle_diagnostico, {
+      through: "his_detalle_diagnostico",
+    }); */
+    /*  Atencion.belongsTo(models.his_turno, {
       foreignKey: "id_turno",
     });
 
     Atencion.belongsTo(models.personal, {
       foreignKey: "id_responsable",
       as: "responsable",
-    });
-  }; */
+    }); */
+  };
 
   return Atencion;
 };

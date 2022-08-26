@@ -3,10 +3,9 @@ const response = require("../helpers/response");
 
 class SupportController {
   /**
-   * @api {get} /v1/support/:id Obtener lista de pacientes
+   * @api {get} /v1/support/ Obtener lista de pacientes
    * @apiGroup Atencion
    * @apiName GetAllAtenciones
-   * @apiContentType application/json
    * @apiHeader {String} token JWT token generated from /login
    *
    */

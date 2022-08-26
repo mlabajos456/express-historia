@@ -2,8 +2,8 @@ const BaseJoi = require("joi");
 const Extension = require("joi-date-extensions");
 const Joi = BaseJoi.extend(Extension);
 const listaDiagnosticoEdit = Joi.object().keys({
-  id_detalle: Joi.string().required().label("id detalle"),
-  id_atencion: Joi.number().required().label("id atencion"),
+  id_detalle: Joi.number().label("id detalle"),
+  id_atencion: Joi.number().label("id atencion"),
   id_cie: Joi.string().required().label("cie 10"),
   valor_lab: Joi.string().label("valor lab"),
   diagnostico_tipo: Joi.string().required().label("tipo de diagnostico"),
@@ -71,11 +71,11 @@ module.exports = {
       estado_gestante: Joi.string(),
       id_centro_poblado: Joi.string(),
       condicion_establec: Joi.string()
-        .max(2)
+        .max(1)
         .required()
         .label("Condición establecimiento"),
       condicion_servicio: Joi.string()
-        .max(2)
+        .max(1)
         .required()
         .label("Condición servicio"),
       fum: Joi.date(),
