@@ -27,12 +27,16 @@ router.get(
   SupportController.getOnePerfil
 );
 
+
 router.get("/cie", SupportController.getAllCie);
 router.get(
   "/cie/:id",
   validateMiddleware(SupportValidationRules.findOne),
   SupportController.getOneCie
 );
+router.get("/cie/getbyname/all",
+  validateMiddleware(SupportValidationRules.findByName),
+  SupportController.getByName);
 
 router.get("/financiador", SupportController.getAllFinanciador);
 router.get(
@@ -47,7 +51,6 @@ router.get(
   validateMiddleware(SupportValidationRules.findOne),
   SupportController.getOneCentroPoblado
 );
-
 
 router.get("/ubigeo/departamento", SupportController.getAllCentroPoblado);
 router.get("/ubigeo/provincia", SupportController.getAllCentroPoblado);

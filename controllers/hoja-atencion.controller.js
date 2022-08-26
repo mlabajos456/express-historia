@@ -6,9 +6,8 @@ class AtencionController {
    * @api {get} /v1/atencion/hoja-atencion/:id Obtener hoja de atencion
    * @apiGroup Atencion
    * @apiName GetAllAtenciones
-   * @apiContentType application/json
    * @apiHeader {String} Authorization JWT Authorization generated from /login
-   * @apiParams {String} id String id
+   * @apiParam {String} id String id
    *
    */
 

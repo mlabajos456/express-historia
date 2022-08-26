@@ -4,9 +4,8 @@ const response = require("../helpers/response");
 class DetalleDiagnosticoController {
   /**
    * @api {get} /v1/detalle-diagnostico/get Obtener lista de diagnosticos
-   * @apiGroup Atencion2
-   * @apiName GetAllAtenciones
-   * @apiContentType application/json
+   * @apiGroup Atencion
+   * @apiName GetDiagnosticos
    * @apiHeader {String} Authorization JWT Authorization generated from /login
    *
    */

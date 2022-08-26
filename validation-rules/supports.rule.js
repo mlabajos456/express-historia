@@ -8,4 +8,9 @@ module.exports = {
       id: Joi.string().required().label("id"),
     },
   },
+  findByName: {
+    body: {
+      q: Joi.string().required().label("q"),
+    },
+  },
 };

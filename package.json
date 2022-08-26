@@ -7,17 +7,17 @@
     "node": ">=8.3.0"
   },
   "scripts": {
-    "start": "npm run docs && nodemon index.js",
+    "start": "nodemon index.js",
     "start-local": "nodemon index.js --exec",
     "lint": "eslint --ignore-path .gitignore .",
     "lint-fix": "eslint --ignore-path .gitignore --fix .",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "docs": "apidoc -i ./ -e node_modules/ -t ./node_modules/apidoc-contenttype-plugin/template/ --parse-parsers apicontenttype=./node_modules/apidoc-contenttype-plugin/api_content_type.js"
+    "doc": "apidoc -i ./ -o doc"
   },
   "author": "Sanket Subhash Hande",
   "license": "GPL-3.0",
   "dependencies": {
-    "apidoc": "^0.17.7",
+    "apidoc": "^0.52.0",
     "apidoc-contenttype-plugin": "^0.1.0",
     "bcrypt": "^5.0.1",
     "express": "^4.18.1",

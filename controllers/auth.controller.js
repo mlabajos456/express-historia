@@ -8,11 +8,7 @@ const response = require("../helpers/response");
  * @api {post} /v1/auth/login Generate JWT token
  * @apiGroup Auth
  * @apiName Login
- *
- * @apiContentType application/json
- *
- * @apiParam {String} usuario Usuario: dires
- * @apiParam {String} clave Contraseña:12342022*dD
+ * 
  */
 
 async function authenticate(req, res) {
@@ -35,7 +31,7 @@ async function authenticate(req, res) {
   res.json({
     success: true,
     message: "Token created.",
-    token: jwt.sign(
+    token: 'bearer '+jwt.sign(
       {
         id: data.id_usuario,
       },

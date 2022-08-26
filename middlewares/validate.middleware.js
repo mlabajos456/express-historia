@@ -9,6 +9,7 @@ module.exports = (options) => {
 
     if (options.body) {
       result = Joi.validate(req.body, options.body);
+      console.log(result)
     }
     if(options.params){
       result = Joi.validate(req.params, options.params);
