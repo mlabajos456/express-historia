@@ -5,7 +5,14 @@ const bcrypt = require("bcrypt");
 const response = require("../helpers/response");
 const { Op } = require("sequelize");
 
-
+/**
+    * @api {post} /v1/auth/login/ Obtener token
+    * @apiGroup Auth
+    * @apiName GetToken
+    * @apiBody {String} usuario       Optional Firstname of the User.
+    * @apiBody {String} clave          Mandatory Lastname.
+  
+ */
 async function authenticate(req, res) {
     const data = await db["his_detalle_usuario"].findOne({
         where: {
@@ -43,7 +50,7 @@ async function authenticate(req, res) {
   res.json({
     success: true,
     message: "Token created.",
-    token: 'bearer '+jwt.sign(
+    token: 'Bearer '+jwt.sign(
       {
         id: data.id_usuario,
       },
@@ -53,19 +60,7 @@ async function authenticate(req, res) {
       }
     ),
   });
-    res.json({
-        success: true,
-        message: "Token created.",
-        token: jwt.sign(
-            {
-                id: data.id_usuario,
-            },
-            privateKey,
-            {
-                expiresIn: tokenExpireInSeconds,
-            }
-        ),
-    });
+   
 }
 
 module.exports = {

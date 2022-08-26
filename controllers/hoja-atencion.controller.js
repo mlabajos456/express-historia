@@ -3,18 +3,12 @@ const response = require("../helpers/response");
 
 class HojaAtencionController {
   /**
-<<<<<<< HEAD
    * @api {get} /v1/atencion/hoja-atencion/:id Obtener hoja de atencion
-   * @apiGroup Atencion
    * @apiName GetAllAtenciones
+   * @apiGroup Atencion
    * @apiHeader {String} Authorization JWT Authorization generated from /login
-   * @apiParam {String} id String id
-=======
-   * @api {get} /v1/hoja-atencion/ Obtener lista de pacientes
+   * @apiParam {Number} id hoja atencion ID.
    * @apiGroup Atencion
-   * @apiName GetAllAtenciones
-   * @apiHeader {String} token JWT token generated from /login
->>>>>>> 62d1e06e4bff133c10efb61301b60feeac3b1848
    *
    */
 

@@ -5,13 +5,10 @@ class DetalleDiagnosticoController {
   /**
    * @api {get} /v1/detalle-diagnostico/get Obtener lista de diagnosticos
    * @apiGroup Atencion
-<<<<<<< HEAD:controllers/detalle-diagnostico.model.js
    * @apiName GetDiagnosticos
    * @apiHeader {String} Authorization JWT Authorization generated from /login
-=======
    * @apiName GetAllAtenciones
    * @apiHeader {String} token JWT token generated from /login
->>>>>>> 62d1e06e4bff133c10efb61301b60feeac3b1848:controllers/detalle-diagnostico.controller.js
    *
    */
 
