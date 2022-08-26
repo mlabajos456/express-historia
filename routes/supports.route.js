@@ -40,7 +40,6 @@ router.get(
   validateMiddleware(SupportValidationRules.findOne),
   SupportController.getOneFinanciador
 );
-
 router.get("/centro-poblado", SupportController.getAllCentroPoblado);
 router.get(
   "/centro-poblado/:id",
