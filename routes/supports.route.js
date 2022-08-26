@@ -49,24 +49,32 @@ router.get(
 );
 //para cargar todos los departamentos.
 router.get("/ubigeo/departamento", SupportController.getAllUbigeoDepatamento);
-router.post("/ubigeo/departamento", SupportController.getAllUbigeoDepatamento);
 //todas las provincias por codigo de departamento
-router.get("/ubigeo/provincia/:codDep", SupportController.getAllUbigeoProvincia);
+router.get(
+  "/ubigeo/:codDep/provincia",
+  SupportController.getAllUbigeoProvincia
+);
 //todos los distritos por codigo de departamento y codigo de provincia
-router.get("/ubigeo/distrito/:codDep/:codProv", SupportController.getAllUbigeoDistrito);
+router.get(
+  "/ubigeo/:codDep/:codProv/distrito",
+  SupportController.getAllUbigeoDistrito
+);
 
 //cargar un departamento en específico
-router.get( "/departamento/:id", validateMiddleware(SupportValidationRules.findOne), SupportController.getOneUbigeoDepatamento);
+router.get(
+  "/departamento/:id",
+  validateMiddleware(SupportValidationRules.findOne),
+  SupportController.getOneUbigeoDepatamento
+);
 //carga una provincia de acuerdo aun departamento
-router.get("/provincia/:codDep/:codProv",SupportController.getOneUbigeoProvincia);
+router.get(
+  "/provincia/:codDep/:codProv",
+  SupportController.getOneUbigeoProvincia
+);
 //cargar un distrito por codigo de departamento y provincia
-router.get("/distrito/:codDep/:codProv/:codDist",SupportController.getOnebigeoDistrito);
-
-router.get("/establecimiento/red", SupportController.getAllRed);
-router.get("/establecimiento/microRed/:codigoRed", SupportController.getAllMicroRed);
-router.get("/establecimiento/ipress/:codigoRed/:codMicroRed", SupportController.getAllIpress);
-
-router.get("/red/:id", SupportController.getOneRed);
-router.get( "/microRed/:codigoRed", SupportController.getOneMicroRed);
-router.get( "/ipress/:/codisa/:codMicroRed", SupportController.getOneIpress);
+router.get(
+  "/distrito/:codDep/:codProv/:codDist",
+  SupportController.getOnebigeoDistrito
+);
+router.get("/establecimiento", SupportController.getAllEstByUbigeo);
 module.exports = router;

@@ -212,20 +212,20 @@ class SupportController {
   /* UBIGEO */
   async getAllUbigeoDepatamento(req, res) {
     try {
-      // var busccar=req.body.departamento;
+      var buscar = req.body.query.toUpperCase().trim();
       await db["maestro_his_ubigeo_inei_reniec"]
         .findAll({
           attributes: {
-            exclude: ["provincia", "distrito", "codDist", "codProv"],
+            exclude: ["provincia", "distrito", "codDist", "codProv", "id"],
           },
-          group: ["departamento", "codigo_departamento_inei"],
-          //where:{departamento:{[Op.like]: '%'+busccar+'%'}}
+          group: ["departamento", "codDep"],
+          where: { departamento: { [Op.like]: "%" + buscar + "%" } },
         })
         .then((val) => {
           response.sendData(res, val, "success");
         })
         .catch((errro) => {
-          response.sendForbidden(res, errro);
+          response.sendForbidden(res, errro.message);
         });
     } catch (error) {
       response.sendBadRequest(res, error.message);
@@ -234,19 +234,18 @@ class SupportController {
 
   async getAllUbigeoProvincia(req, res) {
     try {
+      var buscar = req.body.query.toUpperCase().trim();
       await db["maestro_his_ubigeo_inei_reniec"]
         .findAll({
-          limit: 10,
-          attributes: { exclude: ["distrito", "codDist"] },
-          //attributes: { exclude: ["codDist"]},
-          where: { codDep: req.params.codDep },
-          group: [
-            "departamento",
-            "codigo_departamento_inei",
-            "id_ubigueo_inei",
-            "provincia",
-            "codigo_provincia_inei",
-          ],
+          attributes: {
+            exclude: ["departamento", "distrito", "codDist", "codDep", "id"],
+          },
+          group: ["provincia", "codProv"],
+          where: {
+            codDep: req.params.codDep,
+
+            provincia: { [Op.like]: "%" + buscar + "%" },
+          },
         })
         .then((val) => {
           response.sendData(res, val, "success");
@@ -260,11 +259,18 @@ class SupportController {
   }
   async getAllUbigeoDistrito(req, res) {
     try {
+      var buscar = req.body.query.toUpperCase().trim();
       await db["maestro_his_ubigeo_inei_reniec"]
         .findAll({
-          limit: 10,
-          attributes: { exclude: ["codDep", "codProv"] },
-          where: { codProv: req.params.codProv, codDep: req.params.codDep },
+          attributes: {
+            exclude: ["departamento", "provincia", "codProv", "codDep", "id"],
+          },
+          group: ["distrito", "codDist"],
+          where: {
+            codDep: req.params.codDep,
+            codProv: req.params.codProv,
+            provincia: { [Op.like]: "%" + buscar + "%" },
+          },
         })
         .then((val) => {
           response.sendData(res, val, "success");
@@ -321,7 +327,7 @@ class SupportController {
     try {
       await db["maestro_his_ubigeo_inei_reniec"]
         .findOne({
-          attributes: { exclude: ["codDep", "id", "codProv", ] },
+          attributes: { exclude: ["codDep", "id", "codProv"] },
           where: {
             codDist: req.params.codDist,
             codProv: req.params.codProv,
@@ -341,126 +347,15 @@ class SupportController {
   /* UBIGEO */
   /*IPRRES*/
 
-  async getAllRed(req, res) {
+  async getAllEstByUbigeo(req, res) {
     try {
       await db["maestro_his_establecimiento"]
         .findAll({
-          limit: 10,
           attributes: {
-            exclude: ["codMicroRed", "ubigeo", "microRed", "establecimiento"],
-          },
-          where: { codisa: "30" },
-        })
-        .then((val) => {
-          response.sendData(res, val, "success");
-        })
-        .catch((errro) => {
-          response.sendForbidden(res, errro);
-        });
-    } catch (error) {
-      response.sendBadRequest(res, error.message);
-    }
-  }
-  //filtrando las redes
-  async getAllMicroRed(req, res) {
-    try {
-      await db["maestro_his_establecimiento"]
-        .findAll({
-          limit: 10,
-          attributes: {
-            exclude: ["codMicroRed", "codigoRed", "establecimiento"],
-          },
-          where: { codisa: "30", codigoRed: req.params.codigoRed },
-        })
-        .then((val) => {
-          response.sendData(res, val, "success");
-        })
-        .catch((errro) => {
-          response.sendForbidden(res, errro);
-        });
-    } catch (error) {
-      response.sendBadRequest(res, error.message);
-    }
-  }
-  async getAllIpress(req, res) {
-    try {
-      await db["maestro_his_establecimiento"]
-        .findAll({
-          limit: 10,
-          attributes: {
-            exclude: ["codigoRed", "codMicroRed", "ubigeo"],
+            exclude: ["id"],
           },
           where: {
-            codisa: "30",
-            codigoRed: req.params.codigoRed,
-            codMicroRed: req.params.codMicroRed,
-          },
-        })
-        .then((val) => {
-          response.sendData(res, val, "success");
-        })
-        .catch((errro) => {
-          response.sendForbidden(res, errro);
-        });
-    } catch (error) {
-      response.sendBadRequest(res, error.message);
-    }
-  }
-
-  async getOneRed(req, res) {
-    try {
-      await db["maestro_his_establecimiento"]
-        .findAll({
-          limit: 10,
-          attributes: {
-            exclude: ["codMicroRed", "ubigeo", "microRed", "establecimiento"],
-          },
-          where: { id: req.params.id },
-        })
-        .then((val) => {
-          response.sendData(res, val, "success");
-        })
-        .catch((errro) => {
-          response.sendForbidden(res, errro);
-        });
-    } catch (error) {
-      response.sendBadRequest(res, error.message);
-    }
-  }
-
-  async getOneMicroRed(req, res) {
-    try {
-      await db["maestro_his_establecimiento"]
-        .findAll({
-          limit: 10,
-          attributes: {
-            exclude: ["codMicroRed", "ubigeo", "codigoRed", "establecimiento"],
-          },
-          where: { codisa: "30", codigoRed: req.codigoRed },
-        })
-        .then((val) => {
-          response.sendData(res, val, "success");
-        })
-        .catch((errro) => {
-          response.sendForbidden(res, errro);
-        });
-    } catch (error) {
-      response.sendBadRequest(res, error.message);
-    }
-  }
-  async getOneIpress(req, res) {
-    try {
-      await db["maestro_his_establecimiento"]
-        .findAll({
-          limit: 10,
-          attributes: {
-            exclude: ["codigoRed", "codMicroRed", "ubigeo"],
-          },
-          where: {
-            ubigeo: req.params.ubigeo,
-            codigoRed: req.codigoRed,
-            codMicroRed: req.codMicroRed,
-            id: req.id,
+            ubigeo: req.body.ubigeo,
           },
         })
         .then((val) => {
