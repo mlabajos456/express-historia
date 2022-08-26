@@ -63,8 +63,7 @@ class SupportController {
 
   async getAllUPS(req, res) {
     try {
-
-      console.log('id_usuario: ' + req.id_usuario);
+      console.log("id_usuario: " + req.id_usuario);
       await db["maestro_his_ups"]
         .findAll({
           limit: 100,
@@ -213,13 +212,13 @@ class SupportController {
   /* UBIGEO */
   async getAllUbigeoDepatamento(req, res) {
     try {
-     // var busccar=req.body.departamento;
+      // var busccar=req.body.departamento;
       await db["maestro_his_ubigeo_inei_reniec"]
         .findAll({
           attributes: {
-            exclude: ["provincia", "distrito", "codDist", "codProv"]
+            exclude: ["provincia", "distrito", "codDist", "codProv"],
           },
-          group:['departamento', 'codigo_departamento_inei'],
+          group: ["departamento", "codigo_departamento_inei"],
           //where:{departamento:{[Op.like]: '%'+busccar+'%'}}
         })
         .then((val) => {
@@ -240,8 +239,14 @@ class SupportController {
           limit: 10,
           attributes: { exclude: ["distrito", "codDist"] },
           //attributes: { exclude: ["codDist"]},
-          where: {codDep: req.params.codDep },
-          group:['departamento', 'codigo_departamento_inei','id_ubigueo_inei','provincia', 'codigo_provincia_inei']
+          where: { codDep: req.params.codDep },
+          group: [
+            "departamento",
+            "codigo_departamento_inei",
+            "id_ubigueo_inei",
+            "provincia",
+            "codigo_provincia_inei",
+          ],
         })
         .then((val) => {
           response.sendData(res, val, "success");
@@ -259,7 +264,7 @@ class SupportController {
         .findAll({
           limit: 10,
           attributes: { exclude: ["codDep", "codProv"] },
-          where: {codProv: req.params.codProv,  codDep: req.params.codDep}
+          where: { codProv: req.params.codProv, codDep: req.params.codDep },
         })
         .then((val) => {
           response.sendData(res, val, "success");
@@ -276,7 +281,10 @@ class SupportController {
     try {
       await db["maestro_his_ubigeo_inei_reniec"]
         .findOne({
-          where: { id: req.params.id },
+          where: { codDep: req.params.id },
+          attributes: {
+            exclude: ["id", "codDist", "codProv", "provincia", "distrito"],
+          },
         })
         .then((val) => {
           response.sendData(res, val, "success");
@@ -294,6 +302,9 @@ class SupportController {
         .findOne({
           attributes: { exclude: ["distrito", "codDist"] },
           where: { codProv: req.params.codProv, codDep: req.params.codDep },
+          attributes: {
+            exclude: ["id", "codDist", "codDep", "departamento", "distrito"],
+          },
         })
         .then((val) => {
           response.sendData(res, val, "success");
@@ -310,12 +321,12 @@ class SupportController {
     try {
       await db["maestro_his_ubigeo_inei_reniec"]
         .findOne({
-          attributes: { exclude: ["codDep", "id", "codProv"] },
+          attributes: { exclude: ["codDep", "id", "codProv", ] },
           where: {
-            codDist: req.params.codDist, codProv: '10',
-            codDep: '22'
+            codDist: req.params.codDist,
+            codProv: req.params.codProv,
+            codDep: req.params.codDep,
           },
-
         })
         .then((val) => {
           response.sendData(res, val, "success");
@@ -330,16 +341,15 @@ class SupportController {
   /* UBIGEO */
   /*IPRRES*/
 
-
   async getAllRed(req, res) {
     try {
       await db["maestro_his_establecimiento"]
         .findAll({
           limit: 10,
           attributes: {
-            exclude: ["codMicroRed", "ubigeo", "microRed", "establecimiento"]
+            exclude: ["codMicroRed", "ubigeo", "microRed", "establecimiento"],
           },
-          where:{codisa:'30'}
+          where: { codisa: "30" },
         })
         .then((val) => {
           response.sendData(res, val, "success");
@@ -351,16 +361,16 @@ class SupportController {
       response.sendBadRequest(res, error.message);
     }
   }
-//filtrando las redes
+  //filtrando las redes
   async getAllMicroRed(req, res) {
     try {
       await db["maestro_his_establecimiento"]
         .findAll({
           limit: 10,
           attributes: {
-            exclude: ["codMicroRed", "codigoRed", "establecimiento"]
+            exclude: ["codMicroRed", "codigoRed", "establecimiento"],
           },
-          where: { codisa: '30',codigoRed:req.params.codigoRed}
+          where: { codisa: "30", codigoRed: req.params.codigoRed },
         })
         .then((val) => {
           response.sendData(res, val, "success");
@@ -380,7 +390,11 @@ class SupportController {
           attributes: {
             exclude: ["codigoRed", "codMicroRed", "ubigeo"],
           },
-          where: { codisa: '30', codigoRed: req.params.codigoRed, codMicroRed:req.params.codMicroRed}
+          where: {
+            codisa: "30",
+            codigoRed: req.params.codigoRed,
+            codMicroRed: req.params.codMicroRed,
+          },
         })
         .then((val) => {
           response.sendData(res, val, "success");
@@ -393,16 +407,15 @@ class SupportController {
     }
   }
 
-
   async getOneRed(req, res) {
     try {
       await db["maestro_his_establecimiento"]
         .findAll({
           limit: 10,
           attributes: {
-            exclude: ["codMicroRed", "ubigeo", "microRed", "establecimiento"]
+            exclude: ["codMicroRed", "ubigeo", "microRed", "establecimiento"],
           },
-          where:{id: req.params.id}
+          where: { id: req.params.id },
         })
         .then((val) => {
           response.sendData(res, val, "success");
@@ -421,9 +434,9 @@ class SupportController {
         .findAll({
           limit: 10,
           attributes: {
-            exclude: ["codMicroRed", "ubigeo", "codigoRed", "establecimiento"]
+            exclude: ["codMicroRed", "ubigeo", "codigoRed", "establecimiento"],
           },
-          where: { codisa: '30', codigoRed: req.codigoRed }
+          where: { codisa: "30", codigoRed: req.codigoRed },
         })
         .then((val) => {
           response.sendData(res, val, "success");
@@ -443,7 +456,12 @@ class SupportController {
           attributes: {
             exclude: ["codigoRed", "codMicroRed", "ubigeo"],
           },
-          where: { ubigeo: req.params.ubigeo, codigoRed: req.codigoRed, codMicroRed: req.codMicroRed, id:req.id }
+          where: {
+            ubigeo: req.params.ubigeo,
+            codigoRed: req.codigoRed,
+            codMicroRed: req.codMicroRed,
+            id: req.id,
+          },
         })
         .then((val) => {
           response.sendData(res, val, "success");
@@ -456,6 +474,5 @@ class SupportController {
     }
   }
   /*FIN IPRESS*/
-
 }
 module.exports = new SupportController();
