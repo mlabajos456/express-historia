@@ -26,11 +26,11 @@ module.exports = (sequelize, type) => {
     }
   );
   Usuario.associate = function (models) {
-   /*  Usuario.hasOne(models.his_hoja_atencion, {
+    Usuario.hasMany(models.his_detalle_usuario, {
       foreignKey: {
-        name: "id_responsable",
+        name: "id_usuario",
       },
-    }); */
+    });
   };
   return Usuario;
 };

@@ -5,8 +5,13 @@ class DetalleDiagnosticoController {
   /**
    * @api {get} /v1/detalle-diagnostico/get Obtener lista de diagnosticos
    * @apiGroup Atencion
+<<<<<<< HEAD:controllers/detalle-diagnostico.model.js
    * @apiName GetDiagnosticos
    * @apiHeader {String} Authorization JWT Authorization generated from /login
+=======
+   * @apiName GetAllAtenciones
+   * @apiHeader {String} token JWT token generated from /login
+>>>>>>> 62d1e06e4bff133c10efb61301b60feeac3b1848:controllers/detalle-diagnostico.controller.js
    *
    */
 
@@ -17,22 +22,14 @@ class DetalleDiagnosticoController {
           order: [["id_cie10", "DESC"]],
           limit: 10,
           offset: 0,
-          /*   where:{id_turno: 1,}, */
+          where:{id_atencion: req.body.id_atencion,}, 
 
-          /* include: [
-            { model: db["his_turno"] },
-            {
-              model: db["t_usuario"],
-              attributes: { exclude: ["pass_usuario"] },
-              as: "responsable",
-            },
-          ], */
+          include: [{ model: db["maestro_his_cie_cpms"], as :"cie"}],
         })
         .then((val) => {
           response.sendData(res, val, "success");
         })
         .catch((errro) => {
-          console.log(errro);
           response.sendForbidden(res, errro);
         });
     } catch (error) {
@@ -59,7 +56,6 @@ class DetalleDiagnosticoController {
           response.sendData(res, val, "success");
         })
         .catch((errro) => {
-          console.log(errro);
           response.sendForbidden(res, errro);
         });
     } catch (error) {
@@ -79,7 +75,6 @@ class DetalleDiagnosticoController {
       await t.commit();
       response.sendCreated(res, newTurno);
     } catch (error) {
-      console.log(error);
       await t.rollback();
       response.sendBadRequest(res, error.message);
     }
@@ -89,19 +84,10 @@ class DetalleDiagnosticoController {
       var beforeTurno = await db["his_turno"].findOne({
         where: { id_turno: req.body.id_turno },
       });
-      /*  if (typeof beforeTurno === 'null') {
-        return response.sendBadRequest(
-          res,
-          "NO existe el id: " + req.body.id_turno
-        );
-      } 
-      beforeTurno = req.body;      
-      */
 
       response.sendBadRequest(res, await beforeTurno.save());
       /* response.sendCreated(res, newTurno); */
     } catch (error) {
-      console.log(error);
       response.sendBadRequest(res, "Error de consulta, contactese con OGTES");
     }
   }

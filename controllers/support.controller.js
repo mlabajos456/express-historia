@@ -1,16 +1,10 @@
 const db = require("../models/index");
 const response = require("../helpers/response");
+const { and } = require("joi/lib/types/object");
 const { Op } = require("sequelize");
 
 class SupportController {
-  /**
-   * @api {get} /v1/support/turno/:id Obtener turno por id
-   * @apiGroup Support
-   * @apiName getOneTurno
-   * @apiHeader {String} Authorization JWT Authorization generated from /login
-   * @apiParam {String} id String id
-   *
-   */
+ 
   async getOneTurno(req, res) {
     try {
       await db["his_turno"]
@@ -81,6 +75,7 @@ class SupportController {
   */
   async getAllUPS(req, res) {
     try {
+      console.log("id_usuario: " + req.id_usuario);
       await db["maestro_his_ups"]
         .findAll({
           limit: 100,
@@ -211,7 +206,7 @@ class SupportController {
     try {
       await db["maestro_his_cie_cpms"]
         .findAll({
-            limit:100
+          limit: 100,
         })
         .then((val) => {
           response.sendData(res, val, "success");
@@ -302,7 +297,7 @@ class SupportController {
   async getAllCentroPoblado(req, res) {
     try {
       await db["maestro_his_centro_poblado"]
-        .findAll({limit:10})
+        .findAll({ limit: 10 })
         .then((val) => {
           response.sendData(res, val, "success");
         })
@@ -315,8 +310,164 @@ class SupportController {
   }
 
   /* UBIGEO */
+  async getAllUbigeoDepatamento(req, res) {
+    try {
+      var buscar = req.body.query.toUpperCase().trim();
+      await db["maestro_his_ubigeo_inei_reniec"]
+        .findAll({
+          attributes: {
+            exclude: ["provincia", "distrito", "codDist", "codProv", "id"],
+          },
+          group: ["departamento", "codDep"],
+          where: { departamento: { [Op.like]: "%" + buscar + "%" } },
+        })
+        .then((val) => {
+          response.sendData(res, val, "success");
+        })
+        .catch((errro) => {
+          response.sendForbidden(res, errro.message);
+        });
+    } catch (error) {
+      response.sendBadRequest(res, error.message);
+    }
+  }
 
+  async getAllUbigeoProvincia(req, res) {
+    try {
+      var buscar = req.body.query.toUpperCase().trim();
+      await db["maestro_his_ubigeo_inei_reniec"]
+        .findAll({
+          attributes: {
+            exclude: ["departamento", "distrito", "codDist", "codDep", "id"],
+          },
+          group: ["provincia", "codProv"],
+          where: {
+            codDep: req.params.codDep,
 
+            provincia: { [Op.like]: "%" + buscar + "%" },
+          },
+        })
+        .then((val) => {
+          response.sendData(res, val, "success");
+        })
+        .catch((errro) => {
+          response.sendForbidden(res, errro);
+        });
+    } catch (error) {
+      response.sendBadRequest(res, error.message);
+    }
+  }
+  async getAllUbigeoDistrito(req, res) {
+    try {
+      var buscar = req.body.query.toUpperCase().trim();
+      await db["maestro_his_ubigeo_inei_reniec"]
+        .findAll({
+          attributes: {
+            exclude: ["departamento", "provincia", "codProv", "codDep", "id"],
+          },
+          group: ["distrito", "codDist"],
+          where: {
+            codDep: req.params.codDep,
+            codProv: req.params.codProv,
+            provincia: { [Op.like]: "%" + buscar + "%" },
+          },
+        })
+        .then((val) => {
+          response.sendData(res, val, "success");
+        })
+        .catch((errro) => {
+          response.sendForbidden(res, errro);
+        });
+    } catch (error) {
+      response.sendBadRequest(res, error.message);
+    }
+  }
+  //findone
+  async getOneUbigeoDepatamento(req, res) {
+    try {
+      await db["maestro_his_ubigeo_inei_reniec"]
+        .findOne({
+          where: { codDep: req.params.id },
+          attributes: {
+            exclude: ["id", "codDist", "codProv", "provincia", "distrito"],
+          },
+        })
+        .then((val) => {
+          response.sendData(res, val, "success");
+        })
+        .catch((errro) => {
+          response.sendForbidden(res, errro);
+        });
+    } catch (error) {
+      response.sendBadRequest(res, error.message);
+    }
+  }
+  async getOneUbigeoProvincia(req, res) {
+    try {
+      await db["maestro_his_ubigeo_inei_reniec"]
+        .findOne({
+          attributes: { exclude: ["distrito", "codDist"] },
+          where: { codProv: req.params.codProv, codDep: req.params.codDep },
+          attributes: {
+            exclude: ["id", "codDist", "codDep", "departamento", "distrito"],
+          },
+        })
+        .then((val) => {
+          response.sendData(res, val, "success");
+        })
+        .catch((errro) => {
+          response.sendForbidden(res, errro);
+        });
+    } catch (error) {
+      response.sendBadRequest(res, error.message);
+    }
+  }
+
+  async getOnebigeoDistrito(req, res) {
+    try {
+      await db["maestro_his_ubigeo_inei_reniec"]
+        .findOne({
+          attributes: { exclude: ["codDep", "id", "codProv"] },
+          where: {
+            codDist: req.params.codDist,
+            codProv: req.params.codProv,
+            codDep: req.params.codDep,
+          },
+        })
+        .then((val) => {
+          response.sendData(res, val, "success");
+        })
+        .catch((errro) => {
+          response.sendForbidden(res, errro);
+        });
+    } catch (error) {
+      response.sendBadRequest(res, error.message);
+    }
+  }
   /* UBIGEO */
+  /*IPRRES*/
+
+  async getAllEstByUbigeo(req, res) {
+    try {
+      await db["maestro_his_establecimiento"]
+        .findAll({
+          attributes: {
+            exclude: ["id"],
+          },
+          where: {
+            ubigeo: req.body.ubigeo,
+          },
+        })
+        .then((val) => {
+          response.sendData(res, val, "success");
+        })
+        .catch((errro) => {
+          response.sendForbidden(res, errro);
+        });
+    } catch (error) {
+      response.sendBadRequest(res, error.message);
+    }
+  }
+  /*FIN IPRESS*/
 }
 module.exports = new SupportController();

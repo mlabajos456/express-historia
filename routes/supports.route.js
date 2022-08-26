@@ -52,14 +52,35 @@ router.get(
   SupportController.getOneCentroPoblado
 );
 
-router.get("/ubigeo/departamento", SupportController.getAllCentroPoblado);
-router.get("/ubigeo/provincia", SupportController.getAllCentroPoblado);
-router.get("/ubigeo/distrito", SupportController.getAllCentroPoblado);
 
+//para cargar todos los departamentos.
+router.get("/ubigeo/departamento", SupportController.getAllUbigeoDepatamento);
+//todas las provincias por codigo de departamento
 router.get(
-  "/ubigeo/departamento/:id",
-  validateMiddleware(SupportValidationRules.findOne),
-  SupportController.getOneCentroPoblado
+  "/ubigeo/:codDep/provincia",
+  SupportController.getAllUbigeoProvincia
+);
+//todos los distritos por codigo de departamento y codigo de provincia
+router.get(
+  "/ubigeo/:codDep/:codProv/distrito",
+  SupportController.getAllUbigeoDistrito
 );
 
+//cargar un departamento en específico
+router.get(
+  "/departamento/:id",
+  validateMiddleware(SupportValidationRules.findOne),
+  SupportController.getOneUbigeoDepatamento
+);
+//carga una provincia de acuerdo aun departamento
+router.get(
+  "/provincia/:codDep/:codProv",
+  SupportController.getOneUbigeoProvincia
+);
+//cargar un distrito por codigo de departamento y provincia
+router.get(
+  "/distrito/:codDep/:codProv/:codDist",
+  SupportController.getOnebigeoDistrito
+);
+router.get("/establecimiento", SupportController.getAllEstByUbigeo);
 module.exports = router;

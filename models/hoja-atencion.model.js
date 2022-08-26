@@ -7,6 +7,7 @@ module.exports = (sequelize, type) => {
       id_hoja_atencion: {
         type: type.INTEGER,
         primaryKey: true,
+        autoIncrement:true
       },
       id_turno: type.INTEGER,
       id_responsable: type.STRING,

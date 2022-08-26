@@ -16,9 +16,7 @@ module.exports = (sequelize, type) => {
   );
   Cie.associate = function (models) {
     Cie.hasOne(models.his_detalle_diagnostico, {
-      aforeignKey: {
-        name: "id_cie10",
-      },
+      foreignKey: "id_cie",
     });
   };
   return Cie;
