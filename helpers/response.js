@@ -1,45 +1,51 @@
 module.exports.sendData = function (res, data, message) {
-    return res.status(200).send({
-        success: true,
-        message: message,
-        data: data
-    });
+  return res.status(200).send({
+    success: true,
+    message: message,
+    data: data,
+  });
 };
 
 module.exports.sendCreated = function (res, data) {
-    return res.status(201).send(data);
+  return res.status(201).send(data);
 };
 
 module.exports.sendBadRequest = function (res, message) {
-    return res.status(400).send({
-        success: false,
-        message: message
-    });
+  return res.status(400).send({
+    success: false,
+    message: message,
+  });
 };
 
 module.exports.sendUnauthorized = function (res, message) {
-    return res.status(401).send({
-        success: false,
-        message: message
-    });
+  return res.status(401).send({
+    success: false,
+    message: message,
+  });
 };
 
-module.exports.sendForbidden = function (res, message = 'You do not have rights to access this resource.') {
-    return res.status(403).send({
-        success: false,
-        message: message
-    });
+module.exports.sendForbidden = function (
+  res,
+  message = "You do not have rights to access this resource."
+) {
+  return res.status(403).send({
+    success: false,
+    message: message,
+  });
 };
 
-module.exports.sendNotFound = function (res) {
-    return res.status(404).send({
-        success: false,
-        message: 'Resource not found.'
-    });
+module.exports.sendNotFound = function (res, message) {
+  return res.status(404).send({
+    success: false,
+    message: message ?? "No se encontro.",
+  });
 };
 
 module.exports.setHeadersForCORS = function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, X-Access-Token, Content-Type, Accept, token, Authorization");
-    next();
-}
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, X-Access-Token, Content-Type, Accept, token, Authorization"
+  );
+  next();
+};

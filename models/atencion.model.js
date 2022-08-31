@@ -6,6 +6,7 @@ module.exports = (sequelize, type) => {
     {
       id_atencion: {
         type: type.INTEGER,
+        autoIncrement: true,
         primaryKey: true,
       },
       id_hoja_atencion: type.INTEGER,
@@ -17,7 +18,7 @@ module.exports = (sequelize, type) => {
       peso: type.STRING,
 
       id_financiador: type.STRING /* INNER JOIN */,
-      edad_año: type.STRING,
+      edad_anio: type.STRING,
       edad_mes: type.STRING,
       edad_dias: type.STRING,
       estado_gestante: type.STRING,
@@ -39,7 +40,7 @@ module.exports = (sequelize, type) => {
         },
       },
       talla: {
-        type: type.DATE,
+        type: type.STRING,
       },
       id_paciente: type.INTEGER /* inner join */,
       fecha_hb: {
@@ -56,8 +57,7 @@ module.exports = (sequelize, type) => {
       },
       num_historia_clinica: type.STRING,
       hemoglobina: { type: type.STRING, field: "val_hemoglobina" },
-      estado_digitador: { type: type.STRING },
-      observacion_digitador: { type: type.STRING },
+      estado: { type: type.BOOLEAN },
     },
     {
       timestamps: false,
@@ -67,14 +67,20 @@ module.exports = (sequelize, type) => {
   );
 
   Atencion.associate = function (models) {
-    Atencion.belongsTo(models.his_turno, {
+      Atencion.hasMany(models.his_detalle_diagnostico, {
+      foreignKey: "id_atencion",
+    });
+    /* Atencion.belongsToMany(models.his_detalle_diagnostico, {
+      through: "his_detalle_diagnostico",
+    }); */
+    /*  Atencion.belongsTo(models.his_turno, {
       foreignKey: "id_turno",
     });
 
-    Atencion.belongsTo(models.t_usuario, {
+    Atencion.belongsTo(models.personal, {
       foreignKey: "id_responsable",
       as: "responsable",
-    });
+    }); */
   };
 
   return Atencion;
