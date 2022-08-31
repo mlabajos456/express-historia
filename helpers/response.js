@@ -6,8 +6,12 @@ module.exports.sendData = function (res, data, message) {
   });
 };
 
-module.exports.sendCreated = function (res, data) {
-  return res.status(201).send(data);
+module.exports.sendCreated = function (res, data, message) {
+  return res.status(201).send({
+    success: true,
+    message: message,
+    data: data,
+  });
 };
 
 module.exports.sendBadRequest = function (res, message) {
@@ -45,7 +49,7 @@ module.exports.setHeadersForCORS = function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, X-Access-Token, Content-Type, Accept, token, Authorization"
+    "Origin, X-Requested-With, X-Access-Token, Content-Type, Accept, Authorization"
   );
   next();
 };
