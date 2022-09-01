@@ -1,5 +1,6 @@
 const db = require("../models/index");
 const response = require("../helpers/response");
+const { Op } = require("sequelize");
 
 class usuarioController {
     /**
@@ -44,6 +45,53 @@ class usuarioController {
                     ],
                 })
                 .then((val) => {
+                    response.sendData(res, val, "success");
+                })
+                .catch((errro) => {
+                    response.sendForbidden(res, errro);
+                });
+        } catch (error) {
+            response.sendBadRequest(res, error.message);
+        }
+    }
+
+    async mostarUsuario(req, res) {
+        try {
+            await db["his_detalle_usuario"]
+                .findAll({
+                    where: {
+                        "$t_usuario.id_usuario$": { [Op.eq]: req.id_usuario},
+                        estado : "t"
+                    },
+                    attributes: {
+                        exclude: ["id_personal", "id_perfil", "id_usuario"]
+                    },
+                    include: [
+                        {
+                            model: db["t_usuario"],
+                            required: false,
+                            attributes: {
+                                exclude: ["pass_usuario", "id_usuario"]
+                            },
+                        },
+                        {
+                            model: db["personal"],
+                            required: false,
+                            attributes: {
+                                exclude: ["id_personal", "id_tipo_documento"]
+                            },
+                        },
+                        {
+                            model: db["perfil"],
+                            required: false,
+                            attributes: {
+                                exclude: ["id_perfil"]
+                            },
+                        }
+                    ],
+                })
+                .then((val) => {
+                    console.log(val);
                     response.sendData(res, val, "success");
                 })
                 .catch((errro) => {
