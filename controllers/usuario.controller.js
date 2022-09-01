@@ -64,7 +64,7 @@ class usuarioController {
                         estado : "t"
                     },
                     attributes: {
-                        exclude: ["id_personal", "id_perfil", "id_usuario"]
+                        exclude: ["id_personal", "id_perfil", "id_usuario", "id_detalle_usuario"]
                     },
                     include: [
                         {
