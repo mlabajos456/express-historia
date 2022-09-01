@@ -5,11 +5,7 @@ const Joi = BaseJoi.extend(Extension);
 module.exports = {
     create: {
         body: Joi.object().keys({
-            id_turno: Joi.number().required().label("id turno"),
-            id_responsable: Joi.number().required().label("id responsable"),
-            fecha_apertura: Joi.date(),
-            fecha_cierre: Joi.date(),
-            fecha: Joi.date(),
+            id_turno: Joi.number().required().label("id turno"),         
             codigo_unico_ipress: Joi.string().required().label("código ipress"),
             id_ups: Joi.string().required().label("código ups"),
         }),

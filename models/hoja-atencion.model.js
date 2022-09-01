@@ -23,6 +23,9 @@ module.exports = (sequelize, type) => {
             fecha_cierre: {
                 type: type.DATE,
                 get: function () {
+                    if(this.getDataValue("fecha_cierre") == null){
+                        return ""
+                    }
                     return moment(this.getDataValue("fecha_cierre")).format("DD-MM-YYYY");
                 },
             },

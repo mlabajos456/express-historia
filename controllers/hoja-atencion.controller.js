@@ -73,14 +73,14 @@ class HojaAtencionController {
     async postHojaAtencion(req, res) {
         const t = await db.sequelize.transaction();
         try {
-            /*  var turno = await db["his_turno"].build(req.body);
-      await turno.save(); */
-            /* Corta */
-            var hoja = await db["his_hoja_atencion"].create(req.body, {
-                transaction: t,
-            });
+            var hojaComplete = await db["his_hoja_atencion"].build(req.body);
+            hojaComplete.fecha = Date.now();
+            hojaComplete.fecha_apertura = Date.now();
+            await hojaComplete.save({ transaction: t });
+           
+            
             await t.commit();
-            response.sendCreated(res, hoja, "success");
+            response.sendCreated(res, hojaComplete, "success");
         } catch (error) {
             await t.rollback();
             response.sendBadRequest(res, error.message);
