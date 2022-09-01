@@ -61,7 +61,6 @@ module.exports = (req, res, next) => {
         if(data.perfil){
             req.id_perfil = data.id_perfil;
         }
-        console.log(req.ipress);
         next();
     });
 };
