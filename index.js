@@ -11,20 +11,22 @@ app.use(express.urlencoded({ extended: true }));
 app.use(response.setHeadersForCORS);
 //Ruta Documentacion
 app.get("/docs", function (req, res) {
-  res.sendFile(path.join(__dirname + "/doc/index.html"));
+    res.sendFile(path.join(__dirname + "/doc/index.html"));
 });
 
 app.use("/" + appVersion + "/auth", require("./routes/auth.route"));
-//API
 app.use(require("./middlewares/jwt.middleware"));
 app.use("/" + appVersion + "/support/", require("./routes/supports.route"));
 app.use("/" + appVersion + "/", require("./routes/hoja-atencion.route"));
 app.use("/" + appVersion + "/", require("./routes/atencion.route"));
 app.use("/" + appVersion + "/", require("./routes/detalle-diagnostico.route"));
-app.use("/" + appVersion + "/", require("./routes/usuario.route"));
+
+/* app.use("/" + appVersion + "/", jwt, require("./routes/main.route"));
+app.use("/" + appVersion + "/support/", jwt, require("./routes/supports.route")); */
+
 
 app.use(function (err, req, res, next) {
-  response.sendBadRequest(res, err)
+    response.sendBadRequest(res, err)
 });
 
 app.listen(httpPort, () => console.log(`http://127.0.0.1:${httpPort}`));

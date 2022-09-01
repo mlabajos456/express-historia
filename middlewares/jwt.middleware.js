@@ -25,15 +25,15 @@ module.exports = (req, res, next) => {
 
         const data = await db["his_detalle_usuario"].findOne({
             where: {
-                '$t_usuario.id_usuario$': { [Op.eq]: decoded.id},
-                estado : 't'
+                "$t_usuario.id_usuario$": { [Op.eq]: decoded.id},
+                estado : "t"
             },
             include: [
                 {
                     model: db["t_usuario"],
                     required: true,
                     attributes: {
-                        exclude: ['pass_usuario']
+                        exclude: ["pass_usuario"]
                     },
                 },
                 {
@@ -49,14 +49,19 @@ module.exports = (req, res, next) => {
 
         if (data == null) {
             return response.sendUnauthorized(res, "Access denied.");
-        }        
-        req.detalle_usuario = data.id_detalle_usuario;
+        } 
         req.id_usuario = data.id_usuario;
-        req.id_personal = data.id_personal;
-        req.id_perfil = data.id_perfil;
         req.nom_usuario = data.t_usuario.nom_usuario;
         req.dni = data.t_usuario.dni;
-        req.dni = data.t_usuario.estado_usuario;
+      
+        if( data.personal){
+            req.id_personal = data.id_personal;
+            req.ipress = data.personal.codigo_unico;
+        }
+        if(data.perfil){
+            req.id_perfil = data.id_perfil;
+        }
+        console.log(req.ipress);
         next();
     });
 };
