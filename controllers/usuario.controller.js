@@ -64,7 +64,7 @@ class usuarioController {
                         estado : "t"
                     },
                     attributes: {
-                        exclude: ["id_personal", "id_perfil", "id_usuario", "id_detalle_usuario"]
+                        exclude: ["id_personal", "id_perfil", "id_usuario", ""]
                     },
                     include: [
                         {
@@ -91,7 +91,6 @@ class usuarioController {
                     ],
                 })
                 .then((val) => {
-                    console.log(val);
                     response.sendData(res, val, "success");
                 })
                 .catch((errro) => {
