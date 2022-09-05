@@ -28,9 +28,8 @@ router.get(
     validateMiddleware(HojaAValidationRules.findOne),
     HojaAtencionController.getOneHojaAtencion
 );
-router.get(
-    "/hoja-atencion",
- 
+router.post(
+    "/hoja-atencion/all", 
     HojaAtencionController.getAllHojaAtencion
 );
 

@@ -55,6 +55,12 @@ module.exports = (sequelize, type) => {
                     )} - ${this.getDataValue("observacion_digitador")}`;
                 },
             },
+            anio: {
+                type: type.VIRTUAL,
+                get() {
+                    return moment(this.getDataValue("fecha")).format("YYYY");
+                },
+            },
         },
         {
             timestamps: false,

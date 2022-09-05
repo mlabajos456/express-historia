@@ -1,6 +1,6 @@
 const db = require("../models/index");
 const response = require("../helpers/response");
-
+/* const { Op } = require("sequelize"); */
 class HojaAtencionController {
     /**
    * @api {get} /v1/atencion/hoja-atencion/:id Obtener hoja de atencion
@@ -13,25 +13,37 @@ class HojaAtencionController {
    */
 
     async getAllHojaAtencion(req, res) {
+        const limit = req.body.limit
+        let befPage = req.body.page
+        let page = req.body.page
+        if(page == 1){
+            page = 0
+        }else{
+            page = (page -1) * limit
+        }
+        /*  const buscar = req.body.query */
         try {
             await db["his_hoja_atencion"]
-                .findAll({
-                    /*  order: [["id_turno", "ASC"]], */
-                    /*  limit: 10,
-          offset: 0, */
-                    /*   where:{id_turno: 1,}, */
-
+                .findAndCountAll({
+                    order: [["id_hoja_atencion", "DESC"]],
+                    limit: limit,
+                    offset: page,
+                    /*  where: {
+                        provincia: { [Op.like]: "%" + buscar + "%" }, 
+                    }, */
                     include: [
-                        { model: db["his_turno"] },
-                        // {
-                        //   model: db["t_usuario"],
-                        //   attributes: { exclude: ["pass_usuario"] },
-                        //   as: "responsable",
-                        // },
+                        { model: db["his_turno"] },                      
                     ],
                 })
                 .then((val) => {
-                    response.sendData(res, val, "success");
+                    const data = {
+                        "page": befPage,
+                        "limit": limit,
+                        "total": val.count,
+                        "data": val.rows
+
+                    }
+                    response.sendData(res, data, "success");
                 })
                 .catch((errro) => {
                     response.sendForbidden(res, errro);
