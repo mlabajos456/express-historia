@@ -33,6 +33,7 @@ class HojaAtencionController {
                     }, */
                     include: [
                         { model: db["his_turno"] },                      
+                        { model: db["maestro_his_establecimiento"], as:"establecimiento" },                      
                     ],
                 })
                 .then((val) => {
@@ -46,7 +47,7 @@ class HojaAtencionController {
                     response.sendData(res, data, "success");
                 })
                 .catch((errro) => {
-                    response.sendForbidden(res, errro);
+                    response.sendForbidden(res, errro.message);
                 });
         } catch (error) {
             response.sendBadRequest(res, error.message);
