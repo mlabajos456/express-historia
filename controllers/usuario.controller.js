@@ -60,8 +60,7 @@ class usuarioController {
             await db["his_detalle_usuario"]
                 .findAll({
                     where: {
-                        "$t_usuario.id_usuario$": { [Op.eq]: req.id_usuario},
-                        estado : "t"
+                        "$t_usuario.id_usuario$": { [Op.eq]: req.id_usuario}
                     },
                     attributes: {
                         exclude: ["id_personal", "id_perfil", "id_usuario", ""]
@@ -80,6 +79,12 @@ class usuarioController {
                             attributes: {
                                 exclude: ["id_personal", "id_tipo_documento"]
                             },
+                            include: [
+                                {
+                                    model: db["maestro_his_establecimiento"],
+                                    required: false
+                                }
+                            ]
                         },
                         {
                             model: db["perfil"],

@@ -5,17 +5,38 @@ module.exports = (sequelize, type) => {
             id: {
                 type: type.INTEGER,
                 primaryKey: true,
-                field: "id_establecimiento",
+                field: "codigo_unico",
+
             },
             establecimiento: { type: type.STRING, field: "nombre_establecimiento" },
             codigo: { type: type.STRING, field: "codigo_unico" },
-            ubigeo: { type: type.STRING, field: "ubigueo_establecimiento" },
-            /*   codigoRed: { type: type.STRING, field: "codigo_red" },
-      codMicroRed: { type: type.STRING, field: "codigo_microred" },
-      codisa: { type: type.STRING, field: "codigo_disa" },
-      departamento: { type: type.STRING, field: "departamento" },
-      red: { type: type.STRING, field: "provincia" },
-      microRed: { type: type.STRING, field: "distrito" }, */
+            ubigeo: { type: type.STRING, field: "ubigueo_establecimiento" },        
+            codMicroRed: { type: type.STRING, field: "codigo_microred" },
+            codisa: { type: type.STRING, field: "codigo_disa" },
+            departamento: { type: type.STRING, field: "departamento" },
+            red: { type: type.STRING, field: "provincia" },
+            microRed: { type: type.STRING, field: "distrito" },
+            codDep: {
+                type: type.STRING,
+                field: "ubigueo_establecimiento",
+                get: function() {
+                    return this.ubigeo.substring(0, 2);
+                }
+            },
+            codPro: {
+                type: type.STRING,
+                field: "ubigueo_establecimiento",
+                get: function() {
+                    return this.ubigeo.substring(2, 4);
+                }
+            },
+            codDis: {
+                type: type.STRING,
+                field: "ubigueo_establecimiento",
+                get: function() {
+                    return this.ubigeo.substring(4, 6);
+                }
+            }
         },
         {
             timestamps: false,
@@ -28,10 +49,13 @@ module.exports = (sequelize, type) => {
                 name: "codigo_unico_ipress",
             },
         });
-        Establecimiento.hasOne(models.personal, {
+
+        Establecimiento.hasMany(models.personal, {
             foreignKey: {
                 name: "codigo_unico",
             },
+            as: "maestro_his_establecimiento"
+
         });
     };
     return Establecimiento;
