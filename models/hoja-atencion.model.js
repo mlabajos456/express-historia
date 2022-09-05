@@ -35,10 +35,10 @@ module.exports = (sequelize, type) => {
                     return moment(this.getDataValue("fecha")).format("DD-MM-YYYY");
                 },
             },
-            ipress: {
+            /*    ipress: {
                 type: type.STRING,
                 field: "codigo_unico_ipress",
-            },
+            }, */
             estado: {
                 type: type.STRING,
                 get() {
