@@ -13,31 +13,7 @@ router.get(
 );
 
 router.get(
-    "/listar",
+    "/usuario-listar",
     controller.listar
 );
-
-/* router.post(
-    "/usuario",
-    validateMiddleware(EmployeeValidationRules.create),
-    HojaAtencionController.postAtencion
-); */
-
-/* 
-router.put(
-    "/usuario",
-    validateMiddleware(EmployeeValidationRules.edit),
-    HojaAtencionController.putAtencion
-);
-router.delete(
-    "/usuario/:id",
-    validateMiddleware(EmployeeValidationRules.delete),
-    HojaAtencionController.deleteAtencion
-);
-router.get(
-    "/usuario/:id",
-    validateMiddleware(EmployeeValidationRules.findOne),
-    HojaAtencionController.getAtencion
-); */
-
 module.exports = router;
