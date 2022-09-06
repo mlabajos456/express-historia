@@ -1,6 +1,6 @@
 const db = require("../models/index");
 const response = require("../helpers/response");
-/* const { and } = require("joi/lib/types/object"); */
+const { and } = require("joi/lib/types/object");
 const { Op } = require("sequelize");
 
 class SupportController {
@@ -77,7 +77,9 @@ class SupportController {
         try {
             console.log("id_usuario: " + req.id_usuario);
             await db["maestro_his_ups"]
-                .findAll()
+                .findAll({
+                    limit: 100,
+                })
                 .then((val) => {
                     response.sendData(res, val, "success");
                 })
@@ -314,14 +316,14 @@ class SupportController {
     /* UBIGEO */
     async getAllUbigeoDepatamento(req, res) {
         try {
-            /*  var buscar = req.body.query.toUpperCase().trim(); */
+            var buscar = req.body.query.toUpperCase().trim();
             await db["maestro_his_ubigeo_inei_reniec"]
                 .findAll({
                     attributes: {
                         exclude: ["provincia", "distrito", "codDist", "codProv", "id"],
                     },
                     group: ["departamento", "codDep"],
-                    /*                  where: { departamento: { [Op.like]: "%" + buscar + "%" } }, */
+                    where: { departamento: { [Op.like]: "%" + buscar + "%" } },
                 })
                 .then((val) => {
                     response.sendData(res, val, "success");
@@ -336,7 +338,7 @@ class SupportController {
 
     async getAllUbigeoProvincia(req, res) {
         try {
-            /*  var buscar = req.body.query.toUpperCase().trim(); */
+            var buscar = req.body.query.toUpperCase().trim();
             await db["maestro_his_ubigeo_inei_reniec"]
                 .findAll({
                     attributes: {
@@ -346,7 +348,7 @@ class SupportController {
                     where: {
                         codDep: req.params.codDep,
 
-                        /*                   provincia: { [Op.like]: "%" + buscar + "%" }, */
+                        provincia: { [Op.like]: "%" + buscar + "%" },
                     },
                 })
                 .then((val) => {
@@ -361,7 +363,7 @@ class SupportController {
     }
     async getAllUbigeoDistrito(req, res) {
         try {
-            /*  var buscar = req.body.query.toUpperCase().trim(); */
+            var buscar = req.body.query.toUpperCase().trim();
             await db["maestro_his_ubigeo_inei_reniec"]
                 .findAll({
                     attributes: {
@@ -371,7 +373,7 @@ class SupportController {
                     where: {
                         codDep: req.params.codDep,
                         codProv: req.params.codProv,
-                        /*                   provincia: { [Op.like]: "%" + buscar + "%" }, */
+                        provincia: { [Op.like]: "%" + buscar + "%" },
                     },
                 })
                 .then((val) => {
@@ -408,6 +410,7 @@ class SupportController {
         try {
             await db["maestro_his_ubigeo_inei_reniec"]
                 .findOne({
+                    attributes: { exclude: ["distrito", "codDist"] },
                     where: { codProv: req.params.codProv, codDep: req.params.codDep },
                     attributes: {
                         exclude: ["id", "codDist", "codDep", "departamento", "distrito"],
