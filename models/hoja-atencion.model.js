@@ -23,9 +23,6 @@ module.exports = (sequelize, type) => {
             fecha_cierre: {
                 type: type.DATE,
                 get: function () {
-                    if(this.getDataValue("fecha_cierre") == null){
-                        return ""
-                    }
                     return moment(this.getDataValue("fecha_cierre")).format("DD-MM-YYYY");
                 },
             },
@@ -55,12 +52,6 @@ module.exports = (sequelize, type) => {
                     )} - ${this.getDataValue("observacion_digitador")}`;
                 },
             },
-            anio: {
-                type: type.VIRTUAL,
-                get() {
-                    return moment(this.getDataValue("fecha")).format("YYYY");
-                },
-            },
         },
         {
             timestamps: false,
@@ -77,10 +68,6 @@ module.exports = (sequelize, type) => {
         HojaAtencion.belongsTo(models.t_usuario, {
             foreignKey: "id_responsable",
             as: "responsable",
-        });
-        HojaAtencion.belongsTo(models.maestro_his_establecimiento, {
-            foreignKey: "codigo_unico_ipress",
-            as: "establecimiento",
         });
     };
 

@@ -1,6 +1,6 @@
 const db = require("../models/index");
 const response = require("../helpers/response");
-/* const { Op } = require("sequelize"); */
+
 class HojaAtencionController {
     /**
    * @api {get} /v1/atencion/hoja-atencion/:id Obtener hoja de atencion
@@ -13,41 +13,28 @@ class HojaAtencionController {
    */
 
     async getAllHojaAtencion(req, res) {
-        const limit = req.body.limit
-        let befPage = req.body.page
-        let page = req.body.page
-        if(page == 1){
-            page = 0
-        }else{
-            page = (page -1) * limit
-        }
-        /*  const buscar = req.body.query */
         try {
             await db["his_hoja_atencion"]
-                .findAndCountAll({
-                    order: [["id_hoja_atencion", "DESC"]],
-                    limit: limit,
-                    offset: page,
-                    /*  where: {
-                        provincia: { [Op.like]: "%" + buscar + "%" }, 
-                    }, */
+                .findAll({
+                    /*  order: [["id_turno", "ASC"]], */
+                    /*  limit: 10,
+          offset: 0, */
+                    /*   where:{id_turno: 1,}, */
+
                     include: [
-                        { model: db["his_turno"] },                      
-                        { model: db["maestro_his_establecimiento"], as:"establecimiento" },                      
+                        { model: db["his_turno"] },
+                        // {
+                        //   model: db["t_usuario"],
+                        //   attributes: { exclude: ["pass_usuario"] },
+                        //   as: "responsable",
+                        // },
                     ],
                 })
                 .then((val) => {
-                    const data = {
-                        "page": befPage,
-                        "limit": limit,
-                        "total": val.count,
-                        "data": val.rows
-
-                    }
-                    response.sendData(res, data, "success");
+                    response.sendData(res, val, "success");
                 })
                 .catch((errro) => {
-                    response.sendForbidden(res, errro.message);
+                    response.sendForbidden(res, errro);
                 });
         } catch (error) {
             response.sendBadRequest(res, error.message);
@@ -85,14 +72,15 @@ class HojaAtencionController {
 
     async postHojaAtencion(req, res) {
         const t = await db.sequelize.transaction();
-        try {            
-            var hojaComplete = await db["his_hoja_atencion"].build(req.body);
-            hojaComplete.fecha = Date.now();
-            hojaComplete.fecha_apertura = Date.now();
-            hojaComplete.id_responsable= req.id_personal
-            await hojaComplete.save({ transaction: t });
+        try {
+            /*  var turno = await db["his_turno"].build(req.body);
+      await turno.save(); */
+            /* Corta */
+            var hoja = await db["his_hoja_atencion"].create(req.body, {
+                transaction: t,
+            });
             await t.commit();
-            response.sendCreated(res, hojaComplete, "success");
+            response.sendCreated(res, hoja, "success");
         } catch (error) {
             await t.rollback();
             response.sendBadRequest(res, error.message);
