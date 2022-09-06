@@ -9,8 +9,8 @@ require("express-async-errors");
 
 router.get("/detalle-diagnostico", DetalleDiagController.getAllDetalleDiagnostico);
 router.get(
-  "/detalle-diagnostico/:id",
-  DetalleDiagController.getOneDetalleDiagnostico
+    "/detalle-diagnostico/:id",
+    DetalleDiagController.getOneDetalleDiagnostico
 );
 
 module.exports = router;
