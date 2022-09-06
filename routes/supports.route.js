@@ -34,7 +34,7 @@ router.get(
     validateMiddleware(SupportValidationRules.findOne),
     SupportController.getOneCie
 );
-router.get("/cie/getbyname/all",
+router.post("/cie/getbyname/all",
     validateMiddleware(SupportValidationRules.findByName),
     SupportController.getByName);
 

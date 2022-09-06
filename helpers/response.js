@@ -51,5 +51,6 @@ module.exports.setHeadersForCORS = function (req, res, next) {
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, X-Access-Token, Content-Type, Accept, Authorization"
   );
+  res.header("Access-Control-Request-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   next();
 };

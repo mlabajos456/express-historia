@@ -21,5 +21,6 @@ module.exports = (sequelize, type) => {
             },
         });
     };
+    
     return Ups;
 };

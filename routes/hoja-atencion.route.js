@@ -18,8 +18,8 @@ router.put(
     validateMiddleware(HojaAValidationRules.edit),
     HojaAtencionController.putHojaAtencion
 );
-router.delete(
-    "/hoja-atencion/:id",
+router.post(
+    "/hoja-atencion/:id/del",
     validateMiddleware(HojaAValidationRules.findOne),
     HojaAtencionController.deleteHojaAtencion
 );

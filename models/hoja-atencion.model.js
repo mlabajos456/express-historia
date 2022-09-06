@@ -1,4 +1,5 @@
 const moment = require("moment");
+moment.locale("es")
 
 module.exports = (sequelize, type) => {
     var HojaAtencion = sequelize.define(
@@ -61,6 +62,12 @@ module.exports = (sequelize, type) => {
                     return moment(this.getDataValue("fecha")).format("YYYY");
                 },
             },
+            mes: {
+                type: type.VIRTUAL,
+                get() {
+                    return moment(this.getDataValue("fecha")).format("MMMM");
+                },
+            },
         },
         {
             timestamps: false,
@@ -81,6 +88,10 @@ module.exports = (sequelize, type) => {
         HojaAtencion.belongsTo(models.maestro_his_establecimiento, {
             foreignKey: "codigo_unico_ipress",
             as: "establecimiento",
+        });
+        HojaAtencion.belongsTo(models.maestro_his_ups, {
+            foreignKey: "id_ups",
+            as : "ups"
         });
     };
 

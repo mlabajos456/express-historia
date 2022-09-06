@@ -165,6 +165,10 @@ class SupportController {
  * @apiBody {String} q  query for filter
  */
     async getByName(req, res) {
+        var buscar = ""
+        if(req.body.q !== ""){
+            buscar = req.body.q
+        }
         try {
             await db["maestro_his_cie_cpms"]
                 .findAll({
@@ -172,16 +176,16 @@ class SupportController {
                         [Op.or]: [
                             {
                                 codigo_item: {
-                                    [Op.like]: "%"+req.body.q.toUpperCase()+"%"
+                                    [Op.like]: "%"+buscar+"%"
                                 }
                             },
                             {
                                 descripcion_item: {
-                                    [Op.like]: "%"+req.body.q.toUpperCase()+"%"
+                                    [Op.like]: "%"+buscar+"%"
                                 }
                             }
                         ]
-                    }
+                    }, limit: 100
                 })
                 .then((val) => {
                     response.sendData(res, val, "success");

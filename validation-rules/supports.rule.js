@@ -3,14 +3,14 @@ const Extension = require("joi-date-extensions");
 const Joi = BaseJoi.extend(Extension);
 
 module.exports = {
-  findOne: {
-    params: {
-      id: Joi.string().required().label("id"),
+    findOne: {
+        params: {
+            id: Joi.string().required().label("id"),
+        },
     },
-  },
-  findByName: {
-    body: {
-      q: Joi.string().required().label("q"),
+    findByName: {
+        body: {
+            q: Joi.string().allow(""),
+        },
     },
-  },
 };

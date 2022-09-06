@@ -34,6 +34,7 @@ class HojaAtencionController {
                     include: [
                         { model: db["his_turno"] },                      
                         { model: db["maestro_his_establecimiento"], as:"establecimiento" },                      
+                        { model: db["maestro_his_ups"], as : "ups"},                      
                     ],
                 })
                 .then((val) => {
