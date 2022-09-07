@@ -9,24 +9,24 @@ require("express-async-errors");
 
 /* router.get("/hoja-atencion", HojaAtencionController.getAtencion); */
 router.post(
-  "/hoja-atencion",
-  validateMiddleware(EmployeeValidationRules.create),
-  HojaAtencionController.postAtencion
+    "/hoja-atencion",
+    validateMiddleware(EmployeeValidationRules.create),
+    HojaAtencionController.postAtencion
 );
 router.put(
-  "/hoja-atencion",
-  validateMiddleware(EmployeeValidationRules.edit),
-  HojaAtencionController.putAtencion
+    "/hoja-atencion",
+    validateMiddleware(EmployeeValidationRules.edit),
+    HojaAtencionController.putAtencion
 );
 router.delete(
-  "/hoja-atencion/",
-  validateMiddleware(EmployeeValidationRules.delete),
-  HojaAtencionController.deleteAtencion
+    "/hoja-atencion/",
+    validateMiddleware(EmployeeValidationRules.delete),
+    HojaAtencionController.deleteAtencion
 );
 router.get(
-  "/hoja-atencion/:id",
-  validateMiddleware(EmployeeValidationRules.findOne),
-  HojaAtencionController.getAtencion
+    "/hoja-atencion/:id",
+    validateMiddleware(EmployeeValidationRules.findOne),
+    HojaAtencionController.getAtencion
 );
 
 module.exports = router;

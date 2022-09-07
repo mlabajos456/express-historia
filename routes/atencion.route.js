@@ -9,14 +9,14 @@ require("express-async-errors");
 
 router.get("/atencion", AtencionController.getAllAtencion);
 router.post(
-  "/atencion",
-  validateMiddleware(AtencionValidationRules.create),
-  AtencionController.postAtencion
+    "/atencion",
+    validateMiddleware(AtencionValidationRules.create),
+    AtencionController.postAtencion
 ); 
 router.put(
-  "/atencion",
-  validateMiddleware(AtencionValidationRules.edit),
-  AtencionController.putAtencion
+    "/atencion",
+    validateMiddleware(AtencionValidationRules.edit),
+    AtencionController.putAtencion
 );
 /*router.delete(
   "/atencion",
