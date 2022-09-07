@@ -160,7 +160,7 @@ class SupportController {
     }
   }
 /**
- * @api {get} /v1/support/cie/getbyname/all Obtener Cie por query
+ * @api {post} /v1/support/cie/getbyname/all Obtener Cie por query
  * @apiGroup Support
  * @apiName getByNameCie
  * @apiHeader {String} Authorization JWT Authorization generated from /login

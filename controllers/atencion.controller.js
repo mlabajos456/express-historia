@@ -4,25 +4,12 @@ const DetalleDiagnosticoController = require("./detalle-diagnostico.controller")
 
 class AtencionController {
   /**
-    * @api {get} /v1/atencion/ Obtener lista de pacientes
+    * @api {get} /v1/atencion/ Obtener lista de atenciones
     * @apiGroup Atencion
     * @apiName GetAllAtenciones
-    * @apiHeader {String} token JWT token generated from /login
-    * @apiBody {String} [firstname]       Optional Firstname of the User.
-    * @apiBody {String} lastname          Mandatory Lastname.
-    * @apiBody {String} country="DE"      Mandatory with default value "DE".
-    * @apiBody {Number} [age=18]          Optional Age with default 18.
- *
- * @apiBody (Login) {String} pass      Only logged in users can post this.
- *                                     In generated documentation a separate
- *                                     "Login" Block will be generated.
- *
- * @apiBody {Object} [address]         Optional nested address object.
- * @apiBody {String} [address[street]] Optional street and number.
- * @apiBody {String} [address[zip]]    Optional zip code.
- * @apiBody {String} [address[city]]   Optional city.
+    * @apiHeader {String} Authorization JWT token generated from /login
+    * 
  */
-
   async getAllAtencion(req, res) {
     try {
       await db["his_atencion"]
