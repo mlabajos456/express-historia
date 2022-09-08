@@ -23,7 +23,6 @@ class usuarioController {
             } else {
                 page = (page - 1) * limit
             }
-            console.log(limit, page);
 
             await db["his_detalle_usuario"]
                 .findAndCountAll({

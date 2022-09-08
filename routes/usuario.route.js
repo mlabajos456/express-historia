@@ -11,7 +11,7 @@ router.get(
     controller.mostarUsuario
 );
 
-router.get(
+router.post(
     "/usuario-listar",
     validateMiddleware(pagination),
     controller.listar
