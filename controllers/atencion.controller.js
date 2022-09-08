@@ -45,24 +45,32 @@ class AtencionController {
         }
     }
 
-    async postAtencion(req, res) {
+    async postAtencion(req, res) {        
         const t = await db.sequelize.transaction();
         try {
             var atencion = await db["his_atencion"].build(req.body);
             atencion.edad_anio = "9";
             atencion.edad_mes = "9";
             atencion.edad_dias = "9";
-            atencion.fecha_atencion = Date.now();
+            atencion.condicion_establec = "R"
+            atencion.condicion_servicio = "R"
+            atencion.id_hoja_atencion = 36
+            atencion.fecha_atencion = Date.now();            
             var newAtencion = await atencion.save({ transaction: t });
-
             for (const detail of req.body.diagnosticos) {
+                detail.id_cie = detail.id_cie.id
                 var detailDiag = await db["his_detalle_diagnostico"].build(detail);
                 detailDiag.id_atencion = newAtencion.id_atencion;
-                await detailDiag.save({ transaction: t });
+                
+                var newDetail = await detailDiag.save({ transaction: t });
+                for (const lab of detail.valor_lab){
+                    lab.id_detalle = newDetail.id_detalle
+                    var newLab = await db["his_lab"].build(lab);
+                    await newLab.save({ transaction: t });
+                }
             }
-
             await t.commit();
-            response.sendCreated(res, atencion);
+            response.sendCreated(res, newAtencion);
         } catch (error) {
             await t.rollback();
             response.sendBadRequest(res, error.message);
