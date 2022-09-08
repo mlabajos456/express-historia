@@ -24,4 +24,10 @@ module.exports = {
             id: Joi.string().required().label("id de atención"),
         },
     },
+    pagination:{
+        body: Joi.object().keys({
+            limit: Joi.number().required().label("error en limite de paginacion"),
+            page: Joi.number().required().label("error numero de pagina actual"),
+        }),
+    }
 };

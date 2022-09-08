@@ -15,8 +15,20 @@ class usuarioController {
 
     async listar(req, res) {
         try {
+
+            const limit = req.body.limit
+            let page = req.body.page
+            if (page == 1) {
+                page = 0
+            } else {
+                page = (page - 1) * limit
+            }
+            console.log(limit, page);
+
             await db["his_detalle_usuario"]
-                .findAll({
+                .findAndCountAll({
+                    limit: limit,
+                    offset: page,
                     attributes: {
                         exclude: ["id_personal", "id_perfil", "id_usuario"]
                     },
@@ -60,7 +72,7 @@ class usuarioController {
             await db["his_detalle_usuario"]
                 .findAll({
                     where: {
-                        "$t_usuario.id_usuario$": { [Op.eq]: req.id_usuario}
+                        "$t_usuario.id_usuario$": { [Op.eq]: req.id_usuario }
                     },
                     attributes: {
                         exclude: ["id_personal", "id_perfil", "id_usuario", ""]
