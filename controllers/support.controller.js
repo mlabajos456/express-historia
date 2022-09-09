@@ -470,5 +470,20 @@ class SupportController {
         }
     }
     /*FIN IPRESS*/
+    /**etnia */
+    async getAllEtnia(req, res) {
+        try {
+            await db["maestro_his_etnia"]
+                .findAll({})
+                .then((val) => {
+                    response.sendData(res, val, "success");
+                })
+                .catch((errro) => {
+                    response.sendForbidden(res, errro);
+                });
+        } catch (error) {
+            response.sendBadRequest(res, error.message);
+        }
+    }
 }
 module.exports = new SupportController();
