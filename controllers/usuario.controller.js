@@ -69,17 +69,16 @@ class usuarioController {
 
 
     async eliminar(req, res) {
-        console.log(req.body);
         console.log(res);
-        console.log("hola mundo");
+        response.sendCreated(res, req.params);
         /* try {
             var beforeTurno = await db["his_turno"].findOne({
                 where: { id_turno: req.params.id },
             });
-            response.sendBadRequest(res, await beforeTurno.destroy());
-            //response.sendCreated(res, newTurno);
+            res.sendBadRequest(res, await beforeTurno.destroy());
+            //res.sendCreated(res, newTurno);
         } catch (error) {
-            response.sendBadRequest(res, error.message);
+            res.sendBadRequest(res, error.message);
         } */
     }
 

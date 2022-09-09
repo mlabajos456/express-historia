@@ -30,9 +30,9 @@ app.use("/" + appVersion + "/support/", jwt, require("./routes/supports.route"))
 app.use("/" + appVersion + "/support/", jwt, require("./routes/supports.route")); */
 
 
-app.use(function (err, req, res) {
+/* app.use(function (err, req, res) {
     response.sendBadRequest(res, err)
-});
+}); */
 
 app.listen(httpPort, () => console.log(`http://127.0.0.1:${httpPort}`));
 

@@ -46,28 +46,17 @@ module.exports.sendNotFound = function (res, message) {
 };
 
 module.exports.setHeadersForCORS = function (req, res, next) {
-  var oneof = false;
-  if (req.headers.origin) {
-    res.header('Access-Control-Allow-Origin', req.headers.origin);
-    oneof = true;
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-ALlow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  if (req.method === "OPTIONS") {
+    res.header(
+      "Access-Control-Allow-Methods",
+      "PUT, POST, PATCH, GET, DELETE"
+    );
+    return res.status(200).json({});
   }
-  if (req.headers['access-control-request-method']) {
-    res.header('Access-Control-Allow-Methods', req.headers['access-control-request-method']);
-    oneof = true;
-  }
-  if (req.headers['access-control-request-headers']) {
-    res.header('Access-Control-Allow-Headers', req.headers['access-control-request-headers']);
-    oneof = true;
-  }
-  if (oneof) {
-    res.header('Access-Control-Max-Age', 60 * 60 * 24 * 365);
-  }
-
-  // intercept OPTIONS method
-  if (oneof && req.method == 'OPTIONS') {
-    res.send(200);
-  }
-  else {
-    next();
-  }
+  next(); // send the request to the next middleware
 };

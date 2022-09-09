@@ -18,7 +18,7 @@ router.post(
 );
 
 router.delete(
-    "/usuario-eliminar",
+    "/usuario-eliminar/:id",
     controller.eliminar
 );
 module.exports = router;
