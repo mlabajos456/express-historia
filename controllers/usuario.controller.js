@@ -66,6 +66,22 @@ class usuarioController {
         }
     }
 
+
+
+    async eliminar(req, res) {
+        console.log(req.params.id);
+        console.log(res);
+        /* try {
+            var beforeTurno = await db["his_turno"].findOne({
+                where: { id_turno: req.params.id },
+            });
+            response.sendBadRequest(res, await beforeTurno.destroy());
+            //response.sendCreated(res, newTurno);
+        } catch (error) {
+            response.sendBadRequest(res, error.message);
+        } */
+    }
+
     async mostarUsuario(req, res) {
         try {
             await db["his_detalle_usuario"]

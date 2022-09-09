@@ -30,7 +30,7 @@ app.use("/" + appVersion + "/support/", jwt, require("./routes/supports.route"))
 app.use("/" + appVersion + "/support/", jwt, require("./routes/supports.route")); */
 
 
-app.use(function (err, req, res, next) {
+app.use(function (err, req, res) {
     response.sendBadRequest(res, err)
 });
 

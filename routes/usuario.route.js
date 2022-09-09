@@ -16,4 +16,9 @@ router.post(
     validateMiddleware(pagination),
     controller.listar
 );
+
+router.delete(
+    "/usuario-eliminar",
+    controller.eliminar
+);
 module.exports = router;
