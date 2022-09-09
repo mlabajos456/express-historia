@@ -58,5 +58,5 @@ module.exports.setHeadersForCORS = function (req, res, next) {
     );
     return res.status(200).json({});
   }
-  next(); // send the request to the next middleware
+  next();
 };
