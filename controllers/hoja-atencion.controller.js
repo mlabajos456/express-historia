@@ -11,7 +11,6 @@ class HojaAtencionController {
    * @apiGroup Atencion
    *
    */
-
     async getAllHojaAtencion(req, res) {
         const limit = req.body.limit
         let befPage = req.body.page

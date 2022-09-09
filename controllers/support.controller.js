@@ -157,14 +157,8 @@ class SupportController {
             response.sendBadRequest(res, error.message);
         }
     }
-<<<<<<< HEAD
-  }
-/**
- * @api {post} /v1/support/cie/getbyname/all Obtener Cie por query
-=======
     /**
  * @api {get} /v1/support/cie/getbyname/all Obtener Cie por query
->>>>>>> 6b1a163e4d9a26c5893b8f3218f96f57d9179680
  * @apiGroup Support
  * @apiName getByNameCie
  * @apiHeader {String} Authorization JWT Authorization generated from /login

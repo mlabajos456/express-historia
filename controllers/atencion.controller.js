@@ -3,27 +3,13 @@ const response = require("../helpers/response");
 const DetalleDiagnosticoController = require("./detalle-diagnostico.controller");
 
 class AtencionController {
-<<<<<<< HEAD
-  /**
-    * @api {get} /v1/atencion/ Obtener lista de atenciones
-=======
     /**
     * @api {get} /v1/atencion/ Obtener lista de pacientes
->>>>>>> 6b1a163e4d9a26c5893b8f3218f96f57d9179680
     * @apiGroup Atencion
     * @apiName GetAllAtenciones
     * @apiHeader {String} Authorization JWT token generated from /login
     * 
  */
-<<<<<<< HEAD
-  async getAllAtencion(req, res) {
-    try {
-      await db["his_atencion"]
-        .findAll({
-          include: [
-            {
-              model: db["his_detalle_diagnostico"],
-=======
 
     async getAllAtencion(req, res) {
         try {
@@ -32,7 +18,6 @@ class AtencionController {
                     include: [
                         {
                             model: db["his_detalle_diagnostico"],
->>>>>>> 6b1a163e4d9a26c5893b8f3218f96f57d9179680
           
                         },
                     ],
