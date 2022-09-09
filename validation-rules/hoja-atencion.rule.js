@@ -47,6 +47,7 @@ module.exports = {
         params: {
             limite: Joi.number().required().label("limite"),
             page: Joi.number().required().label("pagina"),
+                       
         },
     },
 };

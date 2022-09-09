@@ -11,7 +11,7 @@
     "start-local": "nodemon index.js --exec",
     "lint": "eslint --ignore-path .gitignore .",
     "lint-fix": "eslint --ignore-path .gitignore --fix .",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "cross-env NODE_ENV=test jest --verbose",
     "docs": "apidoc -i ./ -e node_modules/ -t ./node_modules/apidoc-contenttype-plugin/template/ --parse-parsers apicontenttype=./node_modules/apidoc-contenttype-plugin/api_content_type.js",
     "doc": "apidoc -i ./ -o doc"
   },

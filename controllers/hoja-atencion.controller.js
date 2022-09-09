@@ -20,17 +20,18 @@ class HojaAtencionController {
             page = 0
         }else{
             page = (page -1) * limit
-        }
-        /*  const buscar = req.body.query */
+        }       
+        const queryParams = []       
+        
+        queryParams.push({estado: "1" })
+      
         try {
             await db["his_hoja_atencion"]
                 .findAndCountAll({
                     order: [["id_hoja_atencion", "DESC"]],
                     limit: limit,
                     offset: page,
-                    /*  where: {
-                        provincia: { [Op.like]: "%" + buscar + "%" }, 
-                    }, */
+                    where : queryParams,
                     include: [
                         { model: db["his_turno"] },                      
                         { model: db["maestro_his_establecimiento"], as:"establecimiento" },                      
@@ -43,7 +44,6 @@ class HojaAtencionController {
                         "limit": limit,
                         "total": val.count,
                         "data": val.rows
-
                     }
                     response.sendData(res, data, "success");
                 })
