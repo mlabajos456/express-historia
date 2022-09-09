@@ -66,20 +66,19 @@ class usuarioController {
         }
     }
 
-
-
     async eliminar(req, res) {
-        console.log(res);
-        response.sendCreated(res, req.params);
-        /* try {
-            var beforeTurno = await db["his_turno"].findOne({
-                where: { id_turno: req.params.id },
+        try {
+            await db["his_detalle_usuario"].findOne({
+                where: { id_detalle_usuario: req.params.id },
+            }).then(function (beforeTurno) {
+                beforeTurno.destroy();
+            }).then(() => {
+                response.sendData(res, "Registro eliminado correctamente.");
             });
-            res.sendBadRequest(res, await beforeTurno.destroy());
-            //res.sendCreated(res, newTurno);
+
         } catch (error) {
-            res.sendBadRequest(res, error.message);
-        } */
+            response.sendBadRequest(res, error.message);
+        }
     }
 
     async mostarUsuario(req, res) {
