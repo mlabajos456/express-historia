@@ -69,8 +69,9 @@ class usuarioController {
 
 
     async eliminar(req, res) {
-        console.log(req.params.id);
+        console.log(req.body);
         console.log(res);
+        console.log("hola mundo");
         /* try {
             var beforeTurno = await db["his_turno"].findOne({
                 where: { id_turno: req.params.id },
