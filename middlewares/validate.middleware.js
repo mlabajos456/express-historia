@@ -14,7 +14,6 @@ module.exports = (options) => {
         }
         if(options.params){ 
             result = Joi.validate(req.params, options.params);
-            console.log(result)
         }
         if (result.error === null) {
             return next();

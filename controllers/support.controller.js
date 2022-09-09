@@ -165,13 +165,21 @@ class SupportController {
  * @apiBody {String} q  query for filter
  */
     async getByName(req, res) {
+        const limit = req.body.limit
+        let befPage = req.body.page
+        let page = req.body.page
+        if(page == 1){
+            page = 0
+        }else{
+            page = (page -1) * limit
+        }
         var buscar = ""
         if(req.body.q !== ""){
             buscar = req.body.q
         }
         try {
             await db["maestro_his_cie_cpms"]
-                .findAll({
+                .findAndCountAll({
                     where: {
                         [Op.or]: [
                             {
@@ -185,10 +193,18 @@ class SupportController {
                                 }
                             }
                         ]
-                    }, limit: 100
+                    }, limit: limit,
+                    offset: page,
                 })
                 .then((val) => {
-                    response.sendData(res, val, "success");
+                    const data = {
+                        "page": befPage,
+                        "limit": limit,
+                        "total": val.count,
+                        "data": val.rows
+
+                    }
+                    response.sendData(res, data, "success");
                 })
                 .catch((errro) => {
                     response.sendForbidden(res, errro);
