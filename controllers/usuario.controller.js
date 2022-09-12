@@ -66,6 +66,21 @@ class usuarioController {
         }
     }
 
+    async eliminar(req, res) {
+        try {
+            await db["his_detalle_usuario"].findOne({
+                where: { id_detalle_usuario: req.params.id },
+            }).then(function (beforeTurno) {
+                beforeTurno.destroy();
+            }).then(() => {
+                response.sendData(res, "Registro eliminado correctamente.");
+            });
+
+        } catch (error) {
+            response.sendBadRequest(res, error.message);
+        }
+    }
+
     async mostarUsuario(req, res) {
         try {
             await db["his_detalle_usuario"]

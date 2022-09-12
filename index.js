@@ -27,9 +27,9 @@ app.get("/dark", function (req, res) {
 
 
 
-app.use(function (err, req, res, next) {
+/* app.use(function (err, req, res) {
     response.sendBadRequest(res, err)
-});
+}); */
 
 app.listen(httpPort, () => console.log(`http://127.0.0.1:${httpPort}`));
 
