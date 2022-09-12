@@ -52,9 +52,17 @@ router.get(
     SupportController.getOneCentroPoblado
 );
 
-router.get("/ubigeo/departamento", SupportController.getAllCentroPoblado);
-router.get("/ubigeo/provincia", SupportController.getAllCentroPoblado);
-router.get("/ubigeo/distrito", SupportController.getAllCentroPoblado);
+router.get("/ubigeo/departamento", SupportController.getAllUbigeoDepatamento);
+//todas las provincias por codigo de departamento
+router.get(
+    "/ubigeo/:codDep/provincia",
+    SupportController.getAllUbigeoProvincia
+);
+//todos los distritos por codigo de departamento y codigo de provincia
+router.get(
+    "/ubigeo/:codDep/:codProv/distrito",
+    SupportController.getAllUbigeoDistrito
+);
 
 router.get(
     "/ubigeo/:codDep/provincia",
