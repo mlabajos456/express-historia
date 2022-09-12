@@ -82,5 +82,7 @@ router.get(
     "/distrito/:codDep/:codProv/:codDist",
     SupportController.getOnebigeoDistrito
 );
+/*rtnia*/
+router.get("/etnia", SupportController.getAllEtnia);
 router.post("/establecimiento", SupportController.getAllEstByUbigeo);
 module.exports = router;
