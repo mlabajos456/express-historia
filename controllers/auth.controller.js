@@ -11,8 +11,12 @@ const { Op } = require("sequelize");
     * @apiName GetToken
     * @apiBody {String} usuario       Optional Firstname of the User.
     * @apiBody {String} clave          Mandatory Lastname.
-  
- */
+    * @apiParamExample {json} Request-Example:
+    *     {
+    *       "usuario": "dires",
+    *       "clave": "12342022*dD"
+    *     }
+*/
 async function authenticate(req, res) {
     const data = await db["his_detalle_usuario"].findOne({
         where: {

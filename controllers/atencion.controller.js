@@ -4,7 +4,7 @@ const DetalleDiagnosticoController = require("./detalle-diagnostico.controller")
 
 class AtencionController {
     /**
-    * @api {get} /v1/atencion/ Obtener lista de pacientes
+    * @api {get} /v1/atencion/ Obtener atenciones
     * @apiGroup Atencion
     * @apiName GetAllAtenciones
     * @apiHeader {String} Authorization JWT token generated from /login
