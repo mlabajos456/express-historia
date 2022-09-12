@@ -30,7 +30,7 @@ class HojaAtencionController {
         let params = []
          console.log(req.body)
         if (req.body.mes) {
-            params.push({ mes: req.body.mes })
+            params.push(db.sequelize.where(db.sequelize.fn('date_part', 'month', db.sequelize.col("fecha_apertura")), req.body.mes))
         }
         if (req.body.anio) {
             params.push({ anio: req.body.anio })
@@ -53,10 +53,10 @@ class HojaAtencionController {
                     order: [["id_hoja_atencion", "DESC"]],
                     limit: limit,
                     offset: page,
-                    where: 
+                    where:
                         //db.sequelize.where(db.sequelize.fn('EXTRACT(MONTH from "fecha_apertura") =', 8))
                         //get month from fecha
-                        db.sequelize.where(db.sequelize.fn('date_part','month', db.sequelize.col("fecha_apertura")), req.body.mes)
+                        params
                     , 
                     include: [
                         { model: db["his_turno"] },                      
@@ -70,7 +70,6 @@ class HojaAtencionController {
                         "limit": limit,
                         "total": val.count,
                         "data": val.rows
-
                     }
                     response.sendData(res, data, "success");
                 })

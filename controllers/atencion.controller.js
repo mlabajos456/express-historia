@@ -40,6 +40,7 @@ class AtencionController {
             atencion.edad_anio = "9";
             atencion.edad_mes = "9";
             atencion.edad_dias = "9";
+            
             atencion.condicion_establec = "R"
             atencion.condicion_servicio = "R"
             atencion.id_hoja_atencion = 36

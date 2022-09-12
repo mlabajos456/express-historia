@@ -6,7 +6,7 @@ const cie = Joi.object().keys({
     descripcion: Joi.string().required().label("descripcion")});
 
 const labs = Joi.object().keys({   
-    descripcion: Joi.string().required().label("descripcion")});
+    descripcion: Joi.string().required().allow("").label("descripcion")});
 
 const listaDiagnosticoEdit = Joi.object().keys({
     id_detalle: Joi.number().label("id detalle"),
@@ -43,10 +43,10 @@ module.exports = {
             abd: Joi.string().optional().allow(""),
             observacion: Joi.string().optional().allow(""),
             ubigeo: Joi.string().required().label("ubigeo"),
-            peso: Joi.number(),
+            peso: Joi.string().required().label("peso"),
             id_financiador: Joi.number(),
             estado_gestante: Joi.string(),
-            id_centro_poblado: Joi.string().required().label("id centro poblado"),
+            id_centro_poblado:  Joi.string().optional().allow(""),
             condicion_establec: Joi.string()
                 .max(10)
                 .required()
@@ -55,9 +55,9 @@ module.exports = {
                 .max(10)
                 .required()
                 .label("Condición servicio"),
-            fum: Joi.date(),
+            fum: Joi.string().optional().allow(""),
             /* fecha_atencion: Joi.date(), */
-            talla: Joi.number().optional().allow(""),
+            talla: Joi.string().required().label("talla"),
             id_paciente: Joi.number().required().label("id paciente"),
             fecha_hb: Joi.date(),
             condicion: Joi.boolean(),
@@ -93,11 +93,11 @@ module.exports = {
                 .max(1)
                 .required()
                 .label("Condición servicio"),
-            fum: Joi.date(),
+            fum: Joi.string().optional().allow(""),
             fecha_atencion: Joi.date(),
             talla: Joi.string(),
             id_paciente: Joi.number(),
-            fecha_hb: Joi.date(),
+            fecha_hb: Joi.string(),
             condicion: Joi.boolean(),
             num_historia_clinica: Joi.string()
                 .required()
