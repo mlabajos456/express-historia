@@ -7,7 +7,7 @@ const AtencionController = require("../controllers/atencion.controller");
 
 require("express-async-errors");
 
-router.get("/atencion", AtencionController.getAllAtencion);
+router.post("/atencion/:id", AtencionController.getAllAtencion);
 router.post(
     "/atencion",
     validateMiddleware(AtencionValidationRules.create),
@@ -18,11 +18,10 @@ router.put(
     validateMiddleware(AtencionValidationRules.edit),
     AtencionController.putAtencion
 );
-/*router.delete(
-  "/atencion",
-  validateMiddleware(AtencionValidationRules.delete),
-  AtencionController.deleteAtencion
-);
+router.delete(
+    "/atencion/:id",  
+    AtencionController.deleteAtencion
+);/*
 router.get(
   "/atencion/:id",
   validateMiddleware(AtencionValidationRules.findOne),

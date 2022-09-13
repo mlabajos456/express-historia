@@ -70,6 +70,9 @@ module.exports = (sequelize, type) => {
         Atencion.hasMany(models.his_detalle_diagnostico, {
             foreignKey: "id_atencion",
         });
+        Atencion.belongsTo(models.paciente, {
+            foreignKey: "id_paciente",
+        });
         /* Atencion.belongsToMany(models.his_detalle_diagnostico, {
       through: "his_detalle_diagnostico",
     }); */

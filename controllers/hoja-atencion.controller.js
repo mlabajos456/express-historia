@@ -28,9 +28,8 @@ class HojaAtencionController {
         let befPage = req.body.page
         let page = req.body.page
         let params = []
-         console.log(req.body)
         if (req.body.mes) {
-            params.push(db.sequelize.where(db.sequelize.fn('date_part', 'month', db.sequelize.col("fecha_apertura")), req.body.mes))
+            params.push(db.sequelize.where(db.sequelize.fn("date_part", "month", db.sequelize.col("fecha_apertura")), req.body.mes))
         }
         if (req.body.anio) {
             params.push({ anio: req.body.anio })

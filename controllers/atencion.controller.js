@@ -11,25 +11,45 @@ class AtencionController {
     * 
  */
 
-    async getAllAtencion(req, res) {
+    async getAllAtencion(req, res) {       
+        const limit = req.body.limit
+        let befPage = req.body.page
+        let page = req.body.page
+        if(page == 1){
+            page = 0
+        }else{
+            page = (page -1) * limit
+        } 
         try {
             await db["his_atencion"]
-                .findAll({
+                .findAndCountAll({
+                    limit: limit,
+                    offset: page,
                     include: [
                         {
-                            model: db["his_detalle_diagnostico"],
+                            model: db["paciente"],
           
                         },
                     ],
+                    where: {id_hoja_atencion: req.params.id}
                 })
                 .then((val) => {
-                    response.sendData(res, val, "success");
+                    const data = {
+                        "page": befPage,
+                        "limit": limit,
+                        "total": val.count,
+                        "data": val.rows
+                    }
+                    response.sendData(res, data, "success");
                 })
                 .catch((errro) => {
+                    console.log(errro)
                     response.sendForbidden(res, errro);
                 });
         } catch (error) {
-            response.sendBadRequest(res, error.message);
+            console.log(error)
+            response.sendBadRequest(res, error
+            );
         }
     }
 
@@ -112,22 +132,22 @@ class AtencionController {
             response.sendBadRequest(res, error.message);
         }
     }
-    async deleteHojaAtencion(req, res) {
+    async deleteAtencion(req, res) {
         const t = await db.sequelize.transaction();
-        var estado = "1";
+        var estado = true;
         var msg = "Se ha restablecido correctamente";
         try {
             var hoja = await db["his_atencion"].findOne({
-                where: { id_hoja_atencion: req.params.id },
+                where: { id_atencion: req.params.id },
             });
             if (!hoja) {
                 return response.sendNotFound(
                     res,
-                    "No existe la hoja de atención: " + req.body.id_hoja_atencion
+                    "No existe la atención: " + req.body.id_hoja_atencion
                 );
             }
-            if (hoja.estado === "Activo") {
-                estado = "0";
+            if (hoja.estado === true) {
+                estado = false;
                 msg = "Se ha eliminado correctamente";
             }
             hoja.estado = estado;

@@ -58,11 +58,11 @@ module.exports = (sequelize, type) => {
         }
     );
     Paciente.associate = function (models) {
-    /*  Usuario.hasOne(models.his_hoja_atencion, {
-        foreignKey: {
-          name: "id_responsable",
-        },
-      }); */
+        Paciente.hasOne(models.his_atencion, {
+            foreignKey: {
+                name: "id_paciente",
+            },
+        });
     };
     return Paciente;
 };
