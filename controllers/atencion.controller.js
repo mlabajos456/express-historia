@@ -23,7 +23,7 @@ class AtencionController {
         try {
             await db["his_atencion"]
                 .findAndCountAll({
-                    limit: limit,
+                    limit: 100,
                     offset: page,
                     include: [
                         {
