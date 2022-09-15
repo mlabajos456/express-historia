@@ -17,24 +17,19 @@ class usuarioController {
         const transc = await db.sequelize.transaction();
         try {
 
+            var personal = await db["his_detalle_usuario"].findOne({ where: { id_personal: req.body.id_personal } })
+            if (personal) {
+                return response.sendBadRequest(res, "Personal ya registrado")
+            }
 
-            await db["his_detalle_usuario"].count({ where: { id_personal: req.body.id_personal } })
-                .then(async count => {
-                    if (count > 0) {
-                        return response.sendBadRequest(res, "Personal ya registrado")
-                    }
-                    const savebody = await db["his_detalle_usuario"].build(req.body);
-                    await savebody.save({ transaction: transc })
-                        .then(function (item) {
-                            response.sendCreated(res, item.id_detalle_usuario, "Datos guardados correctamente.");
-                        }).catch(function (err) {
-                            response.sendBadRequest(res, err.message);
-                        });
-                    await transc.commit();
-
+            const savebody = await db["his_detalle_usuario"].build(req.body);
+            await savebody.save({ transaction: transc })
+                .then(function (item) {
+                    response.sendCreated(res, item.id_detalle_usuario, "Datos guardados correctamente.");
                 }).catch(function (err) {
                     response.sendBadRequest(res, err.message);
                 });
+            await transc.commit();
 
         } catch (error) {
             await transc.rollback();
