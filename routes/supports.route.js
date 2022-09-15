@@ -52,10 +52,18 @@ router.get(
     SupportController.getOneCentroPoblado
 );
 
-
-//para cargar todos los departamentos.
 router.get("/ubigeo/departamento", SupportController.getAllUbigeoDepatamento);
 //todas las provincias por codigo de departamento
+router.get(
+    "/ubigeo/:codDep/provincia",
+    SupportController.getAllUbigeoProvincia
+);
+//todos los distritos por codigo de departamento y codigo de provincia
+router.get(
+    "/ubigeo/:codDep/:codProv/distrito",
+    SupportController.getAllUbigeoDistrito
+);
+
 router.get(
     "/ubigeo/:codDep/provincia",
     SupportController.getAllUbigeoProvincia
@@ -82,5 +90,7 @@ router.get(
     "/distrito/:codDep/:codProv/:codDist",
     SupportController.getOnebigeoDistrito
 );
+/*rtnia*/
+router.get("/etnia", SupportController.getAllEtnia);
 router.post("/establecimiento", SupportController.getAllEstByUbigeo);
 module.exports = router;

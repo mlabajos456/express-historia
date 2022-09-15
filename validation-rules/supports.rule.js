@@ -11,6 +11,8 @@ module.exports = {
     findByName: {
         body: {
             q: Joi.string().allow(""),
+            limit: Joi.number().required().label("limite"),
+            page: Joi.number().required().label("pagina"),
         },
     },
 };

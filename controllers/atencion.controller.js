@@ -1,68 +1,84 @@
 const db = require("../models/index");
 const response = require("../helpers/response");
-const DetalleDiagnosticoController = require("./detalle-diagnostico.controller");
 
 class AtencionController {
     /**
-    * @api {get} /v1/atencion/ Obtener lista de pacientes
+    * @api {get} /v1/atencion/ Obtener atenciones
     * @apiGroup Atencion
     * @apiName GetAllAtenciones
-    * @apiHeader {String} token JWT token generated from /login
-    * @apiBody {String} [firstname]       Optional Firstname of the User.
-    * @apiBody {String} lastname          Mandatory Lastname.
-    * @apiBody {String} country="DE"      Mandatory with default value "DE".
-    * @apiBody {Number} [age=18]          Optional Age with default 18.
- *
- * @apiBody (Login) {String} pass      Only logged in users can post this.
- *                                     In generated documentation a separate
- *                                     "Login" Block will be generated.
- *
- * @apiBody {Object} [address]         Optional nested address object.
- * @apiBody {String} [address[street]] Optional street and number.
- * @apiBody {String} [address[zip]]    Optional zip code.
- * @apiBody {String} [address[city]]   Optional city.
+    * @apiHeader {String} Authorization JWT token generated from /login
+    * 
  */
 
-    async getAllAtencion(req, res) {
+    async getAllAtencion(req, res) {       
+        const limit = req.body.limit
+        let befPage = req.body.page
+        let page = req.body.page
+        if(page == 1){
+            page = 0
+        }else{
+            page = (page -1) * limit
+        } 
         try {
             await db["his_atencion"]
-                .findAll({
+                .findAndCountAll({
+                    limit: 100,
+                    offset: page,
                     include: [
                         {
-                            model: db["his_detalle_diagnostico"],
+                            model: db["paciente"],
           
                         },
                     ],
+                    where: {id_hoja_atencion: req.params.id}
                 })
                 .then((val) => {
-                    response.sendData(res, val, "success");
+                    const data = {
+                        "page": befPage,
+                        "limit": limit,
+                        "total": val.count,
+                        "data": val.rows
+                    }
+                    response.sendData(res, data, "success");
                 })
                 .catch((errro) => {
+                    console.log(errro)
                     response.sendForbidden(res, errro);
                 });
         } catch (error) {
-            response.sendBadRequest(res, error.message);
+            console.log(error)
+            response.sendBadRequest(res, error
+            );
         }
     }
 
-    async postAtencion(req, res) {
+    async postAtencion(req, res) {        
         const t = await db.sequelize.transaction();
         try {
             var atencion = await db["his_atencion"].build(req.body);
             atencion.edad_anio = "9";
             atencion.edad_mes = "9";
             atencion.edad_dias = "9";
-            atencion.fecha_atencion = Date.now();
+            
+            atencion.condicion_establec = "R"
+            atencion.condicion_servicio = "R"
+            atencion.id_hoja_atencion = 36
+            atencion.fecha_atencion = Date.now();            
             var newAtencion = await atencion.save({ transaction: t });
-
             for (const detail of req.body.diagnosticos) {
+                detail.id_cie = detail.id_cie.id
                 var detailDiag = await db["his_detalle_diagnostico"].build(detail);
                 detailDiag.id_atencion = newAtencion.id_atencion;
-                await detailDiag.save({ transaction: t });
+                
+                var newDetail = await detailDiag.save({ transaction: t });
+                for (const lab of detail.valor_lab){
+                    lab.id_detalle = newDetail.id_detalle
+                    var newLab = await db["his_lab"].build(lab);
+                    await newLab.save({ transaction: t });
+                }
             }
-
             await t.commit();
-            response.sendCreated(res, atencion);
+            response.sendCreated(res, newAtencion);
         } catch (error) {
             await t.rollback();
             response.sendBadRequest(res, error.message);
@@ -115,22 +131,22 @@ class AtencionController {
             response.sendBadRequest(res, error.message);
         }
     }
-    async deleteHojaAtencion(req, res) {
+    async deleteAtencion(req, res) {
         const t = await db.sequelize.transaction();
-        var estado = "1";
+        var estado = true;
         var msg = "Se ha restablecido correctamente";
         try {
             var hoja = await db["his_atencion"].findOne({
-                where: { id_hoja_atencion: req.params.id },
+                where: { id_atencion: req.params.id },
             });
             if (!hoja) {
                 return response.sendNotFound(
                     res,
-                    "No existe la hoja de atención: " + req.body.id_hoja_atencion
+                    "No existe la atención: " + req.body.id_hoja_atencion
                 );
             }
-            if (hoja.estado === "Activo") {
-                estado = "0";
+            if (hoja.estado === true) {
+                estado = false;
                 msg = "Se ha eliminado correctamente";
             }
             hoja.estado = estado;

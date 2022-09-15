@@ -1,36 +1,62 @@
 const db = require("../models/index");
 const response = require("../helpers/response");
+const { Op } = require("sequelize");
+
 /* const { Op } = require("sequelize"); */
 class HojaAtencionController {
     /**
-   * @api {get} /v1/atencion/hoja-atencion/:id Obtener hoja de atencion
-   * @apiName GetAllAtenciones
+   * @api {get} /v1/hoja-atencion/all Obtener Hoja de atencion
+   * @apiName GetAllHojaAtenciones
    * @apiGroup Atencion
    * @apiHeader {String} Authorization JWT Authorization generated from /login
-   * @apiParam {Number} id hoja atencion ID.
    * @apiGroup Atencion
+   * @apiBody {String} mes String mes
+   * @apiBody {String} anio String anio
+   * @apiBody {String} id_turno String id_turno
+   * @apiBody {String} id_ups String id_ups
+   * @apiParamExample {json} Request-Example:
+   *     {
+   *       "mes": "dires",
+   *       "anio": "12342022*dD",
+   *       "id_turno": 1,
+   *       "id_ups": 1,
+   *     }
    *
-   */
-
+*/
     async getAllHojaAtencion(req, res) {
         const limit = req.body.limit
         let befPage = req.body.page
         let page = req.body.page
+        let params = []
+        if (req.body.mes) {
+            params.push(db.sequelize.where(db.sequelize.fn("date_part", "month", db.sequelize.col("fecha_apertura")), req.body.mes))
+        }
+        if (req.body.anio) {
+            params.push({ anio: req.body.anio })
+        }
+        if (req.body.id_turno) {
+            params.push({ id_turno: req.body.id_turno })
+        }
+        if (req.body.id_ups) {
+            params.push({ id_ups: req.body.id_ups })
+        }
         if(page == 1){
             page = 0
         }else{
             page = (page -1) * limit
         }
-        /*  const buscar = req.body.query */
+        
         try {
             await db["his_hoja_atencion"]
                 .findAndCountAll({
                     order: [["id_hoja_atencion", "DESC"]],
                     limit: limit,
                     offset: page,
-                    /*  where: {
-                        provincia: { [Op.like]: "%" + buscar + "%" }, 
-                    }, */
+                    where:
+                        //db.sequelize.where(db.sequelize.fn('EXTRACT(MONTH from "fecha_apertura") =', 8))
+                        //get month from fecha
+                        params
+                    , 
                     include: [
                         { model: db["his_turno"] },                      
                         { model: db["maestro_his_establecimiento"], as:"establecimiento" },                      
@@ -43,7 +69,6 @@ class HojaAtencionController {
                         "limit": limit,
                         "total": val.count,
                         "data": val.rows
-
                     }
                     response.sendData(res, data, "success");
                 })

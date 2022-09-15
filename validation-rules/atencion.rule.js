@@ -1,18 +1,40 @@
 const BaseJoi = require("joi");
 const Extension = require("joi-date-extensions");
 const Joi = BaseJoi.extend(Extension);
+const cie = Joi.object().keys({
+    id: Joi.string().required().label("cie 10"),
+    descripcion: Joi.string().required().label("descripcion")});
+
+const labs = Joi.object().keys({   
+    descripcion: Joi.string().required().allow("").label("descripcion")});
+
+const editLabs = Joi.object().keys({   
+    id_lab : Joi.number().required().label("id_lab"),
+    descripcion: Joi.string().required().allow("").label("descripcion")});
+
 const listaDiagnosticoEdit = Joi.object().keys({
     id_detalle: Joi.number().label("id detalle"),
-    id_atencion: Joi.number().label("id atencion"),
-    id_cie: Joi.string().required().label("cie 10"),
-    valor_lab: Joi.string().label("valor lab"),
+    valor_lab: Joi.array()
+        .min(1)
+        .items(editLabs)
+        .required()
+        .label("lista de labs"),
     diagnostico_tipo: Joi.string().required().label("tipo de diagnostico"),
+    editable: Joi.boolean().optional().label("editable"),
 });
 const listaDiagnostico = Joi.object().keys({
-    id_cie: Joi.string().required().label("cie 10"),
-    valor_lab: Joi.string().label("valor lab"),
+    id_cie: cie,
+    valor_lab: Joi.array()
+        .min(1)
+        .items(labs)
+        .required()
+        .label("lista de labs"),
     diagnostico_tipo: Joi.string().required().label("tipo de diagnostico"),
+    editable: Joi.boolean().optional().label("editable"),
 });
+
+
+
 
 module.exports = {
     create: {
@@ -23,33 +45,33 @@ module.exports = {
                 .items(listaDiagnostico)
                 .required()
                 .label("lista de diagnosticos"),
-            ficha_familiar: Joi.string().label("ficha familiar"),
-            cef: Joi.string(),
-            abd: Joi.string(),
-            observacion: Joi.string(),
+            ficha_familiar: Joi.string().optional().allow(""),
+            cef: Joi.string().optional().allow(""),
+            abd: Joi.string().optional().allow(""),
+            observacion: Joi.string().optional().allow(""),
             ubigeo: Joi.string().required().label("ubigeo"),
-            peso: Joi.number(),
+            peso: Joi.string().optional().allow(""),
             id_financiador: Joi.number(),
-            estado_gestante: Joi.string(),
-            id_centro_poblado: Joi.string().required().label("id centro poblado"),
+            estado_gestante: Joi.string().optional().allow(""),
+            id_centro_poblado:  Joi.string().optional().allow(""),
             condicion_establec: Joi.string()
-                .max(1)
+                .max(10)
                 .required()
                 .label("Condición establecimiento"),
             condicion_servicio: Joi.string()
-                .max(1)
+                .max(10)
                 .required()
                 .label("Condición servicio"),
-            fum: Joi.date(),
-            /* fecha_atencion: Joi.date(), */
-            talla: Joi.string(),
+            fum: Joi.string().optional().allow(""),
+            fecha_atencion: Joi.date(),
+            talla: Joi.string().optional().allow(""),
             id_paciente: Joi.number().required().label("id paciente"),
-            fecha_hb: Joi.date(),
+            fecha_hb: Joi.date().optional().allow(""),
             condicion: Joi.boolean(),
             num_historia_clinica: Joi.string()
                 .required()
                 .label("Número de historia clinica"),
-            hemoglobina: Joi.number(),
+            hemoglobina: Joi.number().optional(),
         }),
     },
     edit: {
@@ -61,33 +83,33 @@ module.exports = {
                 .items(listaDiagnosticoEdit)
                 .required()
                 .label("lista de diagnosticos"),
-            ficha_familiar: Joi.string().label("ficha familiar"),
-            cef: Joi.string(),
-            abd: Joi.string(),
-            observacion: Joi.string(),
+            ficha_familiar: Joi.string().optional().allow(""),
+            cef: Joi.string().optional().allow(""),
+            abd: Joi.string().optional().allow(""),
+            observacion: Joi.string().optional().allow(""),
             ubigeo: Joi.string().required().label("ubigeo"),
-            peso: Joi.number(),
+            peso: Joi.string().optional().allow(""),
             id_financiador: Joi.number(),
-            estado_gestante: Joi.string(),
-            id_centro_poblado: Joi.string(),
+            estado_gestante: Joi.string().optional().allow(""),
+            id_centro_poblado:  Joi.string().optional().allow(""),
             condicion_establec: Joi.string()
-                .max(1)
+                .max(10)
                 .required()
                 .label("Condición establecimiento"),
             condicion_servicio: Joi.string()
-                .max(1)
+                .max(10)
                 .required()
                 .label("Condición servicio"),
-            fum: Joi.date(),
+            fum: Joi.string().optional().allow(""),
             fecha_atencion: Joi.date(),
-            talla: Joi.string(),
-            id_paciente: Joi.number(),
-            fecha_hb: Joi.date(),
+            talla: Joi.string().optional().allow(""),
+            id_paciente: Joi.number().required().label("id paciente"),
+            fecha_hb: Joi.date().optional().allow(""),
             condicion: Joi.boolean(),
             num_historia_clinica: Joi.string()
                 .required()
                 .label("Número de historia clinica"),
-            hemoglobina: Joi.number(),
+            hemoglobina: Joi.number().optional(),
         }),
     },  
     findOne: {
