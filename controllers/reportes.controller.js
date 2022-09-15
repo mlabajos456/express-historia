@@ -1,18 +1,29 @@
 
+
 const response = require("../helpers/response");
 const atencionService = require("../services/atencion.service");
+const pdfService = require("../services/pdf.service");
+
 class ReportesController {
     async getReportes(req, res) {       
-        const limit = req.body.limit
+        /*  const limit = req.body.limit
         let befPage = req.body.page
         let page = req.body.page
         if(page == 1){
             page = 0
         }else{
             page = (page -1) * limit
-        } 
+        }  */
+        const stream = res.writeHead(200, {
+            "Content-Type": "application/pdf",
+            "Content-Disposition": "attachment; filename=reporte.pdf",
+        })
+        pdfService.createPDF((chunk ) => stream.write(chunk)
+            , () => stream.end())
         try {
-            await atencionService.getAllAtencionByHojaReport(page, limit, req.params.id).then((val) => {                
+           
+            /*  await atencionService.getAllAtencionByHojaReport(page, limit, req.params.id).then((val) => {        
+
                 const data = {
                     "page": befPage,
                     "limit": limit,
@@ -36,8 +47,7 @@ class ReportesController {
                         if(total_bloques < 0){
                             total_bloques = 12+ total_bloques
                             reportPage++
-                        }
-                        
+                        }                        
                         listPosiciones.push({bloque: numBloquesOcupar, page: reportPage, })
                     }else{
                         total_bloques -= 1;
@@ -52,7 +62,7 @@ class ReportesController {
                 });                
 
                 response.sendData(res,listPosiciones, "success");
-            })
+            }) */
         } catch (error) {
             console.log(error)
             response.sendBadRequest(res, error
