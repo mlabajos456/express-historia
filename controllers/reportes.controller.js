@@ -1,4 +1,4 @@
-const db = require("../models/index");
+
 const response = require("../helpers/response");
 const atencionService = require("../services/atencion.service");
 class ReportesController {
@@ -19,11 +19,39 @@ class ReportesController {
                     "total": val.count,
                     "data": val.rows
                 }
-                /*   for (const key in object) {
+                let listPosiciones= []
+                let total_bloques =12 ;
+                let reportPage = 1;    
+                let positionHoja = 1;            
+                val.rows.forEach(paciente => {
+                    let totalDiag = paciente.his_detalle_diagnosticos.length;
+                    let numBloquesOcupar= 1;
+                    if(totalDiag >3){
+                        numBloquesOcupar = totalDiag / 3;
+                        if(numBloquesOcupar % 1 != 0){
+                            numBloquesOcupar = Math.trunc(numBloquesOcupar) + 1;
+                        }
+                        total_bloques = total_bloques - numBloquesOcupar;      
+                       
+                        if(total_bloques < 0){
+                            total_bloques = 12+ total_bloques
+                            reportPage++
+                        }
+                        
+                        listPosiciones.push({bloque: numBloquesOcupar, page: reportPage, })
+                    }else{
+                        total_bloques -= 1;
+                        if(total_bloques < 0){
+                            total_bloques = 12+ total_bloques
+                            reportPage++
+                        }
+                        listPosiciones.push({bloque: numBloquesOcupar, page: reportPage,  })
+                    }
                     
-                } */
+                    
+                });                
 
-                response.sendData(res, data, "success");
+                response.sendData(res,listPosiciones, "success");
             })
         } catch (error) {
             console.log(error)
