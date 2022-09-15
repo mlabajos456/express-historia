@@ -1,6 +1,5 @@
 const db = require("../models/index");
 const response = require("../helpers/response");
-const DetalleDiagnosticoController = require("./detalle-diagnostico.controller");
 
 class AtencionController {
     /**

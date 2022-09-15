@@ -22,8 +22,8 @@ app.use("/" + appVersion + "/", require("./routes/hoja-atencion.route"));
 app.use("/" + appVersion + "/", require("./routes/atencion.route"));
 app.use("/" + appVersion + "/", require("./routes/detalle-diagnostico.route"));
 app.use("/" + appVersion + "/", require("./routes/usuario.route"));
-app.get("/dark", function (req, res) {
-    res.send("hola")})
+app.use("/" + appVersion + "/", require("./routes/report.route"));
+
 
 
 
