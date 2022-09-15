@@ -13,6 +13,35 @@ class usuarioController {
      *
      */
 
+    async crear(req, res) {
+        const transc = await db.sequelize.transaction();
+        try {
+
+
+            await db["his_detalle_usuario"].count({ where: { id_personal: req.body.id_personal } })
+                .then(async count => {
+                    if (count > 0) {
+                        return response.sendBadRequest(res, "Personal ya registrado")
+                    }
+                    const savebody = await db["his_detalle_usuario"].build(req.body);
+                    await savebody.save({ transaction: transc })
+                        .then(function (item) {
+                            response.sendCreated(res, item.id_detalle_usuario, "Datos guardados correctamente.");
+                        }).catch(function (err) {
+                            response.sendBadRequest(res, err.message);
+                        });
+                    await transc.commit();
+
+                }).catch(function (err) {
+                    response.sendBadRequest(res, err.message);
+                });
+
+        } catch (error) {
+            await transc.rollback();
+            response.sendBadRequest(res, error.message);
+        }
+    }
+
     async listar(req, res) {
         try {
 
@@ -31,6 +60,9 @@ class usuarioController {
                     attributes: {
                         exclude: ["id_personal", "id_perfil", "id_usuario"]
                     },
+                    order: [
+                        ["id_detalle_usuario", "DESC"]
+                    ],
                     include: [
                         {
                             model: db["t_usuario"],
@@ -120,6 +152,43 @@ class usuarioController {
                             },
                         }
                     ],
+                })
+                .then((val) => {
+                    response.sendData(res, val, "success");
+                })
+                .catch((errro) => {
+                    response.sendForbidden(res, errro);
+                });
+        } catch (error) {
+            response.sendBadRequest(res, error.message);
+        }
+    }
+
+    async listarPerfiles(req, res) {
+        try {
+            await db["perfil"]
+                .findAll()
+                .then((val) => {
+                    response.sendData(res, val, "success");
+                })
+                .catch((errro) => {
+                    response.sendForbidden(res, errro);
+                });
+        } catch (error) {
+            response.sendBadRequest(res, error.message);
+        }
+    }
+
+    async buscarPersonal(req, res) {
+        try {
+            await db["personal"]
+                .findOne({
+                    where: {
+                        "numero_documento": { [Op.eq]: req.body.dni }
+                    },
+                    attributes: {
+                        exclude: ["id_tipo_documento"]
+                    },
                 })
                 .then((val) => {
                     response.sendData(res, val, "success");
