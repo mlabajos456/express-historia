@@ -2,8 +2,8 @@
 
 const response = require("../helpers/response");
 const atencionService = require("../services/atencion.service");
-const pdfService = require("../services/pdf.service");
-
+const pdfService = require("../services/pdf.service")
+const PDFDocument  = require("pdfkit-construct");
 class ReportesController {
     async getReportes(req, res) {       
         /*  const limit = req.body.limit
@@ -13,13 +13,27 @@ class ReportesController {
             page = 0
         }else{
             page = (page -1) * limit
-        }  */
-        const stream = res.writeHead(200, {
+        }  */  
+        const doc = new PDFDocument ({size:"a4",bufferPages: true,});      
+        doc.image(__dirname+"/../services/his.jpg", 0, 0, {width: 595, height: 842})
+        doc.pipe(res);
+        doc.end()
+        /*   doc.on("data", dataCallback)
+    doc.on("end", endCallback) */
+        /* const stream = res.writeHead(200, {
+            "Content-Type": "application/pdf",
+            "Content-Disposition": "attachment; filename=reporte.pdf",
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+        }); */
+        /* doc.on("data", (data) =>{ stream.write(data)});
+        doc.on("end", () => {stream.end()}); */
+        /*  const stream = res.writeHead(200, {
             "Content-Type": "application/pdf",
             "Content-Disposition": "attachment; filename=reporte.pdf",
         })
         pdfService.createPDF((chunk ) => stream.write(chunk)
-            , () => stream.end())
+            , () => stream.end(), res) */
         try {
            
             /*  await atencionService.getAllAtencionByHojaReport(page, limit, req.params.id).then((val) => {        
