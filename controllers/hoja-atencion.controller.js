@@ -83,7 +83,7 @@ class HojaAtencionController {
         console.log(req.params)
         try {
             await db["his_hoja_atencion"]
-                .findAll({
+                .findOne({
                     /*  order: [["id_turno", "ASC"]], */
                     /*  limit: 10,
           offset: 0, */
