@@ -66,8 +66,14 @@ module.exports = (sequelize, type) => {
 
         Paciente.belongsTo(models.maestro_his_etnia, {
             foreignKey: {
-                name: "id_etnia",
+                name: "id_etnia"
             },
+            as: "etnia"
+        });
+
+        Paciente.belongsTo(models.maestro_his_ubigeo_inei_reniec, {
+            foreignKey: "id_ubigeo",
+            as: "procedencia"
         });
     };
     return Paciente;

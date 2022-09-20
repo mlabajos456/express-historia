@@ -75,7 +75,7 @@ class SupportController {
   */
     async getAllUPS(req, res) {
         try {
-            console.log("id_usuario: " + req.id_usuario);
+           
             await db["maestro_his_ups"]
                 .findAll()
                 .then((val) => {

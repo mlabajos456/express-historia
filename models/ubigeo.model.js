@@ -30,6 +30,12 @@ module.exports = (sequelize, type) => {
                 name: "id_ubigeo",
             },
         });
+        Ubigeo.hasOne(models.paciente, {
+            foreignKey: {
+                name: "id_ubigeo",
+            },
+        });
+        
     };
     return Ubigeo;
 };

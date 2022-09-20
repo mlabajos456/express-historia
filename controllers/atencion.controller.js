@@ -31,7 +31,6 @@ class AtencionController {
                     response.sendData(res, data, "success");
                 })
                 .catch((errro) => {
-                    console.log(errro)
                     response.sendForbidden(res, errro);
                 });
         } catch (error) {
