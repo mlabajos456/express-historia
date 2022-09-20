@@ -18,26 +18,27 @@ class ReportesController {
         const doc = new PDFDocument ({size:"a4",bufferPages: true, margin: 0});      
         doc.image(__dirname+"/../services/his.jpg", 0, 5, {width: 595, height: 842})
         let hojaAtencion = {}
-        try {
+        try {        
             await hojaAtencionService.getOneHojaAtencion(req.params.id).then(( hojaA ) => {
-                hojaAtencion = hojaA 
+                hojaAtencion = hojaA                 
+            }).catch((err) => {
+                response.sendBadRequest(res, err);
             })
         }catch (error) {
             response.sendBadRequest(res, error);
         }
-        pdfService.printHeadPDF(doc, hojaAtencion)       
+        pdfService.printHeadPDF(doc, hojaAtencion)  
         /* HEAD */
         let listPacientes = []
         try {
             await atencionService.getAllAtencionByHojaReport(1, 1000, req.params.id).then((val) => {
-                listPacientes = new ReportesController().getPositionAndPage(val.rows)    
-             
+                listPacientes = new ReportesController().getPositionAndPage(val.rows)                
                         
             })
         } catch (error) {
             response.sendBadRequest(res, error);
         }
-        /*  response.sendData(res,listPacientes, "success"); */
+        
         let pageBefore = 1;       
         for (let index = 0; index < listPacientes.length; index++) {
             var atencion = listPacientes[index];
@@ -48,7 +49,7 @@ class ReportesController {
                 pdfService.printHeadPDF(doc, hojaAtencion)    
                 
             }
-            pdfService.printBodyPDF(doc, atencion.paciente, atencion.diag, atencion.position)    
+            pdfService.printBodyPDF(doc, atencion, atencion.diag, atencion.position)    
         }
         /* HEAD */
         /* BODY */

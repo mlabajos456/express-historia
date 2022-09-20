@@ -14,5 +14,16 @@ module.exports = (sequelize, type) => {
             freezeTableName: true,
         }
     );
+
+    Etnia.associate = function (models) {
+       
+        Etnia.hasOne(models.paciente, {
+            foreignKey: {
+                name: "id_etnia",
+            },
+        });
+    };
+
+
     return Etnia;
 };

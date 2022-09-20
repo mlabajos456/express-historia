@@ -73,6 +73,9 @@ module.exports = (sequelize, type) => {
         Atencion.belongsTo(models.paciente, {
             foreignKey: "id_paciente",
         });
+        Atencion.belongsTo(models.maestro_his_financiador, {
+            foreignKey: "id_financiador",
+        });
         /* Atencion.belongsToMany(models.his_detalle_diagnostico, {
       through: "his_detalle_diagnostico",
     }); */

@@ -13,53 +13,66 @@ function createPDF(dataCallback, endCallback, res)  {
 
 function printHeadPDF (doc, head) {
     console.log(head)
-    doc.fontSize(6).text("2022", 38.5, 135)
-    doc.fontSize(6).text("Septiembre", 68, 135)
-    doc.fontSize(6).text("HOSPITAL II - MOYOBAMBA", 117.71, 135)
-    doc.fontSize(6).text("REHABILITACIÓN O FUNERARIA", 271.5, 135)
-    doc.fontSize(6).text("72887473", 475, 135)
-    doc.fontSize(5).text("Michael Labajos Detquizan", 509, 135)
-    doc.moveTo(484, 122).lineTo(512, 112).stroke() /* M */
-    doc.moveTo(512, 122).lineTo(544, 112).stroke() /* T */
-    doc.moveTo(545, 122).lineTo(578, 112).stroke() /* N */
-}
-function printBodyPDF (doc,paciente, diag, position ) {
-    switch (position) {
+    doc.fontSize(6).text(head.anio, 38.5, 135)
+    doc.fontSize(6).text(head.mes, 68, 135)
+    doc.fontSize(6).text(head.establecimiento.establecimiento , 117.71, 135)
+    doc.fontSize(6).text(head.ups.descripcion, 271.5, 135)
+    doc.fontSize(6).text(head.personal.numero_documento, 475, 135)
+    doc.fontSize(5).text(head.personal.nombre_completo, 509, 135)
+
+    switch (head.his_turno.id_turno) {
     case 1:
-        paintedPosition(doc,paciente,diag,0)
+        doc.moveTo(484, 122).lineTo(512, 112).stroke() /* M */            
         break;
     case 2:
-        paintedPosition(doc,paciente,diag,50)
+        doc.moveTo(512, 122).lineTo(544, 112).stroke() /* T */
         break;
     case 3:
-        paintedPosition(doc,paciente,diag,99)
+        doc.moveTo(545, 122).lineTo(578, 112).stroke() /* N */
+        break;    
+    default:
+        break;
+    }
+
+}
+function printBodyPDF (doc,atencion, diag, position ) {
+    let paciente = atencion.paciente
+    switch (position) {
+    case 1:
+        paintedPosition(doc,atencion,diag,0)
+        break;
+    case 2:
+        paintedPosition(doc,atencion,diag,50)
+        break;
+    case 3:
+        paintedPosition(doc,atencion,diag,99)
         break;
     case 4:
-        paintedPosition(doc,paciente,diag,148)
+        paintedPosition(doc,atencion,diag,148)
         break;
     case 5: 
-        paintedPosition(doc,paciente,diag,198)
+        paintedPosition(doc,atencion,diag,198)
         break;
     case 6:
-        paintedPosition(doc,paciente,diag,248)
+        paintedPosition(doc,atencion,diag,248)
         break;
     case 7:
-        paintedPosition(doc,paciente,diag,296.5)
+        paintedPosition(doc,atencion,diag,296.5)
         break;
     case 8:
-        paintedPosition(doc,paciente,diag,346)
+        paintedPosition(doc,atencion,diag,346)
         break;
     case 9:
-        paintedPosition(doc,paciente,diag,395.7)
+        paintedPosition(doc,atencion,diag,395.7)
         break;
     case 10:
-        paintedPosition(doc,paciente,diag,445)
+        paintedPosition(doc,atencion,diag,445)
         break;
     case 11:
-        paintedPosition(doc,paciente,diag,495)
+        paintedPosition(doc,atencion,diag,495)
         break;
     case 12:
-        paintedPosition(doc,paciente,diag,545)
+        paintedPosition(doc,atencion,diag,545)
         break;
 
     default:
@@ -68,11 +81,12 @@ function printBodyPDF (doc,paciente, diag, position ) {
 }
 
 
-function paintedPosition (doc , paciente, diag, position){
+function paintedPosition (doc , atencion, diag, position){
+    let paciente = atencion.paciente
     doc.fontSize(12).text("31", 39, 198 + position) /* DÍA */
-    doc.fontSize(6).text("72887473", 62, 185.62 + position) /* DNI */
-    doc.fontSize(6).text("HC 72887473", 59, 199 + position) /* DÍA */
-    doc.fontSize(6).text("Michael Labajos", 59, 209 + position) /*nombre y Apellidos */
+    doc.fontSize(6).text(paciente.documento, 62, 185.62 + position) /* DNI */
+    doc.fontSize(6).text(atencion.num_historia_clinica, 59, 199 + position) /* DÍA */
+    doc.fontSize(6).text(paciente.nombres, 59, 209 + position) /*nombre y Apellidos */
     doc.fontSize(6).text("Detquizan ", 59, 215 + position) /* apellido */
 
     doc.fontSize(6).text("S.I.S", 111, 189 + position) /* financiador con space */

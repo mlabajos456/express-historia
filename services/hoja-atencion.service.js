@@ -6,7 +6,9 @@ class HojaAtencionService {
                 where:{id_hoja_atencion: id,},
                 include: [
                     { model: db["his_turno"] },
-             
+                    { model: db["maestro_his_establecimiento"], as:"establecimiento"},                      
+                    { model: db["maestro_his_ups"], as : "ups"},
+                    { model: db["personal"]}
                 ],
             })
         return resp;

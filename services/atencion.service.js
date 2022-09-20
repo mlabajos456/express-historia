@@ -21,12 +21,12 @@ class AtencionService {
                 limit: 100,
                 offset: page,
                 include: [
-                    {
-                        model: db["paciente"],
-                      
-  
-                    },
-                    {model: db["his_detalle_diagnostico"]}
+                    {model: db["paciente"], 
+                        include: [
+                            {model: db["maestro_his_etnia"]},
+                        ]},
+                    {model: db["his_detalle_diagnostico"]},
+                    {model: db["maestro_his_financiador"]}
                 ],
                 where: {id_hoja_atencion: id}
             })

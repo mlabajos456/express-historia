@@ -85,6 +85,11 @@ module.exports = (sequelize, type) => {
             foreignKey: "id_responsable",
             as: "responsable",
         });
+
+        HojaAtencion.belongsTo(models.personal, {
+            foreignKey: "id_responsable"
+        });
+
         HojaAtencion.belongsTo(models.maestro_his_establecimiento, {
             foreignKey: "codigo_unico_ipress",
             as: "establecimiento",
