@@ -36,7 +36,7 @@ class ReportesController {
         } catch (error) {
             response.sendBadRequest(res, error);
         }
-        
+        let objetc = {};
         let pageBefore = 1;       
         for (let index = 0; index < listPacientes.length; index++) {
             var atencion = listPacientes[index];
@@ -47,8 +47,11 @@ class ReportesController {
                 pdfService.printHeadPDF(doc, hojaAtencion)    
                 
             }
-            pdfService.printBodyPDF(doc, atencion, atencion.diag, atencion.position)    
+            
+            pdfService.printBodyPDF(doc, atencion, atencion.diag, atencion.position) 
+            objetc = atencion.diag   
         }
+        //response.sendData(res,listPacientes, "success");
         /* HEAD */
         /* BODY */
        
@@ -114,7 +117,8 @@ class ReportesController {
         for (let index = 0; index < data.length; index++) {
             tempPositionPage = positionPage  
             const element = data[index];
-            const diag = element.his_detalle_diagnosticos;
+
+            const diag = element.diagnostico;
             const totalDiag = diag.length
             tempPositionPage +=1
             if (totalDiag <= 3) {
@@ -129,9 +133,9 @@ class ReportesController {
                         position: positionPage,
                         totalDiag: totalDiag,
                         totalGrupos: 1,
-                        paciente: element.paciente,
+                        paciente: element,
                         grupo: 1,
-                        diag: element.diag
+                        diag: diag
                     }
                 )
             }else{
@@ -164,7 +168,7 @@ class ReportesController {
                             totalGrupos: totalGrupos,
                             paciente: element,
                             grupo: index+1,
-                            diag: element.his_detalle_diagnosticos.slice(index * 3, (index * 3) + 3)
+                            diag: diag.slice(index * 3, (index * 3) + 3)
                         }
                     )
                 }

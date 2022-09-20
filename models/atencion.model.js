@@ -69,13 +69,22 @@ module.exports = (sequelize, type) => {
     Atencion.associate = function (models) {
         Atencion.hasMany(models.his_detalle_diagnostico, {
             foreignKey: "id_atencion",
+            
+            as: "diagnostico",
         });
         Atencion.belongsTo(models.paciente, {
             foreignKey: "id_paciente",
         });
         Atencion.belongsTo(models.maestro_his_financiador, {
             foreignKey: "id_financiador",
+            as: "financiador",
         });
+
+        Atencion.belongsTo(models.maestro_his_centro_poblado, {
+            foreignKey: "id_centro_poblado",
+            as: "cp_procedencia"
+        });
+        
         /* Atencion.belongsToMany(models.his_detalle_diagnostico, {
       through: "his_detalle_diagnostico",
     }); */

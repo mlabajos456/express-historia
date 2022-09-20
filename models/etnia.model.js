@@ -20,7 +20,7 @@ module.exports = (sequelize, type) => {
         Etnia.hasOne(models.paciente, {
             foreignKey: {
                 name: "id_etnia",
-            },
+            }
         });
     };
 

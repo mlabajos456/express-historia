@@ -20,7 +20,7 @@ module.exports = (sequelize, type) => {
         CentroPoblado.hasOne(models.his_atencion, {
             foreignKey: {
                 name: "id_centro_poblado",
-            },
+            }
         });
     };
     return CentroPoblado;

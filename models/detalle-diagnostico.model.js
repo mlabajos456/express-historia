@@ -9,7 +9,10 @@ module.exports = (sequelize, type) => {
             },
             id_atencion: type.INTEGER,
             diagnostico_tipo: type.STRING,
-            id_cie: { type: type.STRING, field: "id_cie10" },
+            id_cie: { type: type.STRING, field: "id_cie10",  references: {
+                model: "maestro_his_cie_cpms",
+                key: "id"
+            } },
         },
         {
             timestamps: false,
@@ -33,6 +36,13 @@ module.exports = (sequelize, type) => {
         DetalleDiag.hasMany(models.his_detalle_diagnostico, {
             foreignKey: "id_detalle",
         });
+
+        DetalleDiag.hasMany(models.his_lab, {
+            foreignKey: "id_detalle",
+        });
+        /*  DetalleDiag.hasMany(models.maestro_his_cie_cpms, {
+            foreignKey: "id_cie",
+        }); */
     };
     return DetalleDiag;
 };
