@@ -1,5 +1,3 @@
-
-
 const response = require("../helpers/response");
 const atencionService = require("../services/atencion.service");
 const pdfService = require("../services/pdf.service")
@@ -116,13 +114,9 @@ class ReportesController {
         for (let index = 0; index < data.length; index++) {
             tempPositionPage = positionPage  
             const element = data[index];
-
             const diag = element.his_detalle_diagnosticos;
             const totalDiag = diag.length
             tempPositionPage +=1
-  
-          
-
             if (totalDiag <= 3) {
                 if(tempPositionPage > 12){
                     positionPage = 1
@@ -178,6 +172,5 @@ class ReportesController {
         }
         return listPosition
     }
-   
 }
 module.exports = new ReportesController();

@@ -6,15 +6,16 @@ module.exports = (sequelize, type) => {
                 type: type.STRING,
                 primaryKey: true,
                 field: "id_lab",
-                autoIncrement:true
+                autoIncrement: true,
             },
-            id_detalle: { type: type.INTEGER, },
+            id_detalle: { type: type.INTEGER },
             descripcion: { type: type.STRING, field: "valor_lab" },
         },
         {
             timestamps: false,
             freezeTableName: true,
-            schema: "datahis",        }
+            schema: "datahis",
+        }
     );
     ValorLab.associate = function (models) {
         ValorLab.belongsTo(models.his_detalle_diagnostico, {
