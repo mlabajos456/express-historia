@@ -27,6 +27,14 @@ module.exports = (sequelize, type) => {
             codigo_unico: {
                 type: type.STRING
             },
+            /* unir nombre  y apellidos */
+            nombre_completo: {
+                type: type.VIRTUAL,
+                get() {
+                    return `${this.nombre} ${this.apellido_paterno} ${this.apellido_materno}`;
+                },
+            },
+
             fecha_nacimiento: {
                 type: type.DATE,
                 get: function () {
@@ -51,6 +59,12 @@ module.exports = (sequelize, type) => {
         Personal.belongsTo(models.maestro_his_establecimiento, {
             foreignKey: {
                 name: "codigo_unico",
+            },
+        });
+
+        Personal.hasOne(models.his_hoja_atencion, {
+            foreignKey: {
+                name: "id_responsable",
             },
         });
     };

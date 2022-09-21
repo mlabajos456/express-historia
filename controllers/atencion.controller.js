@@ -1,6 +1,6 @@
 const db = require("../models/index");
 const response = require("../helpers/response");
-
+const atencionService = require("../services/atencion.service");
 class AtencionController {
     /**
     * @api {get} /v1/atencion/ Obtener atenciones
@@ -20,19 +20,8 @@ class AtencionController {
             page = (page -1) * limit
         } 
         try {
-            await db["his_atencion"]
-                .findAndCountAll({
-                    limit: 100,
-                    offset: page,
-                    include: [
-                        {
-                            model: db["paciente"],
-          
-                        },
-                    ],
-                    where: {id_hoja_atencion: req.params.id}
-                })
-                .then((val) => {
+            atencionService.getAllAtencionByHojaReport(page, limit, req.params.id)
+                .then((val) => {                    
                     const data = {
                         "page": befPage,
                         "limit": limit,
@@ -42,7 +31,6 @@ class AtencionController {
                     response.sendData(res, data, "success");
                 })
                 .catch((errro) => {
-                    console.log(errro)
                     response.sendForbidden(res, errro);
                 });
         } catch (error) {

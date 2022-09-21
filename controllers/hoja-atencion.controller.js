@@ -1,6 +1,7 @@
 const db = require("../models/index");
 const response = require("../helpers/response");
-const { Op } = require("sequelize");
+
+const hojaAtencionService = require("../services/hoja-atencion.service");
 
 /* const { Op } = require("sequelize"); */
 class HojaAtencionController {
@@ -80,24 +81,9 @@ class HojaAtencionController {
         }
     }
     async getOneHojaAtencion(req, res) {
-        console.log(req.params)
+        
         try {
-            await db["his_hoja_atencion"]
-                .findAll({
-                    /*  order: [["id_turno", "ASC"]], */
-                    /*  limit: 10,
-          offset: 0, */
-                    /*   where:{id_turno: 1,}, */
-
-                    include: [
-                        { model: db["his_turno"] },
-                        // {
-                        //   model: db["t_usuario"],
-                        //   attributes: { exclude: ["pass_usuario"] },
-                        //   as: "responsable",
-                        // },
-                    ],
-                })
+            hojaAtencionService.getOneHojaAtencion(req.params.id)
                 .then((val) => {
                     response.sendData(res, val, "success");
                 })

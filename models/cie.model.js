@@ -15,9 +15,11 @@ module.exports = (sequelize, type) => {
         }
     );
     Cie.associate = function (models) {
-        Cie.hasOne(models.his_detalle_diagnostico, {
-            foreignKey: "id_cie",
-        });
+        /* Cie.hasOne(models.his_detalle_diagnostico, {
+            foreignKey: {
+                name: "id_cie",
+            },
+        }); */
     };
     return Cie;
 };

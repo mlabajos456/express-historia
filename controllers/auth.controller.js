@@ -20,8 +20,8 @@ const { Op } = require("sequelize");
 async function authenticate(req, res) {
     const data = await db["his_detalle_usuario"].findOne({
         where: {
-            '$t_usuario.nom_usuario$': { [Op.eq]: req.body.usuario },
-            estado : 't'
+            "$t_usuario.nom_usuario$": { [Op.eq]: req.body.usuario },
+            estado : "t"
         },
         include: [
             {
@@ -51,19 +51,19 @@ async function authenticate(req, res) {
         return;
     }
 
-  res.json({
-    success: true,
-    message: "Token created.",
-    token: 'Bearer '+jwt.sign(
-      {
-        id: data.id_usuario,
-      },
-      privateKey,
-      {
-        expiresIn: tokenExpireInSeconds,
-      }
-    ),
-  });
+    res.json({
+        success: true,
+        message: "Token created.",
+        token: "Bearer "+jwt.sign(
+            {
+                id: data.id_usuario,
+            },
+            privateKey,
+            {
+                expiresIn: tokenExpireInSeconds,
+            }
+        ),
+    });
    
 }
 
