@@ -13,29 +13,7 @@ class usuarioController {
      *
      */
 
-    async crear(req, res) {
-        const transc = await db.sequelize.transaction();
-        try {
-            var personal = await db["his_detalle_usuario"].findOne({ where: { id_personal: req.body.id_personal } })
-            if (personal) {
-                return response.sendBadRequest(res, "Personal ya registrado")
-            }
-            const savebody = await db["his_detalle_usuario"].build(req.body);
-            await savebody.save({ transaction: transc })
-                .then(function (item) {
-                    response.sendCreated(res, item.id_detalle_usuario, "Datos guardados correctamente.");
-                }).catch(function (err) {
-                    response.sendBadRequest(res, err.message);
-                });
-            await transc.commit();
-
-        } catch (error) {
-            await transc.rollback();
-            response.sendBadRequest(res, error.message);
-        }
-    }
-
-    async listar(req, res) {
+    async listrecords(req, res) {
         try {
 
             const limit = req.body.limit
@@ -89,6 +67,36 @@ class usuarioController {
         } catch (error) {
             response.sendBadRequest(res, error.message);
         }
+    }
+
+    async crearte(req, res) {
+        const transc = await db.sequelize.transaction();
+        try {
+            var personal = await db["his_detalle_usuario"].findOne({ where: { id_personal: req.body.id_personal } })
+            if (personal) {
+                return response.sendBadRequest(res, "Personal ya registrado")
+            }
+            const savebody = await db["his_detalle_usuario"].build(req.body);
+            await savebody.save({ transaction: transc })
+                .then(function (item) {
+                    response.sendCreated(res, item.id_detalle_usuario, "Datos guardados correctamente.");
+                }).catch(function (err) {
+                    response.sendBadRequest(res, err.message);
+                });
+            await transc.commit();
+
+        } catch (error) {
+            await transc.rollback();
+            response.sendBadRequest(res, error.message);
+        }
+    }
+
+    readated(req, res) {
+
+    }
+
+    updated(req, res) {
+
     }
 
     async eliminar(req, res) {

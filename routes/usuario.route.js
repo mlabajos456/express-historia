@@ -35,6 +35,6 @@ router.post(
 //agregar usuario
 router.post(
     "/usuario-crear",
-    controller.crear
+    controller.crearte
 );
 module.exports = router;
