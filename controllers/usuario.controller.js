@@ -13,7 +13,7 @@ class usuarioController {
      *
      */
 
-    async listrecords(req, res) {
+    async list(req, res) {
         try {
 
             const limit = req.body.limit
@@ -69,7 +69,7 @@ class usuarioController {
         }
     }
 
-    async crearte(req, res) {
+    async created(req, res) {
         const transc = await db.sequelize.transaction();
         try {
             var personal = await db["his_detalle_usuario"].findOne({ where: { id_personal: req.body.id_personal } })
@@ -91,15 +91,15 @@ class usuarioController {
         }
     }
 
-    readated(req, res) {
+    /*  readated(req, res) {
 
     }
 
     updated(req, res) {
 
-    }
+    } */
 
-    async eliminar(req, res) {
+    async deleted(req, res) {
         try {
             await db["his_detalle_usuario"].findOne({
                 where: { id_detalle_usuario: req.params.id },

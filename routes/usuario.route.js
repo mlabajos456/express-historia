@@ -5,22 +5,31 @@ const { pagination } = require("../validation-rules/usuario.rule");
 const controller = require("../controllers/usuario.controller");
 
 require("express-async-errors");
-
-//mostrar usuario logueado
-router.get(
-    "/usuario",
-    controller.mostarUsuario
-);
 //listar usuario
 router.post(
     "/usuario-listar",
     validateMiddleware(pagination),
-    controller.listar
+    controller.list
 );
+
+//agregar usuario
+router.post(
+    "/usuario-crear",
+    controller.created
+);
+
 //eliminar usuario
 router.delete(
     "/usuario-eliminar/:id",
-    controller.eliminar
+    controller.deleted
+);
+/**
+ * OTROS
+ */
+//mostrar usuario logueado
+router.get(
+    "/usuario",
+    controller.mostarUsuario
 );
 //listar perfiles
 router.get(
@@ -32,9 +41,5 @@ router.post(
     "/buscar-personal",
     controller.buscarPersonal
 );
-//agregar usuario
-router.post(
-    "/usuario-crear",
-    controller.crearte
-);
+
 module.exports = router;
