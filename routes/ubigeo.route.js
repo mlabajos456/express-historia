@@ -13,4 +13,11 @@ router.get(
     controller.microredes
 );
 
+
+router.get(
+    "/establecimientos/:codred/:codmicrored",
+    controller.establecimientos
+);
+
+
 module.exports = router;
