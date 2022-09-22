@@ -20,7 +20,10 @@ class UbigeoController {
                     group: [
                         "codigo_red",
                         "red"
-                    ]
+                    ],
+                    order: [
+                        ["red", "ASC"]
+                    ],
                 })
 
                 .then((val) => {
@@ -59,7 +62,10 @@ class UbigeoController {
                     group: [
                         "codigo_microred",
                         "microred"
-                    ]
+                    ],
+                    order: [
+                        ["microred", "ASC"]
+                    ],
                 })
 
                 .then((val) => {
