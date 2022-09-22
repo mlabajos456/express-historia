@@ -41,12 +41,12 @@ class HojaAtencionController {
         if (req.body.id_ups) {
             params.push({ id_ups: req.body.id_ups })
         }
-        if(page == 1){
+        if (page == 1) {
             page = 0
-        }else{
-            page = (page -1) * limit
+        } else {
+            page = (page - 1) * limit
         }
-        
+
         try {
             await db["his_hoja_atencion"]
                 .findAndCountAll({
@@ -57,11 +57,11 @@ class HojaAtencionController {
                         //db.sequelize.where(db.sequelize.fn('EXTRACT(MONTH from "fecha_apertura") =', 8))
                         //get month from fecha
                         params
-                    , 
+                    ,
                     include: [
-                        { model: db["his_turno"] },                      
-                        { model: db["maestro_his_establecimiento"], as:"establecimiento" },                      
-                        { model: db["maestro_his_ups"], as : "ups"},                      
+                        { model: db["his_turno"] },
+                        { model: db["maestro_his_establecimiento"], as: "establecimiento" },
+                        { model: db["maestro_his_ups"], as: "ups" },
                     ],
                 })
                 .then((val) => {
@@ -81,7 +81,7 @@ class HojaAtencionController {
         }
     }
     async getOneHojaAtencion(req, res) {
-        
+
         try {
             hojaAtencionService.getOneHojaAtencion(req.params.id)
                 .then((val) => {
@@ -97,11 +97,11 @@ class HojaAtencionController {
 
     async postHojaAtencion(req, res) {
         const t = await db.sequelize.transaction();
-        try {            
+        try {
             var hojaComplete = await db["his_hoja_atencion"].build(req.body);
             hojaComplete.fecha = Date.now();
             hojaComplete.fecha_apertura = Date.now();
-            hojaComplete.id_responsable= req.id_personal
+            hojaComplete.id_responsable = req.id_personal
             await hojaComplete.save({ transaction: t });
             await t.commit();
             response.sendCreated(res, hojaComplete, "success");
@@ -157,6 +157,6 @@ class HojaAtencionController {
             response.sendBadRequest(res, error.message);
         }
     }
-    
+
 }
 module.exports = new HojaAtencionController();
