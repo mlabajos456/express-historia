@@ -30,7 +30,6 @@ router.get(
 );
 router.post(
     "/hoja-atencion/all",
-    
     HojaAtencionController.getAllHojaAtencion
 );
 

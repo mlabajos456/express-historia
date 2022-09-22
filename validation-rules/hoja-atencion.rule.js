@@ -7,9 +7,9 @@ module.exports = {
         body: Joi.object().keys({
             id_turno: Joi.number().required().label("id turno"),
             /*   id_responsable: Joi.number().required().label("id responsable"), */
-            fecha_apertura: Joi.date(),
-            fecha_cierre: Joi.date(),
-            fecha: Joi.date(),
+            /* fecha_apertura: Joi.date(),
+            fecha_cierre: Joi.date(), */
+            /* fecha: Joi.date(), */
             codigo_unico_ipress: Joi.string().required().label("código ipress"),
             id_ups: Joi.string().required().label("código ups"),
         }),
@@ -47,7 +47,7 @@ module.exports = {
         params: {
             limite: Joi.number().required().label("limite"),
             page: Joi.number().required().label("pagina"),
-                       
+
         },
     },
 };
