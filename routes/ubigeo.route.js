@@ -4,7 +4,13 @@ const router = express.Router();
 require("express-async-errors"); */
 const controller = require("../controllers/ubigeo.controller");
 router.get(
-    "/redes", 
+    "/redes",
     controller.redes
 );
+
+router.get(
+    "/micro-redes/:codred",
+    controller.microredes
+);
+
 module.exports = router;
