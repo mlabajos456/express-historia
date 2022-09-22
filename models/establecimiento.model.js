@@ -18,6 +18,7 @@ module.exports = (sequelize, type) => {
             microred: { type: type.STRING },
             codigo_microred: { type: type.STRING },
             codigo_red: { type: type.STRING },
+            nombre_establecimiento: { type: type.STRING },
 
             codDep: {
                 type: type.STRING,
