@@ -157,5 +157,6 @@ class HojaAtencionController {
             response.sendBadRequest(res, error.message);
         }
     }
+    
 }
 module.exports = new HojaAtencionController();

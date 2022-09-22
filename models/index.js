@@ -15,7 +15,9 @@ const sequelize = new Sequelize(
         operatorsAliases: false,
         timezone: "+05:00", // set time zone to UTC
         port: config.db.port,
-    }
+        //logging: false
+    },
+    
 );
 
 // check database connection

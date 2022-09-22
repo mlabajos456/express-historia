@@ -9,13 +9,16 @@ module.exports = (sequelize, type) => {
 
             },
             establecimiento: { type: type.STRING, field: "nombre_establecimiento" },
-            codigo: { type: type.STRING, field: "codigo_unico" },
+            //codigo: { type: type.STRING, field: "codigo_unico" },
             ubigeo: { type: type.STRING, field: "ubigueo_establecimiento" },        
             codMicroRed: { type: type.STRING, field: "codigo_microred" },
             codisa: { type: type.STRING, field: "codigo_disa" },
             departamento: { type: type.STRING, field: "departamento" },
-            red: { type: type.STRING, field: "provincia" },
-            microRed: { type: type.STRING, field: "distrito" },
+            red: { type: type.STRING , field: "red"},
+            microRed: { type: type.STRING , field: "microred"},
+
+            codigo_red: { type: type.STRING},
+
             codDep: {
                 type: type.STRING,
                 field: "ubigueo_establecimiento",

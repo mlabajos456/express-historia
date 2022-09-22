@@ -23,7 +23,7 @@ app.use("/" + appVersion + "/", require("./routes/hoja-atencion.route"));
 app.use("/" + appVersion + "/", require("./routes/atencion.route"));
 app.use("/" + appVersion + "/", require("./routes/detalle-diagnostico.route"));
 app.use("/" + appVersion + "/", require("./routes/usuario.route"));
-
+app.use("/" + appVersion + "/ubigeo/", require("./routes/ubigeo.route"));
 
 
 
