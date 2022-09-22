@@ -5,6 +5,6 @@ require("express-async-errors"); */
 const controller = require("../controllers/ubigeo.controller");
 router.get(
     "/redes", 
-    controller.RedesSanMartin
+    controller.redes
 );
 module.exports = router;

@@ -3,11 +3,9 @@ const response = require("../helpers/response");
 
 
 class UbigeoController {
-    async RedesSanMartin(req, res) {
+
+    async redes(req, res) {
         try {
-            /**SELECT codigo_red AS codigo, red AS nombre 
-             * FROM maestro_his_establecimiento 
-             * WHERE codigo_disa = '30' GROUP BY codigo_red, red ORDER BY red */
             await db["maestro_his_establecimiento"]
                 .findAll({
                     attributes: [
