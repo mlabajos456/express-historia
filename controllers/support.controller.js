@@ -4,7 +4,7 @@ const response = require("../helpers/response");
 const { Op } = require("sequelize");
 
 class SupportController {
- 
+
     async getOneTurno(req, res) {
         try {
             await db["his_turno"]
@@ -75,7 +75,7 @@ class SupportController {
   */
     async getAllUPS(req, res) {
         try {
-           
+
             await db["maestro_his_ups"]
                 .findAll()
                 .then((val) => {
@@ -168,13 +168,13 @@ class SupportController {
         const limit = req.body.limit
         let befPage = req.body.page
         let page = req.body.page
-        if(page == 1){
+        if (page == 1) {
             page = 0
-        }else{
-            page = (page -1) * limit
+        } else {
+            page = (page - 1) * limit
         }
         var buscar = ""
-        if(req.body.q !== ""){
+        if (req.body.q !== "") {
             buscar = req.body.q
         }
         try {
@@ -184,12 +184,12 @@ class SupportController {
                         [Op.or]: [
                             {
                                 codigo_item: {
-                                    [Op.like]: "%"+buscar+"%"
+                                    [Op.like]: "%" + buscar + "%"
                                 }
                             },
                             {
                                 descripcion_item: {
-                                    [Op.like]: "%"+buscar+"%"
+                                    [Op.like]: "%" + buscar + "%"
                                 }
                             }
                         ]
@@ -375,6 +375,7 @@ class SupportController {
             response.sendBadRequest(res, error.message);
         }
     }
+
     async getAllUbigeoDistrito(req, res) {
         try {
             /*  var buscar = req.body.query.toUpperCase().trim(); */
@@ -400,6 +401,7 @@ class SupportController {
             response.sendBadRequest(res, error.message);
         }
     }
+
     //findone
     async getOneUbigeoDepatamento(req, res) {
         try {
@@ -420,6 +422,7 @@ class SupportController {
             response.sendBadRequest(res, error.message);
         }
     }
+
     async getOneUbigeoProvincia(req, res) {
         try {
             await db["maestro_his_ubigeo_inei_reniec"]
@@ -485,6 +488,7 @@ class SupportController {
             response.sendBadRequest(res, error.message);
         }
     }
+    
     /*FIN IPRESS*/
     /**etnia */
     async getAllEtnia(req, res) {

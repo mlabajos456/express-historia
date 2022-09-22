@@ -9,30 +9,34 @@ module.exports = (sequelize, type) => {
  
             },
             establecimiento: { type: type.STRING, field: "nombre_establecimiento" },
-            codigo: { type: type.STRING, field: "codigo_unico" },
-            ubigeo: { type: type.STRING, field: "ubigueo_establecimiento" },        
-            codMicroRed: { type: type.STRING, field: "codigo_microred" },
+            //codigo: { type: type.STRING, field: "codigo_unico" },
+            ubigeo: { type: type.STRING, field: "ubigueo_establecimiento" },
+            codisa: { type: type.STRING, field: "codigo_disa" },
             departamento: { type: type.STRING, field: "departamento" },
-            red: { type: type.STRING, field: "provincia" },
-            microRed: { type: type.STRING, field: "distrito" },
+            //------//
+            red: { type: type.STRING},
+            microred: { type: type.STRING },
+            codigo_microred: { type: type.STRING },
+            codigo_red: { type: type.STRING },
+
             codDep: {
                 type: type.STRING,
                 field: "ubigueo_establecimiento",
-                get: function() {
+                get: function () {
                     return this.ubigeo.substring(0, 2);
                 }
             },
             codPro: {
                 type: type.STRING,
                 field: "ubigueo_establecimiento",
-                get: function() {
+                get: function () {
                     return this.ubigeo.substring(2, 4);
                 }
             },
             codDis: {
                 type: type.STRING,
                 field: "ubigueo_establecimiento",
-                get: function() {
+                get: function () {
                     return this.ubigeo.substring(4, 6);
                 }
             }

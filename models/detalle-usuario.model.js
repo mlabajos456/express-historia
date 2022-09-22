@@ -7,6 +7,7 @@ module.exports = (sequelize, type) => {
             id_detalle_usuario: {
                 type: type.INTEGER,
                 primaryKey: true,
+                autoIncrement: true
             },
             id_usuario: type.INTEGER,
             estado: type.BOOLEAN,

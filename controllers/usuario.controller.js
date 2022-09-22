@@ -13,7 +13,7 @@ class usuarioController {
      *
      */
 
-    async listar(req, res) {
+    async list(req, res) {
         try {
 
             const limit = req.body.limit
@@ -31,6 +31,9 @@ class usuarioController {
                     attributes: {
                         exclude: ["id_personal", "id_perfil", "id_usuario"]
                     },
+                    order: [
+                        ["id_detalle_usuario", "DESC"]
+                    ],
                     include: [
                         {
                             model: db["t_usuario"],
@@ -66,7 +69,37 @@ class usuarioController {
         }
     }
 
-    async eliminar(req, res) {
+    async created(req, res) {
+        const transc = await db.sequelize.transaction();
+        try {
+            var personal = await db["his_detalle_usuario"].findOne({ where: { id_personal: req.body.id_personal } })
+            if (personal) {
+                return response.sendBadRequest(res, "Personal ya registrado")
+            }
+            const savebody = await db["his_detalle_usuario"].build(req.body);
+            await savebody.save({ transaction: transc })
+                .then(function (item) {
+                    response.sendCreated(res, item.id_detalle_usuario, "Datos guardados correctamente.");
+                }).catch(function (err) {
+                    response.sendBadRequest(res, err.message);
+                });
+            await transc.commit();
+
+        } catch (error) {
+            await transc.rollback();
+            response.sendBadRequest(res, error.message);
+        }
+    }
+
+    /*  readated(req, res) {
+
+    }
+
+    updated(req, res) {
+
+    } */
+
+    async deleted(req, res) {
         try {
             await db["his_detalle_usuario"].findOne({
                 where: { id_detalle_usuario: req.params.id },
@@ -120,6 +153,43 @@ class usuarioController {
                             },
                         }
                     ],
+                })
+                .then((val) => {
+                    response.sendData(res, val, "success");
+                })
+                .catch((errro) => {
+                    response.sendForbidden(res, errro);
+                });
+        } catch (error) {
+            response.sendBadRequest(res, error.message);
+        }
+    }
+
+    async listarPerfiles(req, res) {
+        try {
+            await db["perfil"]
+                .findAll()
+                .then((val) => {
+                    response.sendData(res, val, "success");
+                })
+                .catch((errro) => {
+                    response.sendForbidden(res, errro);
+                });
+        } catch (error) {
+            response.sendBadRequest(res, error.message);
+        }
+    }
+
+    async buscarPersonal(req, res) {
+        try {
+            await db["personal"]
+                .findOne({
+                    where: {
+                        "numero_documento": { [Op.eq]: req.body.dni }
+                    },
+                    attributes: {
+                        exclude: ["id_tipo_documento"]
+                    },
                 })
                 .then((val) => {
                     response.sendData(res, val, "success");

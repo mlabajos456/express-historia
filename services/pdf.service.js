@@ -85,9 +85,9 @@ function paintedPosition (doc , lista, diag, position){
     doc.fontSize(12).text("31", 39, 198 + position) /* DÍA */
     doc.fontSize(6).text(paciente.documento, 62, 185.62 + position) /* DNI */
     doc.fontSize(6).text(atencion.num_historia_clinica, 59, 199 + position) /* DÍA */
-    doc.fontSize(6).text(paciente.nombres, 59, 209 + position) /*nombre y Apellidos */
-    //doc.fontSize(6).text("Detquizan ", 59, 215 + position) /* apellido */
-    doc.fontSize(6).text(atencion.financiador.descripcion, 111, 189 + position) /* financiador con space */
+    doc.fontSize(6).text(atencion.estado_gestante, 59, 212 + position) /*nombre y Apellidos */
+    doc.fontSize(6).text(paciente.nombres, 126, 174 + position) /* apellido */
+    doc.fontSize(6).text(atencion.id_financiador    , 120, 189 + position) /* financiador con space */
   
    
         
