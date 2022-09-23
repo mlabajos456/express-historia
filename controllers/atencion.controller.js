@@ -40,6 +40,23 @@ class AtencionController {
         }
     }
 
+    async getOneAtencion (req, res){
+        try {
+            atencionService.getOneAtencion(req.params.id)
+                .then((val) => {
+                    response.sendData(res, val, "success");
+                })
+                .catch((errro) => {
+                    console.log(errro)
+                    response.sendForbidden(res, errro);
+                });
+        } catch (error) {
+            console.log(error)
+            response.sendBadRequest(res, error
+            );
+        }
+    }
+
     async postAtencion(req, res) {        
         const t = await db.sequelize.transaction();
         try {
@@ -47,10 +64,6 @@ class AtencionController {
             atencion.edad_anio = "9";
             atencion.edad_mes = "9";
             atencion.edad_dias = "9";
-            
-            atencion.condicion_establec = "R"
-            atencion.condicion_servicio = "R"
-            atencion.id_hoja_atencion = 36
             atencion.fecha_atencion = Date.now();            
             var newAtencion = await atencion.save({ transaction: t });
             for (const detail of req.body.diagnosticos) {
