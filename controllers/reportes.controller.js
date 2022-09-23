@@ -36,7 +36,6 @@ class ReportesController {
         } catch (error) {
             response.sendBadRequest(res, error);
         }
-        let objetc = {};
         let pageBefore = 1;       
         for (let index = 0; index < listPacientes.length; index++) {
             var atencion = listPacientes[index];
@@ -49,7 +48,7 @@ class ReportesController {
             }
             
             pdfService.printBodyPDF(doc, atencion, atencion.diag, atencion.position) 
-            objetc = atencion.diag   
+           
         }
         //response.sendData(res,listPacientes, "success");
         /* HEAD */
@@ -118,7 +117,7 @@ class ReportesController {
             tempPositionPage = positionPage  
             const element = data[index];
 
-            const diag = element.diagnostico;
+            const diag = element.diagnosticos;
             const totalDiag = diag.length
             tempPositionPage +=1
             if (totalDiag <= 3) {

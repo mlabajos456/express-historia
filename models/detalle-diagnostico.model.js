@@ -23,26 +23,19 @@ module.exports = (sequelize, type) => {
     DetalleDiag.associate = function (models) {
         DetalleDiag.belongsTo(models.maestro_his_cie_cpms, {
             foreignKey: "id_cie",
-            as: "cie",
+            as :"cie"
         });
-        /*  DetalleDiag.belongsToMany(models.his_atencion, {
-      through: "his_atencion",
-    }); */
+        
         DetalleDiag.belongsTo(models.his_atencion, {
             foreignKey: {
                 name: "id_atencion",
             },
         });
-        DetalleDiag.hasMany(models.his_detalle_diagnostico, {
-            foreignKey: "id_detalle",
-        });
-
         DetalleDiag.hasMany(models.his_lab, {
-            foreignKey: "id_detalle",
+            foreignKey:  {
+                name: "id_detalle"
+            }
         });
-        /*  DetalleDiag.hasMany(models.maestro_his_cie_cpms, {
-            foreignKey: "id_cie",
-        }); */
     };
     return DetalleDiag;
 };
