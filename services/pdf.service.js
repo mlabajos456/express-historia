@@ -94,7 +94,15 @@ function paintedPosition (doc , lista, diag, position){
             width: 50,
         }) /* DNI */
     doc.fontSize(6).text(atencion.num_historia_clinica, 59, 199 + position) /* DÍA */
-    doc.fontSize(6).text(atencion.estado_gestante, 59, 212 + position) /*nombre y Apellidos */
+    var gestante = ""
+    if(atencion.estado_gestante =="1"){
+        gestante = "GESTANTE"
+    } 
+    if(atencion.estado_gestante =="2"){
+        gestante = "PUERPERA"
+    } 
+    
+    doc.fontSize(6).text(gestante, 59, 212 + position) /*nombre y Apellidos */
     doc.fontSize(6).text(paciente.nombres, 126, 174 + position) /* apellido */
     doc.fontSize(6).text(atencion.id_financiador    , 120, 189 + position) /* financiador con space */
   
@@ -166,21 +174,23 @@ function paintedPosition (doc , lista, diag, position){
 
     doc.fontSize(6).text(atencion.peso, 289, 185 + position)  /* peso +52 por cada position */
     doc.fontSize(6).text(atencion.talla, 289, 198 + position)  /* talla + 52 por cada position */
+    if(atencion.hemoglobina === "01-01-2022"){
+        /* cortar fecha hemoglobina por dia mes anio */
+        let fecha_hb = atencion.fecha_hb.split("-")
+        doc.fontSize(6).text(fecha_hb[0], 332, 174 + position)  /* DIA + 52 por cada position */
+        doc.fontSize(6).text(fecha_hb[1], 348, 174 + position)  /* MES + 52 por cada position */
+        doc.fontSize(6).text(fecha_hb[2], 365, 174 + position)  /* AÑO + 52 por cada position */
+
+    }
     doc.fontSize(6).text(atencion.hemoglobina, 289, 211 + position)  /* Hemoglobina + 52 por cada position */
 
-    /* cortar fecha hemoglobina por dia mes anio */
-    let fecha_hb = atencion.fecha_hb.split("-")
-    doc.fontSize(6).text(fecha_hb[0], 332, 174 + position)  /* DIA + 52 por cada position */
-    doc.fontSize(6).text(fecha_hb[1], 348, 174 + position)  /* MES + 52 por cada position */
-    doc.fontSize(6).text(fecha_hb[2], 365, 174 + position)  /* AÑO + 52 por cada position */
-
     
-    let fecha_fum = atencion.fum.split("-")
-    doc.fontSize(6).text(fecha_fum[0], 532, 174 + position)  /* DIA + 52 por cada position */
-    doc.fontSize(6).text(fecha_fum[1], 549, 174 + position)  /* MES + 52 por cada position */
-    doc.fontSize(6).text(fecha_fum[2], 563, 174 + position)  /* AÑO + 52 por cada position */
-
-
+    if(atencion.fum === "01-01-2022"){
+        let fecha_fum = atencion.fum.split("-")
+        doc.fontSize(6).text(fecha_fum[0], 532, 174 + position)  /* DIA + 52 por cada position */
+        doc.fontSize(6).text(fecha_fum[1], 549, 174 + position)  /* MES + 52 por cada position */
+        doc.fontSize(6).text(fecha_fum[2], 563, 174 + position)  /* AÑO + 52 por cada position */
+    }
       
     switch (atencion.condicion_establec) {
     case "N":
