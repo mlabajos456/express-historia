@@ -45,7 +45,7 @@ router.get(
     SupportController.getOneFinanciador
 );
 
-router.get("/centro-poblado", SupportController.getAllCentroPoblado);
+router.post("/centro-poblado",  validateMiddleware(SupportValidationRules.findUbigeoCentroPoblado), SupportController.getAllCentroPoblado);
 router.get(
     "/centro-poblado/:id",
     validateMiddleware(SupportValidationRules.findOne),

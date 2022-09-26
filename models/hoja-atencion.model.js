@@ -8,7 +8,7 @@ module.exports = (sequelize, type) => {
             id_hoja_atencion: {
                 type: type.INTEGER,
                 primaryKey: true,
-                autoIncrement:true
+                autoIncrement: true
             },
             id_turno: type.INTEGER,
             id_responsable: type.STRING,
@@ -24,7 +24,7 @@ module.exports = (sequelize, type) => {
             fecha_cierre: {
                 type: type.DATE,
                 get: function () {
-                    if(this.getDataValue("fecha_cierre") == null){
+                    if (this.getDataValue("fecha_cierre") == null) {
                         return ""
                     }
                     return moment(this.getDataValue("fecha_cierre")).format("DD-MM-YYYY");
@@ -96,7 +96,7 @@ module.exports = (sequelize, type) => {
         });
         HojaAtencion.belongsTo(models.maestro_his_ups, {
             foreignKey: "id_ups",
-            as : "ups"
+            as: "ups"
         });
     };
 
