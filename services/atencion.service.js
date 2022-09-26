@@ -29,7 +29,7 @@ class AtencionService {
                     {model: db["his_detalle_diagnostico"], as: "diagnosticos",
                         include: [
                             {model: db["his_lab"]},
-                            /* {model: db["maestro_his_cie_cpms"]}, */
+                            {model: db["maestro_his_cie_cpms"],as :"cie"},
                         ]},
                     {model: db["maestro_his_financiador"], as: "financiador"},
                     {model: db["maestro_his_centro_poblado"], as : "cp_procedencia"},
