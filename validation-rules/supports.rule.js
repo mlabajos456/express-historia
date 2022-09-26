@@ -8,6 +8,13 @@ module.exports = {
             id: Joi.string().required().label("id"),
         },
     },
+
+    findUbigeoCentroPoblado: {
+        body: {
+            ubigeo: Joi.string().required().label("Codigo Ubigeo")
+        },
+    },
+
     findByName: {
         body: {
             q: Joi.string().allow(""),

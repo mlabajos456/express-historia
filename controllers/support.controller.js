@@ -314,8 +314,14 @@ class SupportController {
   */
     async getAllCentroPoblado(req, res) {
         try {
+            var buscar = req.body.ubigeo.trim();
+
             await db["maestro_his_centro_poblado"]
-                .findAll({ limit: 10 })
+                .findAll({
+                    limit: 10, where: {
+                        id_ubigueo_centro_poblado: buscar,
+                    },
+                })
                 .then((val) => {
                     response.sendData(res, val, "success");
                 })
@@ -488,7 +494,7 @@ class SupportController {
             response.sendBadRequest(res, error.message);
         }
     }
-    
+
     /*FIN IPRESS*/
     /**etnia */
     async getAllEtnia(req, res) {
