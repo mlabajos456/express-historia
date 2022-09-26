@@ -18,9 +18,9 @@ module.exports = (sequelize, type) => {
             peso: type.STRING,
 
             id_financiador: type.STRING /* INNER JOIN */,
-            edad_anio: type.STRING,
-            edad_mes: type.STRING,
-            edad_dias: type.STRING,
+            edad_anio: type.INTEGER,
+            edad_mes: type.INTEGER,
+            edad_dias: type.INTEGER,
             estado_gestante: type.STRING,
             id_centro_poblado: type.STRING,
             condicion_establec: type.STRING,
