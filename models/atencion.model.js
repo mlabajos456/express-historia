@@ -70,7 +70,7 @@ module.exports = (sequelize, type) => {
         Atencion.hasMany(models.his_detalle_diagnostico, {
             foreignKey: "id_atencion",
             
-            as: "diagnostico",
+            as: "diagnosticos",
         });
         Atencion.belongsTo(models.paciente, {
             foreignKey: "id_paciente",

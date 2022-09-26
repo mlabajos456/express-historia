@@ -14,12 +14,12 @@ module.exports = (sequelize, type) => {
             freezeTableName: true,
         }
     );
-    Cie.associate = function (models) {
-        /* Cie.hasOne(models.his_detalle_diagnostico, {
+    /* Cie.associate = function (models) {
+        Cie.hasOne(models.his_detalle_diagnostico, {
             foreignKey: {
-                name: "id_cie",
+                name: "id_cie",            
             },
-        }); */
-    };
+        });
+    }; */
     return Cie;
 };

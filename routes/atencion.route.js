@@ -8,6 +8,9 @@ const AtencionController = require("../controllers/atencion.controller");
 require("express-async-errors");
 
 router.post("/atencion/:id", AtencionController.getAllAtencion);
+router.get("/atencion/:id", 
+    validateMiddleware(AtencionValidationRules.findOne),
+    AtencionController.getOneAtencion);
 router.post(
     "/atencion",
     validateMiddleware(AtencionValidationRules.create),
