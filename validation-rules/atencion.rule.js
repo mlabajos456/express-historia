@@ -72,6 +72,12 @@ module.exports = {
                 .required()
                 .label("Número de historia clinica"),
             hemoglobina: Joi.number().optional(),
+            
+            edad_anio: Joi.number().optional().allow(""),
+            
+            edad_mes: Joi.number().optional().allow(""),
+            
+            edad_dias: Joi.number().optional().allow(""),
         }),
     },
     edit: {

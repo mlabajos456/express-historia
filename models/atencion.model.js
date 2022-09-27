@@ -18,9 +18,9 @@ module.exports = (sequelize, type) => {
             peso: type.STRING,
 
             id_financiador: type.STRING /* INNER JOIN */,
-            edad_anio: type.STRING,
-            edad_mes: type.STRING,
-            edad_dias: type.STRING,
+            edad_anio: type.INTEGER,
+            edad_mes: type.INTEGER,
+            edad_dias: type.INTEGER,
             estado_gestante: type.STRING,
             id_centro_poblado: type.STRING,
             condicion_establec: type.STRING,
@@ -28,7 +28,7 @@ module.exports = (sequelize, type) => {
             fum: {
                 type: type.DATE,
                 get: function () {
-                    return moment(this.getDataValue("fecha_apertura")).format(
+                    return moment(this.getDataValue("fum")).format(
                         "DD-MM-YYYY"
                     );
                 },
@@ -36,7 +36,7 @@ module.exports = (sequelize, type) => {
             fecha_atencion: {
                 type: type.DATE,
                 get: function () {
-                    return moment(this.getDataValue("fecha_cierre")).format("DD-MM-YYYY");
+                    return moment(this.getDataValue("fecha_atencion")).format("DD-MM-YYYY");
                 },
             },
             talla: {
@@ -46,7 +46,7 @@ module.exports = (sequelize, type) => {
             fecha_hb: {
                 type: type.DATE,
                 get: function () {
-                    return moment(this.getDataValue("fecha_cierre")).format("DD-MM-YYYY");
+                    return moment(this.getDataValue("fecha_hb")).format("DD-MM-YYYY");
                 },
             },
             condicion: {

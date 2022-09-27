@@ -61,9 +61,6 @@ class AtencionController {
         const t = await db.sequelize.transaction();
         try {
             var atencion = await db["his_atencion"].build(req.body);
-            atencion.edad_anio = "9";
-            atencion.edad_mes = "9";
-            atencion.edad_dias = "9";
             atencion.fecha_atencion = Date.now();            
             var newAtencion = await atencion.save({ transaction: t });
             for (const detail of req.body.diagnosticos) {

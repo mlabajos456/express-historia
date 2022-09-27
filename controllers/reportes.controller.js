@@ -37,6 +37,9 @@ class ReportesController {
             response.sendBadRequest(res, error);
         }
         let pageBefore = 1;       
+        let pacienteAnterior = 0;
+        let id_atencion = 0
+        let tachar = false;
         for (let index = 0; index < listPacientes.length; index++) {
             var atencion = listPacientes[index];
             if(pageBefore !== atencion.page){
@@ -46,11 +49,16 @@ class ReportesController {
                 pdfService.printHeadPDF(doc, hojaAtencion)    
                 
             }
+            if(pacienteAnterior === atencion.paciente.id_paciente && id_atencion === atencion.paciente.id_atencion){
+                tachar = true
+            }
+            pacienteAnterior = atencion.paciente.id_paciente
+            id_atencion = atencion.paciente.id_atencion
             
-            pdfService.printBodyPDF(doc, atencion, atencion.diag, atencion.position) 
+            pdfService.printBodyPDF(doc, atencion, atencion.diag, atencion.position, tachar) 
            
         }
-        //response.sendData(res,listPacientes, "success");
+        /*  response.sendData(res,listPacientes, "success"); */
         /* HEAD */
         /* BODY */
        
