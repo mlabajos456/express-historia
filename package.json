@@ -7,7 +7,7 @@
     "node": ">=8.3.0"
   },
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "node index.js",
     "start-local": "nodemon index.js --exec",
     "lint": "eslint --ignore-path .gitignore .",
     "lint-fix": "eslint --ignore-path .gitignore --fix .",
