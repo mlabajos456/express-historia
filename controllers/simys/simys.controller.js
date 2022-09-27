@@ -36,7 +36,6 @@ async function authenticate(req, res) {
         response.sendUnauthorized(res, "Authentication failed.");
         return;
     }
-
     res.json({
         success: true,
         message: "Token created.",
