@@ -8,7 +8,7 @@ const defaultConfig = {
         dialect: "postgres",
     },
     db_production: {
-        host: "20.195.226.148",
+        host: "localhost",
         name: "simys",
         user: "postgres",
         password: "utE#Eu$O1xy7XTqU",
