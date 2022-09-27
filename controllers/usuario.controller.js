@@ -230,7 +230,6 @@ class usuarioController {
     }
 
     async buscarPersonal(req, res) {
-		console.log(req.body)
         try {
             await db["personal"]
                 .findOne({
