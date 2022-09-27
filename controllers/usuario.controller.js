@@ -1,6 +1,7 @@
 const db = require("../models/index");
 const response = require("../helpers/response");
 const { Op } = require("sequelize");
+const bcrypt = require("bcrypt");
 
 class usuarioController {
     /**
@@ -71,11 +72,59 @@ class usuarioController {
 
     async created(req, res) {
         const transc = await db.sequelize.transaction();
+
         try {
-            var personal = await db["his_detalle_usuario"].findOne({ where: { id_personal: req.body.id_personal } })
+            var personal = await db["his_detalle_usuario"].findOne({
+                where: { id_personal: req.body.id_personal },
+                raw: true,
+                include: [
+                    {
+                        model: db["t_usuario"],
+                        required: false,
+                        attributes: {
+                            exclude: ["pass_usuario"]
+                        },
+                    }
+                ],
+            });
+            console.log(personal);
             if (personal) {
-                return response.sendBadRequest(res, "Personal ya registrado")
+                //return response.sendBadRequest(res, "Personal ya registrado")
+                //REGISTAR EN his_detalle_usuario
+
+                console.log("REGISTAR EN his_detalle_usuario");
+            } else {
+                //OBTENER MAX ID_USUARIO
+                const idMaxUsuario = await db["t_usuario"].max("id_usuario")
+                const id_usuario = idMaxUsuario + 1;
+                //ENCRIPTAR CONTRASEÑA
+                const salt = await bcrypt.genSaltSync(10);
+                const password = req.body.password
+                const newPassword = (await bcrypt.hashSync(password, salt)).replace("$2b$", "$2y$");
+
+                //CREAR USUARIO t_usuario
+                await db["t_usuario"].create({
+                    id_usuario: id_usuario,
+                    pass_usuario: newPassword,
+                    nom_usuario: req.body.nom_usuario,
+                    nom_empleado: req.body.nom_empleado,
+                    dni: req.body.dni,
+                    email: req.body.email,
+                    profesion: req.body.profesion,
+                    telefono: req.body.telefono,
+                    fecha_acceso_termina: req.body.fecha_acceso,
+                    estado_usuario: req.body.estado
+                }).then(data => {
+                    //REGISTAR EN his_detalle_usuario
+                    
+                    response.sendData(res, data, "success");
+                }).catch(function () {
+                    res.json({ "status": "error" })
+                    response.sendBadRequest(res, "Error inisperado");
+                })
             }
+
+            /* 
             const savebody = await db["his_detalle_usuario"].build(req.body);
             await savebody.save({ transaction: transc })
                 .then(function (item) {
@@ -83,7 +132,7 @@ class usuarioController {
                 }).catch(function (err) {
                     response.sendBadRequest(res, err.message);
                 });
-            await transc.commit();
+            await transc.commit(); */
 
         } catch (error) {
             await transc.rollback();

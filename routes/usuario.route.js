@@ -23,6 +23,7 @@ router.delete(
     "/usuario-eliminar/:id",
     controller.deleted
 );
+
 /**
  * OTROS
  */
