@@ -228,7 +228,6 @@ class usuarioController {
             response.sendBadRequest(res, error.message);
         }
     }
-
     async buscarPersonal(req, res) {
         try {
             await db["personal"]
