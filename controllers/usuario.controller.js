@@ -240,6 +240,7 @@ class usuarioController {
                     attributes: {
                         exclude: ["id_tipo_documento"]
                     },
+                    include: [db["maestro_his_establecimiento"]]
                 })
                 .then((val) => {
                     response.sendData(res, val, "success");
