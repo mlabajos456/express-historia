@@ -5,10 +5,16 @@ module.exports = (sequelize, type) => {
             id_usuario: {
                 type: type.INTEGER,
                 primaryKey: true,
+                autoIncrement: true,
             },
             pass_usuario: type.STRING,
             nom_usuario: type.STRING,
+            nom_empleado: type.STRING,
+            profesion: type.STRING,
+            telefono: type.STRING,
+            email: type.STRING,
             dni: type.STRING,
+            fecha_acceso_termina: type.STRING,
             estado_usuario: {
                 type: type.STRING,
                 get() {

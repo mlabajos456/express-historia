@@ -15,6 +15,7 @@ app.get("/docs", function (req, res) {
 });
 
 app.use("/" + appVersion + "/auth", require("./routes/auth.route"));
+app.use("/" + appVersion + "/simys/auth", require("./routes/simys/simys.route"));
 app.use("/" + appVersion + "/", require("./routes/report.route"));
 
 app.use(require("./middlewares/jwt.middleware"));
