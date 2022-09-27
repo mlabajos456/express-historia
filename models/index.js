@@ -5,16 +5,18 @@ const Sequelize = require("sequelize");
 
 const basename = path.basename(__filename);
 const db = {};
+const basedatos = config.db_production
+//const basedatos = config.db_test
 const sequelize = new Sequelize(
-    config.db.name, // database name
-    config.db.user, // user
-    config.db.password, // password
+    basedatos.name, 
+    basedatos.user, 
+    basedatos.password, 
     {
-        host: config.db.host,
-        dialect: config.db.dialect,
+        host: basedatos.host,
+        dialect: basedatos.dialect,
         operatorsAliases: false,
         timezone: "+05:00", // set time zone to UTC
-        port: config.db.port,
+        port: basedatos.port,
         //logging: false
     },
     

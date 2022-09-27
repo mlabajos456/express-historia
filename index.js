@@ -1,18 +1,18 @@
 const express = require("express");
 const { httpPort, appVersion } = require("./config/config");
-const path = require("path");
+/* const path = require("path"); */
 const app = express();
 const response = require("./helpers/response");
-app.use(express.static("doc"));
+/* app.use(express.static("doc")); */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //CORS
 app.use(response.setHeadersForCORS);
 //Ruta Documentacion
-app.get("/docs", function (req, res) {
+/* app.get("/docs", function (req, res) {
     res.sendFile(path.join(__dirname + "/doc/index.html"));
-});
+}); */
 
 app.use("/" + appVersion + "/auth", require("./routes/auth.route"));
 app.use("/" + appVersion + "/simys/auth", require("./routes/simys/simys.route"));
