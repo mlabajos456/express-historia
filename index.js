@@ -26,8 +26,6 @@ app.use("/" + appVersion + "/", require("./routes/detalle-diagnostico.route"));
 app.use("/" + appVersion + "/", require("./routes/usuario.route"));
 app.use("/" + appVersion + "/ubigeo/", require("./routes/ubigeo.route"));
 
-
-
 /* app.use(function (err, req, res) {
     response.sendBadRequest(res, err)
 }); */
