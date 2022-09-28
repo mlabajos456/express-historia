@@ -12,8 +12,11 @@ module.exports = (options) => {
             result = Joi.validate(req.body, options.body);
             
         }
-        if(options.params){ 
+        if(options.params){
             result = Joi.validate(req.params, options.params);
+        }
+        if(options.query){
+            result = Joi.validate(req.query, options.query);
         }
         if (result.error === null) {
             return next();

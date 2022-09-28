@@ -25,6 +25,7 @@ app.use("/" + appVersion + "/", require("./routes/atencion.route"));
 app.use("/" + appVersion + "/", require("./routes/detalle-diagnostico.route"));
 app.use("/" + appVersion + "/", require("./routes/usuario.route"));
 app.use("/" + appVersion + "/ubigeo/", require("./routes/ubigeo.route"));
+app.use("/" + appVersion + "/simys/atencion-prenatal/", require("./routes/simys/atencion_prenatal_hoja.route"));
 
 /* app.use(function (err, req, res) {
     response.sendBadRequest(res, err)
