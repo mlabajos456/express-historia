@@ -228,10 +228,10 @@ class usuarioController {
             response.sendBadRequest(res, error.message);
         }
     }
-    async buscarPersonal(req, res) {
+    async buscarListPersonal(req, res) {
         try {
             await db["personal"]
-                .findOne({
+                .findAll({
                     where: {
                         "numero_documento": { [Op.eq]: req.body.dni }
                     },
@@ -250,5 +250,6 @@ class usuarioController {
             response.sendBadRequest(res, error.message);
         }
     }
+    
 }
 module.exports = new usuarioController();
