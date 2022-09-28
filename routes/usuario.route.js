@@ -40,7 +40,7 @@ router.get(
 //buscar personal
 router.post(
     "/buscar-personal",
-    controller.buscarPersonal
+    controller.buscarListPersonal
 );
 
 module.exports = router;
