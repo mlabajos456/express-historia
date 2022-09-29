@@ -63,7 +63,7 @@ module.exports = (sequelize, type) => {
                 name: "id_paciente",
             },
         });
-
+     
         Paciente.belongsTo(models.maestro_his_etnia, {
             foreignKey: {
                 name: "id_etnia"
