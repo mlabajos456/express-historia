@@ -14,5 +14,6 @@ router.get(
     DetalleDiagController.getOneDetalleDiagnostico
 ); */
 router.post("/", atencionPrenatalController.postAtencionPrenatal)
+router.put("/", atencionPrenatalController.putAtencionPrenatal)
 
 module.exports = router;

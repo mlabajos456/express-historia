@@ -20,6 +20,7 @@ module.exports = (sequelize, type) => {
     ValorLab.associate = function (models) {
         ValorLab.belongsTo(models.his_detalle_diagnostico, {
             foreignKey: "id_detalle",
+            onDelete: "CASCADE" 
         });
     };
     return ValorLab;

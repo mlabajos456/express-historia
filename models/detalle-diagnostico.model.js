@@ -30,11 +30,13 @@ module.exports = (sequelize, type) => {
             foreignKey: {
                 name: "id_atencion",
             },
+            onDelete: "CASCADE",
         });
         DetalleDiag.hasMany(models.his_lab, {
             foreignKey:  {
                 name: "id_detalle"
-            }
+            },
+            onDelete: "CASCADE",
         });
     };
     return DetalleDiag;
