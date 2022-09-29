@@ -51,15 +51,22 @@ class AtencionPrenatalController {
         /* crear hoja */
         let newAtencion = req.body.atencion;
         let newHojaAtencion = req.body.hoja_atencion;
-        let gestante = await gestanteService.getOneGestante(req.body.id_gestante)
+        let gestante = await gestanteService.getOneGestante(req.body.atencion_prenatal.id_gestante)
+        let atencionPrenatal = req.body.atencion_prenatal;
 
         try {
-            var newHojaCreated = hojaAtencionService.postHojaAtencion(t,newHojaAtencion);
+            var newHojaCreated =await hojaAtencionService.postHojaAtencion(t,newHojaAtencion);
             var atencion = await db["his_atencion"].build(newAtencion);
             atencion.id_hoja_atencion = newHojaCreated.id_hoja_atencion;
             atencion.fecha_atencion = Date.now();            
             atencion.id_paciente = gestante.paciente.id
             var newAtencionCreated = await atencion.save({ transaction: t });
+
+            
+            atencionPrenatal.id_atencion = newAtencionCreated.id_atencion;
+            await atencionPrenatalService.postAtencionPrenatal(t,atencionPrenatal)
+
+
             for (const detail of newAtencion.diagnosticos) {
                 detail.id_cie = detail.id_cie.id
                 var detailDiag = await db["his_detalle_diagnostico"].build(detail);
@@ -72,6 +79,7 @@ class AtencionPrenatalController {
                     await newLab.save({ transaction: t });
                 }
             }
+            
             await t.commit();
             response.sendCreated(res, newAtencionCreated);
         } catch (error) {

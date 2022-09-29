@@ -68,6 +68,11 @@ class AtencionService {
             })
         return resp;
     }
+    async postAtencionPrenatal (transaction, atencionPrenatal){
+        var atencionPrenatalComplete = await db["his_atencion_prenatal_hoja"].build(atencionPrenatal);
+        await atencionPrenatalComplete.save({ transaction: transaction });
+        return atencionPrenatalComplete;
+    }  
 }
 
 
