@@ -3,6 +3,7 @@ const response = require("../../helpers/response");
 const atencionPrenatalService = require("../../services/simys/atencion_prenatal_hoja.service");
 const gestanteService = require("../../services/simys/gestante.service");
 const hojaAtencionService = require("../../services/hoja-atencion.service");
+const atencionService = require("../../services/atencion.service");
 class AtencionPrenatalController {
     /**
     * @api {get} /v1/atencion/ Obtener atenciones
@@ -61,7 +62,6 @@ class AtencionPrenatalController {
             atencion.fecha_atencion = Date.now();            
             atencion.id_paciente = gestante.paciente.id
             var newAtencionCreated = await atencion.save({ transaction: t });
-
             
             atencionPrenatal.id_atencion = newAtencionCreated.id_atencion;
             await atencionPrenatalService.postAtencionPrenatal(t,atencionPrenatal)
@@ -87,47 +87,36 @@ class AtencionPrenatalController {
             response.sendBadRequest(res, error.message);
         }
     }
-    async putAtencion(req, res) {
+    async putAtencionPrenatal(req, res) {
         const t = await db.sequelize.transaction();
         try {
-            var atencion = await db["his_atencion"].findOne({
-                where: { id_atencion: req.body.id_atencion },
-            });
-
+            let atencion = await   atencionService.getOneAtencion(req.body.atencion.id_atencion)
             if (!atencion) {
                 return response.sendNotFound(
                     res,
                     "No existe la atención: " + req.body.id_atencion
                 );
             }
-            atencion = await atencion.update(req.body, {}, { transaction: t });
-            for (const detail of req.body.diagnosticos) {
+            for (const diag of atencion.diagnosticos) {
+                await db["his_lab"].destroy({
+                    where :{id_detalle : diag.id_detalle},
+                    transaction: t
+                }) 
+            }   
+            await db["his_detalle_diagnostico"].destroy({
+                where: {id_atencion : atencion.id_atencion},transaction: t
+            },)              
+            atencion = await atencion.update(req.body.atencion, {}, { transaction: t });
+            for (const detail of req.body.atencion.diagnosticos) {
                 if (detail.id_detalle) {
-                    var beforeDetail = await db["his_detalle_diagnostico"].findOne({
-                        where: { id_detalle: detail.id_detalle },
-                    });
-
-                    if (!beforeDetail) {
-                        response.sendNotFound(
-                            res,
-                            "No existe el : " + req.body.id_atencion
-                        );
-                        return t.rollback();
-                    }
-
-                    beforeDetail = await beforeDetail.update(
-                        detail,
-                        {},
-                        { transaction: t }
-                    );
-                } else {
                     var detailDiag = await db["his_detalle_diagnostico"].build(detail);
                     detailDiag.id_atencion = atencion.id_atencion;
-                    await detailDiag.save({ transaction: t });
+                    await detailDiag.save({ transaction: t });               
                 }
             }
 
             t.commit();
+         
             response.sendData(res, atencion, "Se ha actualizado correctamente");
         } catch (error) {
             t.rollback();
