@@ -107,12 +107,10 @@ class AtencionPrenatalController {
                 where: {id_atencion : atencion.id_atencion},transaction: t
             },)              
             atencion = await atencion.update(req.body.atencion, {}, { transaction: t });
-            for (const detail of req.body.atencion.diagnosticos) {
-                if (detail.id_detalle) {
-                    var detailDiag = await db["his_detalle_diagnostico"].build(detail);
-                    detailDiag.id_atencion = atencion.id_atencion;
-                    await detailDiag.save({ transaction: t });               
-                }
+            for (const detail of req.body.atencion.diagnosticos) {               
+                var detailDiag = await db["his_detalle_diagnostico"].build(detail);
+                detailDiag.id_atencion = atencion.id_atencion;
+                await detailDiag.save({ transaction: t });                 
             }
 
             t.commit();
