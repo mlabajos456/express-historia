@@ -13,6 +13,21 @@ class HojaAtencionService {
             })
         return resp;
     }
+
+    async postHojaAtencion (transaction, atencion){
+        var hojaComplete = await db["his_hoja_atencion"].build(atencion);
+        hojaComplete.fecha = Date.now();
+        hojaComplete.fecha_apertura = Date.now();
+        hojaComplete.id_responsable = atencion.id_responsable
+        await hojaComplete.save({ transaction: transaction });
+        return hojaComplete;
+    }
+    async findOneHojaAtencion(id){
+        return db["his_hoja_atencion"].findOne({
+            where: { id_hoja_atencion: id },
+        });
+
+    }
    
 }
 

@@ -98,11 +98,7 @@ class HojaAtencionController {
     async postHojaAtencion(req, res) {
         const t = await db.sequelize.transaction();
         try {
-            var hojaComplete = await db["his_hoja_atencion"].build(req.body);
-            hojaComplete.fecha = Date.now();
-            hojaComplete.fecha_apertura = Date.now();
-            hojaComplete.id_responsable = req.id_personal
-            await hojaComplete.save({ transaction: t });
+            let hojaComplete = await hojaAtencionService.postHojaAtencion(t, req.body)
             await t.commit();
             response.sendCreated(res, hojaComplete, "success");
         } catch (error) {
@@ -113,9 +109,7 @@ class HojaAtencionController {
     async putHojaAtencion(req, res) {
         const t = await db.sequelize.transaction();
         try {
-            var hoja = await db["his_hoja_atencion"].findOne({
-                where: { id_hoja_atencion: req.body.id_hoja_atencion },
-            });
+            var hoja = await hojaAtencionService.findOneHojaAtencion(req.body.id_hoja_atencion);
             if (!hoja) {
                 return response.sendNotFound(
                     res,

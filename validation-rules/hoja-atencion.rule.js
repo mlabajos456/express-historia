@@ -6,7 +6,7 @@ module.exports = {
     create: {
         body: Joi.object().keys({
             id_turno: Joi.number().required().label("id turno"),
-            /*   id_responsable: Joi.number().required().label("id responsable"), */
+            id_responsable: Joi.number().required().label("id responsable"),
             /* fecha_apertura: Joi.date(),
             fecha_cierre: Joi.date(), */
             /* fecha: Joi.date(), */

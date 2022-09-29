@@ -2,6 +2,7 @@ const db = require("../../models/index");
 const response = require("../../helpers/response");
 const atencionPrenatalService = require("../../services/simys/atencion_prenatal_hoja.service");
 const gestanteService = require("../../services/simys/gestante.service");
+const hojaAtencionService = require("../../services/hoja-atencion.service");
 class AtencionPrenatalController {
     /**
     * @api {get} /v1/atencion/ Obtener atenciones
@@ -47,15 +48,22 @@ class AtencionPrenatalController {
 
     async postAtencionPrenatal(req, res) {        
         const t = await db.sequelize.transaction();
+        /* crear hoja */
+        let newAtencion = req.body.atencion;
+        let newHojaAtencion = req.body.hoja_atencion;
         let gestante = await gestanteService.getOneGestante(req.body.id_gestante)
+
         try {
-            var atencion = await db["his_atencion"].build(req.body);
+            var newHojaCreated = hojaAtencionService.postHojaAtencion(t,newHojaAtencion);
+            var atencion = await db["his_atencion"].build(newAtencion);
+            atencion.id_hoja_atencion = newHojaCreated.id_hoja_atencion;
             atencion.fecha_atencion = Date.now();            
-            var newAtencion = await atencion.save({ transaction: t });
-            for (const detail of req.body.diagnosticos) {
+            atencion.id_paciente = gestante.paciente.id
+            var newAtencionCreated = await atencion.save({ transaction: t });
+            for (const detail of newAtencion.diagnosticos) {
                 detail.id_cie = detail.id_cie.id
                 var detailDiag = await db["his_detalle_diagnostico"].build(detail);
-                detailDiag.id_atencion = newAtencion.id_atencion;
+                detailDiag.id_atencion = newAtencionCreated.id_atencion;
                 
                 var newDetail = await detailDiag.save({ transaction: t });
                 for (const lab of detail.valor_lab){
@@ -65,7 +73,7 @@ class AtencionPrenatalController {
                 }
             }
             await t.commit();
-            response.sendCreated(res, newAtencion);
+            response.sendCreated(res, newAtencionCreated);
         } catch (error) {
             await t.rollback();
             response.sendBadRequest(res, error.message);
