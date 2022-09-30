@@ -16,6 +16,7 @@ app.use(response.setHeadersForCORS);
 
 app.use("/" + appVersion + "/auth", require("./routes/auth.route"));
 app.use("/" + appVersion + "/simys/auth", require("./routes/simys/simys.route"));
+app.use("/" + appVersion + "/", require("./routes/report.route"));
 
 app.use(require("./middlewares/jwt.middleware"));
 app.use("/" + appVersion + "/support/", require("./routes/supports.route"));
@@ -24,7 +25,6 @@ app.use("/" + appVersion + "/", require("./routes/atencion.route"));
 app.use("/" + appVersion + "/", require("./routes/detalle-diagnostico.route"));
 app.use("/" + appVersion + "/", require("./routes/usuario.route"));
 app.use("/" + appVersion + "/ubigeo/", require("./routes/ubigeo.route"));
-app.use("/" + appVersion + "/", require("./routes/report.route"));
 app.use("/" + appVersion + "/simys/atencion-prenatal/", require("./routes/simys/atencion_prenatal_hoja.route"));
 
 /* app.use(function (err, req, res) {
