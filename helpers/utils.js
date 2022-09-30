@@ -1,6 +1,6 @@
 module.exports.ageCalculator = function (fecha_nacimiento) {  
     
-    var dob = new Date(fecha_nacimiento);  
+    var dob = new Date(fecha_nacimiento); //formato mm/dd/yyyy)
 
     //extract the year, month, and date from user date input  
     var dobYear = dob.getYear();  
@@ -16,8 +16,7 @@ module.exports.ageCalculator = function (fecha_nacimiento) {
       
     //declare a variable to collect the age in year, month, and days  
     var age = {};  
-    var ageString = "";  
-    
+
     //get years  
     var yearAge = currentYear - dobYear;  
       
@@ -49,29 +48,9 @@ module.exports.ageCalculator = function (fecha_nacimiento) {
         years: yearAge,  
         months: monthAge,  
         days: dateAge  
-    };  
-        
-        
-    if ( (age.years > 0) && (age.months > 0) && (age.days > 0) )  
-        ageageString = age.years + " years, " + age.months + " months, and " + age.days + " days old.";  
-    else if ( (age.years == 0) && (age.months == 0) && (age.days > 0) )  
-        ageString = "Only " + age.days + " days old!";  
-        //when current month and date is same as birth date and month  
-    else if ( (age.years > 0) && (age.months == 0) && (age.days == 0) )  
-        ageageString = age.years +  " years old. Happy Birthday!!";  
-    else if ( (age.years > 0) && (age.months > 0) && (age.days == 0) )  
-        ageageString = age.years + " years and " + age.months + " months old.";  
-    else if ( (age.years == 0) && (age.months > 0) && (age.days > 0) )  
-        ageageString = age.months + " months and " + age.days + " days old.";  
-    else if ( (age.years > 0) && (age.months == 0) && (age.days > 0) )  
-        ageageString = age.years + " years, and" + age.days + " days old.";  
-    else if ( (age.years == 0) && (age.months > 0) && (age.days == 0) )  
-        ageageString = age.months + " months old.";  
-        //when current date is same as dob(date of birth)  
-    else ageString = "Welcome to Earth! <br> It's first day on Earth!";   
-  
-    //display the calculated age  
-    return document.getElementById("result").innerHTML = ageString;   
+    };
+      
+    return age;
                
     
 }  
