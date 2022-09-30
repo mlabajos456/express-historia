@@ -3,7 +3,7 @@ class AtencionService {
     async  getOneAtencionPrenatal (id_atencion, id_gestante, id_num) {
         var resp =  await db["his_atencion_prenatal_hoja"]
             .findOne({
-                where : {id_atencion: id_atencion, id_gestante: id_gestante, id_num: id_num},
+                where : { id_gestante: id_gestante, id_num: id_num},
                 include: [
                     {model: db["his_atencion"],
                         include: [{model: db["paciente"], 
