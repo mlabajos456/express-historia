@@ -94,7 +94,7 @@ class AtencionPrenatalController {
             if (!atencion) {
                 return response.sendNotFound(
                     res,
-                    "No existe la atención: " + req.body.id_atencion
+                    "No existe la atención: " + req.body.atencion.id_atencion
                 );
             }
             for (const diag of atencion.diagnosticos) {
@@ -107,10 +107,16 @@ class AtencionPrenatalController {
                 where: {id_atencion : atencion.id_atencion},transaction: t
             },)              
             atencion = await atencion.update(req.body.atencion, {}, { transaction: t });
-            for (const detail of req.body.atencion.diagnosticos) {               
+            for (const detail of req.body.atencion.diagnosticos) {       
+                detail.id_cie = detail.id_cie.id       
                 var detailDiag = await db["his_detalle_diagnostico"].build(detail);
                 detailDiag.id_atencion = atencion.id_atencion;
-                await detailDiag.save({ transaction: t });                 
+                let newDetail = await detailDiag.save({ transaction: t });        
+                for (const lab of detail.valor_lab){
+                    lab.id_detalle = newDetail.id_detalle
+                    var newLab = await db["his_lab"].build(lab);
+                    await newLab.save({ transaction: t });
+                }         
             }
 
             t.commit();

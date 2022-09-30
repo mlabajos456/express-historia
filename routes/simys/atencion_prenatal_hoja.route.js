@@ -13,7 +13,7 @@ router.get(
     "/detalle-diagnostico/:id",
     DetalleDiagController.getOneDetalleDiagnostico
 ); */
-router.post("/", atencionPrenatalController.postAtencionPrenatal)
-router.put("/", atencionPrenatalController.putAtencionPrenatal)
+router.post("/", validateMiddleware(atencionPrenatalRule.createAtencionPrenatal),atencionPrenatalController.postAtencionPrenatal)
+router.put("/", validateMiddleware(atencionPrenatalRule.editAtencionPrenatal),atencionPrenatalController.putAtencionPrenatal)
 
 module.exports = router;
