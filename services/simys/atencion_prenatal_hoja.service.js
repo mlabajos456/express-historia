@@ -9,8 +9,9 @@ class AtencionService {
                         
                         model: db["his_atencion"],
                         include: [
+                            
                             {model: db["his_hoja_atencion"],
-                                include: [{model:db["personal"]}]
+                                include: [{model:db["personal"]},{model: db["maestro_his_establecimiento"], as :"establecimiento"},]
                             },
                             {model: db["paciente"], 
                                 include: [
