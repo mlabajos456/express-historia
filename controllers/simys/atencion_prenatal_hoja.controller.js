@@ -14,12 +14,11 @@ class AtencionPrenatalController {
  */
 
     async getOneAtencionPrenatal(req, res) {
-        let id_atencion = req.query.id_atencion;
         let id_gestante = req.query.id_gestante;
         let id_num = req.query.id_num; 
         try {
            
-            atencionPrenatalService.getOneAtencionPrenatal(id_atencion,id_gestante,id_num).then((val) => {
+            atencionPrenatalService.getOneAtencionPrenatal(id_gestante,id_num).then((val) => {
                 response.sendData(res, val, "success");
             }).catch((err) => {
                 response.sendBadRequest(res, err.message);
