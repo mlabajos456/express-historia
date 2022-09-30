@@ -98,6 +98,11 @@ module.exports = (sequelize, type) => {
             foreignKey: "id_ups",
             as: "ups"
         });
+        HojaAtencion.hasOne(models.his_atencion, {
+            foreignKey: {
+                name: "id_hoja_atencion",
+            },
+        });
     };
 
     return HojaAtencion;

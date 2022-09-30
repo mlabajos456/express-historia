@@ -5,19 +5,25 @@ class AtencionService {
             .findOne({
                 where : { id_gestante: id_gestante, id_num: id_num},
                 include: [
-                    {model: db["his_atencion"],
-                        include: [{model: db["paciente"], 
-                            include: [
-                                {model: db["maestro_his_etnia"], as: "etnia"},
-                                {model: db["maestro_his_ubigeo_inei_reniec"], as: "procedencia"},
-                            ]},
-                        {model: db["his_detalle_diagnostico"], as: "diagnosticos",
-                            include: [
-                                {model: db["his_lab"]},
-                                {model: db["maestro_his_cie_cpms"],as :"cie"},
-                            ]},
-                        {model: db["maestro_his_financiador"], as: "financiador"},
-                        {model: db["maestro_his_centro_poblado"], as : "cp_procedencia"},]
+                    {
+                        
+                        model: db["his_atencion"],
+                        include: [
+                            {model: db["his_hoja_atencion"],
+                                include: [{model:db["personal"]}]
+                            },
+                            {model: db["paciente"], 
+                                include: [
+                                    {model: db["maestro_his_etnia"], as: "etnia"},
+                                    {model: db["maestro_his_ubigeo_inei_reniec"], as: "procedencia"},
+                                ]},
+                            {model: db["his_detalle_diagnostico"], as: "diagnosticos",
+                                include: [
+                                    {model: db["his_lab"]},
+                                    {model: db["maestro_his_cie_cpms"],as :"cie"},
+                                ]},
+                            {model: db["maestro_his_financiador"], as: "financiador"},
+                            {model: db["maestro_his_centro_poblado"], as : "cp_procedencia"},]
                     }
                 ]
             })
