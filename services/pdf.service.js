@@ -180,7 +180,7 @@ function paintedPosition (doc , lista, diag, position,tachar){
 
         doc.fontSize(6).text(atencion.peso, 289, 185 + position)  /* peso +52 por cada position */
         doc.fontSize(6).text(atencion.talla, 289, 198 + position)  /* talla + 52 por cada position */
-        if(atencion.hemoglobina === "01-01-2022"){
+        if(atencion.hemoglobina === "01-01-0001"){
         /* cortar fecha hemoglobina por dia mes anio */
             let fecha_hb = atencion.fecha_hb.split("-")
             doc.fontSize(6).text(fecha_hb[0], 332, 174 + position)  /* DIA + 52 por cada position */
@@ -191,7 +191,7 @@ function paintedPosition (doc , lista, diag, position,tachar){
         doc.fontSize(6).text(atencion.hemoglobina, 289, 211 + position)  /* Hemoglobina + 52 por cada position */
 
     
-        if(atencion.fum === "01-01-2022"){
+        if(atencion.fum === "01-01-0001"){
             let fecha_fum = atencion.fum.split("-")
             doc.fontSize(6).text(fecha_fum[0], 532, 174 + position)  /* DIA + 52 por cada position */
             doc.fontSize(6).text(fecha_fum[1], 549, 174 + position)  /* MES + 52 por cada position */

@@ -27,33 +27,14 @@ class AtencionPrenatalController {
             );
         }
     }
-
-    /*  async getOneAtencion (req, res){
-        try {
-            atencionService.getOneAtencion(req.params.id)
-                .then((val) => {
-                    response.sendData(res, val, "success");
-                })
-                .catch((errro) => {
-                    console.log(errro)
-                    response.sendForbidden(res, errro);
-                });
-        } catch (error) {
-            console.log(error)
-            response.sendBadRequest(res, error
-            );
-        }
-    } */
-
     async postAtencionPrenatal(req, res) {        
         const t = await db.sequelize.transaction();
-        /* crear hoja */
         let newAtencion = req.body.atencion;
         let newHojaAtencion = req.body.hoja_atencion;
         let gestante = await gestanteService.getOneGestante(req.body.atencion_prenatal.id_gestante)
-        let atencionPrenatal = req.body.atencion_prenatal;       
-
+        let atencionPrenatal = req.body.atencion_prenatal;    
         try {
+            
             let detalleAtencionPrenatal = await atencionPrenatalService.getOneAtencionPrenatal(atencionPrenatal.id_gestante, atencionPrenatal.id_num)
             if(!detalleAtencionPrenatal){
                 /* se crea la hoja */
@@ -63,6 +44,12 @@ class AtencionPrenatalController {
                 atencion.id_hoja_atencion = newHojaCreated.id_hoja_atencion;
                 atencion.fecha_atencion = Date.now();            
                 atencion.id_paciente = gestante.paciente.id
+              
+
+
+                atencion.edad_anio = ""
+                atencion.edad_mes = ""
+                atencion.edad_dias = ""
                 var newAtencionCreated = await atencion.save({ transaction: t });            
                 /* se registra el detalle de la atencion prenatal */
                 atencionPrenatal.id_atencion = newAtencionCreated.id_atencion;
@@ -87,7 +74,7 @@ class AtencionPrenatalController {
                 req.body.hoja_atencion.id_hoja_atencion = detalleAtencionPrenatal.his_atencion.his_hoja_atencion.id_hoja_atencion
                 req.body.atencion.id_atencion = detalleAtencionPrenatal.id_atencion
                 req.body.atencion.id_hoja_atencion = detalleAtencionPrenatal.his_atencion.his_hoja_atencion.id_hoja_atencion
-                new AtencionPrenatalController().putAtencionPrenatal(req, res) //
+                new AtencionPrenatalController().putAtencionPrenatal(req, res)
             }
             
             
