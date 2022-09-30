@@ -34,10 +34,11 @@ class AtencionPrenatalController {
         let newHojaAtencion = req.body.hoja_atencion;
         let gestante = await gestanteService.getOneGestante(req.body.atencion_prenatal.id_gestante)
         let atencionPrenatal = req.body.atencion_prenatal;    
+      
+       
         try {
-            let fnacimiento = gestante.paciente.f_nacimiento.split("-")
 
-            let edad =  utils.ageCalculator(fnacimiento[1]+"/"+fnacimiento[0]+"/"+fnacimiento[2] )
+           
             
             let detalleAtencionPrenatal = await atencionPrenatalService.getOneAtencionPrenatal(atencionPrenatal.id_gestante, atencionPrenatal.id_num)
             if(!detalleAtencionPrenatal){
@@ -46,11 +47,19 @@ class AtencionPrenatalController {
                 /* se modela la atencion para posteriormente guardar */
                 var atencion = await db["his_atencion"].build(newAtencion);
                 atencion.id_hoja_atencion = newHojaCreated.id_hoja_atencion;
-                atencion.fecha_atencion = Date.now();            
+                /*  atencion.fecha_atencion = Date.now();  */          
+                let fnacimiento = gestante.paciente.f_nacimiento.split("-")
+                try {
+                    let edad =  utils.ageCalculator(fnacimiento[1]+"/"+fnacimiento[0]+"/"+fnacimiento[2],newAtencion.fecha_atencion)  
+                    atencion.edad_anio = edad.years
+                    atencion.edad_mes = edad.months
+                    atencion.edad_dias = edad.days
+                } catch (error) {
+                    atencion.edad_anio = ""
+                    atencion.edad_mes = ""
+                    atencion.edad_dias = ""
+                }
                 atencion.id_paciente = gestante.paciente.id
-                atencion.edad_anio = edad.years
-                atencion.edad_mes = edad.months
-                atencion.edad_dias = edad.days
                 var newAtencionCreated = await atencion.save({ transaction: t });            
                 /* se registra el detalle de la atencion prenatal */
                 atencionPrenatal.id_atencion = newAtencionCreated.id_atencion;

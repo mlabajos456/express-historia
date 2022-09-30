@@ -1,4 +1,4 @@
-module.exports.ageCalculator = function (fecha_nacimiento) {  
+module.exports.ageCalculator = function (fecha_nacimiento,now) {  
     
     var dob = new Date(fecha_nacimiento); //formato mm/dd/yyyy)
 
@@ -8,7 +8,7 @@ module.exports.ageCalculator = function (fecha_nacimiento) {
     var dobDate = dob.getDate();  
       
     //get the current date from the system  
-    var now = new Date();  
+    now = new Date(now);  
     //extract the year, month, and date from current date  
     var currentYear = now.getYear();  
     var currentMonth = now.getMonth();  
