@@ -18,7 +18,7 @@ function printHeadPDF (doc, head) {
     doc.fontSize(6).text(head.ups.descripcion, 271.5, 135)
     doc.fontSize(6).text(head.personal.numero_documento, 475, 135)
     doc.fontSize(5).text(head.personal.nombre_completo, 509, 133, {
-        width: 80,
+        width: 68,
         height:12,
         ellipsis:true
     })
@@ -91,13 +91,13 @@ function paintedPosition (doc , lista, diag, position,tachar){
     /* if */
     if(tachar){
         doc.moveTo(36.54, 220 + position).lineTo(335, 181 + position).stroke()
-    }else{
+    }else{       
         doc.fontSize(12).text(diaAtencion[0], 39, 198 + position) /* DÍA */
         doc.fontSize(6).text(paciente.documento, 59, 185.62 + position,
             {
                 width: 50,
             }) /* DNI */
-        doc.fontSize(6).text(atencion.num_historia_clinica, 59, 199 + position) /* DÍA */
+        doc.fontSize(6).text(atencion.num_historia_clinica, 59, 199 + position) /* numero de historia clinica */
         var gestante = ""
         if(atencion.estado_gestante =="1"){
             gestante = "GESTANTE"
@@ -106,8 +106,15 @@ function paintedPosition (doc , lista, diag, position,tachar){
             gestante = "PUERPERA"
         } 
         doc.fontSize(6).text(gestante, 59, 212 + position) /*nombre y Apellidos */
-        doc.fontSize(6).text(paciente.nombres, 126, 174 + position) /* apellido */
-        doc.fontSize(6).text(atencion.id_financiador    , 120, 189 + position) /* financiador con space */
+        doc.fontSize(6).text(paciente.nombres +" "+ paciente.paterno +" "+paciente.materno, 126, 174 + position, {
+            width: 108,
+            height: 12,
+            ellipsis:true
+        }) /* apellido */
+        
+        if(atencion.id_financiador){
+            doc.fontSize(6).text(atencion.id_financiador    , 120, 189 + position) /* financiador con space */
+        }
 
         if(paciente.etnia){
             var yEtnia= 204
@@ -229,10 +236,10 @@ function paintedPosition (doc , lista, diag, position,tachar){
     /* console.log(diag[0].cie.descripcion) */
    
     var yCieFirst = 183.4
-    var fontSizeCieFirst = 3
+    var fontSizeCieFirst = 5
     if(diag[0].cie.descripcion.length < 45){
         yCieFirst = 185
-        fontSizeCieFirst  =3
+        fontSizeCieFirst  =5
     }
     doc.fontSize(fontSizeCieFirst).text(diag[0].cie.descripcion, 341, yCieFirst + position,{
         width: 120,
@@ -256,14 +263,14 @@ function paintedPosition (doc , lista, diag, position,tachar){
         break;
     }
     if(diag[0].his_labs[0]){
-        doc.fontSize(6).text(diag[0].his_labs[0].descripcion, 497.5, 185 + position)
+        doc.fontSize(6).text(diag[0].his_labs[0].descripcion, 495.5, 185 + position)
     }
     
     if(diag[0].his_labs[1]){
-        doc.fontSize(6).text(diag[0].his_labs[1].descripcion, 510, 185 + position)
+        doc.fontSize(6).text(diag[0].his_labs[1].descripcion, 509, 185 + position)
     }
     if(diag[0].his_labs[2]){
-        doc.fontSize(6).text(diag[0].his_labs[2].descripcion, 523, 185 + position)
+        doc.fontSize(6).text(diag[0].his_labs[2].descripcion, 521, 185 + position)
     }
     doc.fontSize(6).text(diag[0].id_cie, 542, 185 + position)
 
@@ -273,10 +280,10 @@ function paintedPosition (doc , lista, diag, position,tachar){
        
         //posision 2
         var yCieSecond = 196.5
-        var fontSizeCieSecond = 3
+        var fontSizeCieSecond = 5
         if(diag[1].cie.descripcion.length < 45){
             yCieSecond = 198
-            fontSizeCieSecond = 3
+            fontSizeCieSecond = 5
         }
         doc.fontSize(fontSizeCieSecond).text(diag[1].cie.descripcion, 341, yCieSecond + position,{
             width: 120,
@@ -299,14 +306,14 @@ function paintedPosition (doc , lista, diag, position,tachar){
         }
 
         if(diag[1].his_labs[0]){
-            doc.fontSize(6).text(diag[1].his_labs[0].descripcion, 497.5, 198.5 + position)
+            doc.fontSize(6).text(diag[1].his_labs[0].descripcion, 495.5, 198.5 + position)
         }
         
         if(diag[1].his_labs[1]){
-            doc.fontSize(6).text(diag[1].his_labs[1].descripcion, 510, 198.5 + position)
+            doc.fontSize(6).text(diag[1].his_labs[1].descripcion, 509, 198.5 + position)
         }
         if(diag[1].his_labs[2]){
-            doc.fontSize(6).text(diag[1].his_labs[2].descripcion, 523, 198.5 + position)
+            doc.fontSize(6).text(diag[1].his_labs[2].descripcion, 521, 198.5 + position)
         }
         doc.fontSize(6).text(diag[1].id_cie, 542, 198.5 + position)
        
@@ -320,10 +327,10 @@ function paintedPosition (doc , lista, diag, position,tachar){
     if(diag[2]){
         //posision 3
         var yCieThird = 209
-        var fontSizeCieThird = 3
+        var fontSizeCieThird = 5
         if(diag[2].cie.descripcion.length < 45){
             yCieThird = 211.5
-            fontSizeCieThird = 3
+            fontSizeCieThird = 5
         }
         doc.fontSize(fontSizeCieThird).text(diag[2].cie.descripcion, 341, yCieThird + position,{
             width: 120,
@@ -347,14 +354,14 @@ function paintedPosition (doc , lista, diag, position,tachar){
         
         
         if(diag[2].his_labs[0]){
-            doc.fontSize(6).text(diag[2].his_labs[0].descripcion, 497.5, 211 + position)
+            doc.fontSize(6).text(diag[2].his_labs[0].descripcion, 495.5, 211 + position)
         }
         
         if(diag[2].his_labs[1]){
-            doc.fontSize(6).text(diag[2].his_labs[1].descripcion, 512, 211 + position)
+            doc.fontSize(6).text(diag[2].his_labs[1].descripcion, 509, 211 + position)
         }
         if(diag[2].his_labs[2]){
-            doc.fontSize(6).text(diag[2].his_labs[2].descripcion, 523, 211 + position)
+            doc.fontSize(6).text(diag[2].his_labs[2].descripcion, 521, 211 + position)
         }
    
         doc.fontSize(6).text(diag[2].id_cie, 542, 211 + position)
