@@ -1,6 +1,7 @@
 const db = require("../../models/index");
 class AtencionService {
     async  getOneAtencionPrenatal ( id_gestante, id_num) {
+        console.log("soy el nombre",db.sequelize.models.his_atencion)
         var resp =  await db["his_atencion_prenatal_hoja"]
             .findOne({
                 where : { id_gestante: id_gestante, id_num: id_num},
@@ -26,7 +27,11 @@ class AtencionService {
                             {model: db["maestro_his_financiador"], as: "financiador"},
                             {model: db["maestro_his_centro_poblado"], as : "cp_procedencia"},]
                     }
-                ]
+                ],
+                order: [
+                    ["his_atencion","diagnosticos",  "id_detalle", "ASC"],
+                    ["his_atencion","diagnosticos","his_labs", "id", "ASC"],
+                ] 
             })
         return resp;
     }
