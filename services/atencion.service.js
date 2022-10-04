@@ -27,14 +27,17 @@ class AtencionService {
                             {model: db["maestro_his_ubigeo_inei_reniec"], as: "procedencia"},
                         ]},
                     {model: db["his_detalle_diagnostico"], as: "diagnosticos",
+                       
                         include: [
-                            {model: db["his_lab"]},
+                            {model: db["his_lab"], order: [["id", "ASC"]] },
                             {model: db["maestro_his_cie_cpms"],as :"cie"},
                         ]},
                     {model: db["maestro_his_financiador"], as: "financiador"},
                     {model: db["maestro_his_centro_poblado"], as : "cp_procedencia"},
                 ],
-                where: {id_hoja_atencion: id}
+                where: {id_hoja_atencion: id},
+               
+               
             })
         return resp;
     }
