@@ -36,7 +36,7 @@ module.exports = (sequelize, type) => {
             foreignKey:  {
                 name: "id_detalle"
             },
-            onDelete: "CASCADE",
+            onDelete: "CASCADE", 
         });
     };
     return DetalleDiag;

@@ -16,29 +16,37 @@ class AtencionService {
         return resp;
     }
     async  getAllAtencionByHojaReport (page, limit, id) {
-        var resp =  await db["his_atencion"]
-            .findAndCountAll({
-                limit: 100,
-                offset: 0,
-                include: [
-                    {model: db["paciente"], 
-                        include: [
-                            {model: db["maestro_his_etnia"], as: "etnia"},
-                            {model: db["maestro_his_ubigeo_inei_reniec"], as: "procedencia"},
-                        ]},
-                    {model: db["his_detalle_diagnostico"], as: "diagnosticos",
+        try {
+            var resp =  await db["his_atencion"]
+                .findAndCountAll({
+                    limit: 100,
+                    offset: 0,
+                    include: [
+                        {model: db["paciente"], 
+                            include: [
+                                {model: db["maestro_his_etnia"], as: "etnia"},
+                                {model: db["maestro_his_ubigeo_inei_reniec"], as: "procedencia"},
+                            ]},
+                        {model: db["his_detalle_diagnostico"], as: "diagnosticos",
                        
-                        include: [
-                            {model: db["his_lab"], order: [["id", "ASC"]] },
-                            {model: db["maestro_his_cie_cpms"],as :"cie"},
-                        ]},
-                    {model: db["maestro_his_financiador"], as: "financiador"},
-                    {model: db["maestro_his_centro_poblado"], as : "cp_procedencia"},
-                ],
-                where: {id_hoja_atencion: id},
+                            include: [
+                                {model: db["his_lab"], /* order: [["id", "ASC"]] */ },
+                                {model: db["maestro_his_cie_cpms"],as :"cie"},
+                            
+                            ],/* order: [["id_detalle", "DESC"]] */ },
+                        {model: db["maestro_his_financiador"], as: "financiador"},
+                        {model: db["maestro_his_centro_poblado"], as : "cp_procedencia"},
+                    ],
+                    where: {id_hoja_atencion: id},
+                    order: [["diagnosticos->his_labs", /* "his_lab", */ "id_detalle", "ASC"]]
+                    
                
                
-            })
+                })
+        } catch (error) {
+            console.log("tengo error",error)
+        }
+        
         return resp;
     }
 

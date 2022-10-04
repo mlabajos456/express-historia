@@ -53,7 +53,7 @@ module.exports = {
                 fecha_hb: Joi.date().optional().allow(""),
                 condicion: Joi.boolean(),
                 
-                hemoglobina: Joi.number().optional().allow(""),
+                hemoglobina: Joi.string().optional().allow(""),
                 
                 edad_anio: Joi.number().optional().allow(""),
                 
@@ -106,7 +106,7 @@ module.exports = {
             fecha_atencion: Joi.date().required().label("fecha de atencion"),
             fecha_hb: Joi.date().optional().allow(""),
             condicion: Joi.boolean(),
-            hemoglobina: Joi.number().optional().allow(""),
+            hemoglobina: Joi.string().optional().allow(""),
         
             edad_anio: Joi.number().optional().allow(""),
         
