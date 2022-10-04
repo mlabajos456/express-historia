@@ -38,7 +38,7 @@ class AtencionService {
                         {model: db["maestro_his_centro_poblado"], as : "cp_procedencia"},
                     ],
                     where: {id_hoja_atencion: id},
-                    order: [["diagnosticos->his_labs", /* "his_lab", */ "id_detalle", "ASC"]]
+                    order: [["diagnosticos->his_labs.", /* "his_lab", */ "id", "ASC"]]
                     
                
                
