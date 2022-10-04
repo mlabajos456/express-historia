@@ -33,13 +33,8 @@ class AtencionPrenatalController {
         let newAtencion = req.body.atencion;
         let newHojaAtencion = req.body.hoja_atencion;
         let gestante = await gestanteService.getOneGestante(req.body.atencion_prenatal.id_gestante)
-        let atencionPrenatal = req.body.atencion_prenatal;    
-      
-       
+        let atencionPrenatal = req.body.atencion_prenatal;
         try {
-
-           
-            
             let detalleAtencionPrenatal = await atencionPrenatalService.getOneAtencionPrenatal(atencionPrenatal.id_gestante, atencionPrenatal.id_num)
             if(!detalleAtencionPrenatal){
                 /* se crea la hoja */
@@ -47,6 +42,10 @@ class AtencionPrenatalController {
                 /* se modela la atencion para posteriormente guardar */
                 var atencion = await db["his_atencion"].build(newAtencion);
                 atencion.id_hoja_atencion = newHojaCreated.id_hoja_atencion;
+                atencion.fum = gestante.fur
+                atencion.talla = gestante.gest_talla
+                atencion.id_centro_poblado = gestante.id_centro_poblado
+                atencion.num_historia_clinica = gestante.documento
                 /*  atencion.fecha_atencion = Date.now();  */          
                 let fnacimiento = gestante.paciente.f_nacimiento.split("-")
                 try {
