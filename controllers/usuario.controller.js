@@ -87,12 +87,11 @@ class usuarioController {
                     }
                 ],
             });
-            console.log(personal);
             if (personal) {
                 //return response.sendBadRequest(res, "Personal ya registrado")
                 //REGISTAR EN his_detalle_usuario
 
-                console.log("REGISTAR EN his_detalle_usuario");
+              
             } else {
                 //OBTENER MAX ID_USUARIO
                 const idMaxUsuario = await db["t_usuario"].max("id_usuario")

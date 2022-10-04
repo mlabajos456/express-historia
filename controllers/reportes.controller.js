@@ -32,7 +32,7 @@ class ReportesController {
         try {
             await atencionService.getAllAtencionByHojaReport(1, 1000, req.params.id).then((val) => {
                 listPacientes = new ReportesController().getPositionAndPage(val.rows)                
-                //  response.sendData(res,val.rows, "success");      
+                response.sendData(res,val.rows, "success");      
             })
         } catch (error) {
             response.sendBadRequest(res, error);

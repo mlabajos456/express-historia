@@ -12,7 +12,6 @@ function createPDF(dataCallback, endCallback, res)  {
 }
 
 function printHeadPDF (doc, head) {
-    console.log("soy cabeza",head)
     doc.fontSize(6).text(head.anio, 38.5, 135)
     doc.fontSize(6).text(head.mes, 68, 135)
     doc.fontSize(6).text(head.establecimiento.establecimiento , 117.71, 135)
