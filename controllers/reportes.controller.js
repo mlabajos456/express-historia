@@ -18,7 +18,8 @@ class ReportesController {
         let hojaAtencion = {}
         try {        
             await hojaAtencionService.getOneHojaAtencion(req.params.id).then(( hojaA ) => {
-                hojaAtencion = hojaA                 
+                hojaAtencion = hojaA    
+                //   response.sendData(res,hojaAtencion, "success");                
             }).catch((err) => {
                 response.sendBadRequest(res, err);
             })
@@ -31,7 +32,7 @@ class ReportesController {
         try {
             await atencionService.getAllAtencionByHojaReport(1, 1000, req.params.id).then((val) => {
                 listPacientes = new ReportesController().getPositionAndPage(val.rows)                
-                response.sendData(res,listPacientes, "success");      
+                //  response.sendData(res,val.rows, "success");      
             })
         } catch (error) {
             response.sendBadRequest(res, error);
