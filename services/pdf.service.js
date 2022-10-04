@@ -235,136 +235,139 @@ function paintedPosition (doc , lista, diag, position,tachar){
 
     /* console.log(diag[0].cie.descripcion) */
    
-    var yCieFirst = 183.4
-    var fontSizeCieFirst = 5
-    if(diag[0].cie.descripcion.length < 45){
-        yCieFirst = 185
-        fontSizeCieFirst  =5
-    }
-    doc.fontSize(fontSizeCieFirst).text(diag[0].cie.descripcion, 341, yCieFirst + position,{
-        width: 120,
-        height: 12,
-        ellipsis:true
-    }) /* DIAG 1 */
+    if(diag.length > 0 ){ 
+        var yCieFirst = 183.4
+        var fontSizeCieFirst = 5
+        if(diag[0].cie.descripcion.length < 45){
+            yCieFirst = 185
+            fontSizeCieFirst  =5
+        }
+        doc.fontSize(fontSizeCieFirst).text(diag[0].cie.descripcion, 341, yCieFirst + position,{
+            width: 120,
+            height: 12,
+            ellipsis:true
+        }) /* DIAG 1 */
   
    
-    switch (diag[0].diagnostico_tipo) {
-    case "P":
-        doc.moveTo(461, 194 + position).lineTo(472, 181 + position).stroke() /* TIPO DE DIAGNÓSTICO P */ 
-        break;
-    case "D":
-        doc.moveTo(473, 194 + position).lineTo(484, 181 + position).stroke() /* TIPO DE DIAGNÓSTICO D */  
-        break;
-    case "R":
-        doc.moveTo(484, 194 + position).lineTo(495, 181 + position).stroke() /* TIPO DE DIAGNÓSTICO R */ 
-        break;
+        switch (diag[0].diagnostico_tipo) {
+        case "P":
+            doc.moveTo(461, 194 + position).lineTo(472, 181 + position).stroke() /* TIPO DE DIAGNÓSTICO P */ 
+            break;
+        case "D":
+            doc.moveTo(473, 194 + position).lineTo(484, 181 + position).stroke() /* TIPO DE DIAGNÓSTICO D */  
+            break;
+        case "R":
+            doc.moveTo(484, 194 + position).lineTo(495, 181 + position).stroke() /* TIPO DE DIAGNÓSTICO R */ 
+            break;
     
-    default:
-        break;
-    }
-    if(diag[0].his_labs[0]){
-        doc.fontSize(6).text(diag[0].his_labs[0].descripcion, 495.5, 185 + position)
-    }
+        default:
+            break;
+        }
+        if(diag[0].his_labs[0]){
+            doc.fontSize(6).text(diag[0].his_labs[0].descripcion, 495.5, 185 + position)
+        }
     
-    if(diag[0].his_labs[1]){
-        doc.fontSize(6).text(diag[0].his_labs[1].descripcion, 509, 185 + position)
-    }
-    if(diag[0].his_labs[2]){
-        doc.fontSize(6).text(diag[0].his_labs[2].descripcion, 521, 185 + position)
-    }
-    doc.fontSize(6).text(diag[0].id_cie, 542, 185 + position)
+        if(diag[0].his_labs[1]){
+            doc.fontSize(6).text(diag[0].his_labs[1].descripcion, 509, 185 + position)
+        }
+        if(diag[0].his_labs[2]){
+            doc.fontSize(6).text(diag[0].his_labs[2].descripcion, 521, 185 + position)
+        }
+        doc.fontSize(6).text(diag[0].id_cie, 542, 185 + position)
 
    
-    if(diag[1]){
+        if(diag[1]){
         /* DIAG 2 */
        
-        //posision 2
-        var yCieSecond = 196.5
-        var fontSizeCieSecond = 5
-        if(diag[1].cie.descripcion.length < 45){
-            yCieSecond = 198
-            fontSizeCieSecond = 5
-        }
-        doc.fontSize(fontSizeCieSecond).text(diag[1].cie.descripcion, 341, yCieSecond + position,{
-            width: 120,
-            height: 12,
-            ellipsis:true
-        })
-        switch (diag[1].diagnostico_tipo) {
-        case "P":
-            doc.moveTo(461, 207 + position).lineTo(472, 195 + position).stroke() /* TIPO DE DIAGNÓSTICO P */ 
-            break;
-        case "D":
-            doc.moveTo(473, 207 + position).lineTo(484, 195 + position).stroke() /* TIPO DE DIAGNÓSTICO D */  
-            break;
-        case "R":
-            doc.moveTo(484, 207 + position).lineTo(495, 195 + position).stroke() /* TIPO DE DIAGNÓSTICO R */  
-            break;
+            //posision 2
+            var yCieSecond = 196.5
+            var fontSizeCieSecond = 5
+            if(diag[1].cie.descripcion.length < 45){
+                yCieSecond = 198
+                fontSizeCieSecond = 5
+            }
+            doc.fontSize(fontSizeCieSecond).text(diag[1].cie.descripcion, 341, yCieSecond + position,{
+                width: 120,
+                height: 12,
+                ellipsis:true
+            })
+            switch (diag[1].diagnostico_tipo) {
+            case "P":
+                doc.moveTo(461, 207 + position).lineTo(472, 195 + position).stroke() /* TIPO DE DIAGNÓSTICO P */ 
+                break;
+            case "D":
+                doc.moveTo(473, 207 + position).lineTo(484, 195 + position).stroke() /* TIPO DE DIAGNÓSTICO D */  
+                break;
+            case "R":
+                doc.moveTo(484, 207 + position).lineTo(495, 195 + position).stroke() /* TIPO DE DIAGNÓSTICO R */  
+                break;
                 
-        default:
-            break;
+            default:
+                break;
+            }
+
+            if(diag[1].his_labs[0]){
+                doc.fontSize(6).text(diag[1].his_labs[0].descripcion, 495.5, 198.5 + position)
+            }
+        
+            if(diag[1].his_labs[1]){
+                doc.fontSize(6).text(diag[1].his_labs[1].descripcion, 509, 198.5 + position)
+            }
+            if(diag[1].his_labs[2]){
+                doc.fontSize(6).text(diag[1].his_labs[2].descripcion, 521, 198.5 + position)
+            }
+            doc.fontSize(6).text(diag[1].id_cie, 542, 198.5 + position)
+       
+       
+       
+        
+        }
+   
+        //posision 2
+    
+        if(diag[2]){
+        //posision 3
+            var yCieThird = 209
+            var fontSizeCieThird = 5
+            if(diag[2].cie.descripcion.length < 45){
+                yCieThird = 211.5
+                fontSizeCieThird = 5
+            }
+            doc.fontSize(fontSizeCieThird).text(diag[2].cie.descripcion, 341, yCieThird + position,{
+                width: 120,
+                height: 12,
+                ellipsis:true
+            })
+            switch (diag[2].diagnostico_tipo) {
+            case "P":
+                doc.moveTo(461, 220 + position).lineTo(472, 208 + position).stroke() /* TIPO DE DIAGNÓSTICO P */ 
+                break;
+            case "D":
+                doc.moveTo(473, 220 + position).lineTo(484, 208 + position).stroke() /* TIPO DE DIAGNÓSTICO D */  
+                break;
+            case "R":
+                doc.moveTo(484, 220 + position).lineTo(495, 208 + position).stroke() /* TIPO DE DIAGNÓSTICO R */   
+                break;
+                
+            default:
+                break;
+            }  
+        
+        
+            if(diag[2].his_labs[0]){
+                doc.fontSize(6).text(diag[2].his_labs[0].descripcion, 495.5, 211 + position)
+            }
+        
+            if(diag[2].his_labs[1]){
+                doc.fontSize(6).text(diag[2].his_labs[1].descripcion, 509, 211 + position)
+            }
+            if(diag[2].his_labs[2]){
+                doc.fontSize(6).text(diag[2].his_labs[2].descripcion, 521, 211 + position)
+            }
+   
+            doc.fontSize(6).text(diag[2].id_cie, 542, 211 + position)
         }
 
-        if(diag[1].his_labs[0]){
-            doc.fontSize(6).text(diag[1].his_labs[0].descripcion, 495.5, 198.5 + position)
-        }
-        
-        if(diag[1].his_labs[1]){
-            doc.fontSize(6).text(diag[1].his_labs[1].descripcion, 509, 198.5 + position)
-        }
-        if(diag[1].his_labs[2]){
-            doc.fontSize(6).text(diag[1].his_labs[2].descripcion, 521, 198.5 + position)
-        }
-        doc.fontSize(6).text(diag[1].id_cie, 542, 198.5 + position)
-       
-       
-       
-        
-    }
-   
-    //posision 2
-    
-    if(diag[2]){
-        //posision 3
-        var yCieThird = 209
-        var fontSizeCieThird = 5
-        if(diag[2].cie.descripcion.length < 45){
-            yCieThird = 211.5
-            fontSizeCieThird = 5
-        }
-        doc.fontSize(fontSizeCieThird).text(diag[2].cie.descripcion, 341, yCieThird + position,{
-            width: 120,
-            height: 12,
-            ellipsis:true
-        })
-        switch (diag[2].diagnostico_tipo) {
-        case "P":
-            doc.moveTo(461, 220 + position).lineTo(472, 208 + position).stroke() /* TIPO DE DIAGNÓSTICO P */ 
-            break;
-        case "D":
-            doc.moveTo(473, 220 + position).lineTo(484, 208 + position).stroke() /* TIPO DE DIAGNÓSTICO D */  
-            break;
-        case "R":
-            doc.moveTo(484, 220 + position).lineTo(495, 208 + position).stroke() /* TIPO DE DIAGNÓSTICO R */   
-            break;
-                
-        default:
-            break;
-        }  
-        
-        
-        if(diag[2].his_labs[0]){
-            doc.fontSize(6).text(diag[2].his_labs[0].descripcion, 495.5, 211 + position)
-        }
-        
-        if(diag[2].his_labs[1]){
-            doc.fontSize(6).text(diag[2].his_labs[1].descripcion, 509, 211 + position)
-        }
-        if(diag[2].his_labs[2]){
-            doc.fontSize(6).text(diag[2].his_labs[2].descripcion, 521, 211 + position)
-        }
-   
-        doc.fontSize(6).text(diag[2].id_cie, 542, 211 + position)
     }
 
   

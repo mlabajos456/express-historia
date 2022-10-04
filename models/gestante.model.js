@@ -18,9 +18,11 @@ module.exports = (sequelize, type) => {
             id_centro_poblado: {
                 type: type.STRING,
             },
-            fur:{type: type.DATE , get: function () {
-                return moment(this.getDataValue("fur")).format("DD-MM-YYYY");
-            },},
+            fur:{type: type.DATE , 
+                /*  get: function () {
+                    return moment(this.getDataValue("fur")).format("DD-MM-YYYY");
+                }, */
+            },
             gest_talla:{type: type.DOUBLE }
         },
         {
