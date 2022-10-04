@@ -19,7 +19,7 @@ class AtencionService {
         var resp =  await db["his_atencion"]
             .findAndCountAll({
                 limit: 100,
-                offset: page,
+                offset: 0,
                 include: [
                     {model: db["paciente"], 
                         include: [
