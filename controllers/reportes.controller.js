@@ -54,7 +54,7 @@ class ReportesController {
             }
             pacienteAnterior = atencion.paciente.id_paciente
             id_atencion = atencion.paciente.id_atencion
-            console.log("________________________________________________",atencion.position)
+            console.log("________________________________________________",atencion.diag)
             pdfService.printBodyPDF(doc, atencion, atencion.diag, atencion.position, tachar) 
            
         }
