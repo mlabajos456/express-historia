@@ -17,6 +17,7 @@ const sequelize = new Sequelize(
         operatorsAliases: false,
         timezone: "+05:00", // set time zone to UTC
         port: basedatos.port,
+     
         //logging: false
     },
     
