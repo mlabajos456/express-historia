@@ -40,7 +40,7 @@ module.exports = {
                 peso: Joi.number().optional().allow(""),
                 id_financiador: Joi.number(),
                 estado_gestante: Joi.string().optional().allow(""),
-                id_centro_poblado:  Joi.string().optional().allow(""),
+               
                 condicion_establec: Joi.string()
                     .max(1)
                     .required()
@@ -49,14 +49,10 @@ module.exports = {
                     .max(1)
                     .required()
                     .label("Condición servicio"),
-                fum: Joi.string().optional().allow(""),
                 fecha_atencion: Joi.date().required().label("fecha de atencion"),
-                talla: Joi.number().optional().allow(""),
                 fecha_hb: Joi.date().optional().allow(""),
                 condicion: Joi.boolean(),
-                num_historia_clinica: Joi.string()
-                    .required()
-                    .label("Número de historia clinica"),
+                
                 hemoglobina: Joi.number().optional().allow(""),
                 
                 edad_anio: Joi.number().optional().allow(""),
@@ -108,12 +104,8 @@ module.exports = {
                 .label("Condición servicio"),
             fum: Joi.string().optional().allow(""),
             fecha_atencion: Joi.date().required().label("fecha de atencion"),
-            talla: Joi.number().optional().allow(""),
             fecha_hb: Joi.date().optional().allow(""),
             condicion: Joi.boolean(),
-            num_historia_clinica: Joi.string()
-                .required()
-                .label("Número de historia clinica"),
             hemoglobina: Joi.number().optional().allow(""),
         
             edad_anio: Joi.number().optional().allow(""),
