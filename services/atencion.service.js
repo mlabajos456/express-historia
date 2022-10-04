@@ -30,17 +30,17 @@ class AtencionService {
                         {model: db["his_detalle_diagnostico"], as: "diagnosticos",
                        
                             include: [
-                                {model: db["his_lab"], /* as :"lab" *//* order: [["id", "ASC"]] */ },
+                                {model: db["his_lab"] },
                                 {model: db["maestro_his_cie_cpms"],as :"cie"},
                             
-                            ],/* order: [["id_detalle", "DESC"]] */ },
+                            ],},
                         {model: db["maestro_his_financiador"], as: "financiador"},
                         {model: db["maestro_his_centro_poblado"], as : "cp_procedencia"},
                     ],
                     where: {id_hoja_atencion: id},
                     order: [
-                        ["diagnosticos", /* "his_lab", */ "id_detalle", "ASC"],
-                        ["diagnosticos","his_labs", /* "his_lab", */ "id", "ASC"],
+                        ["diagnosticos", "id_detalle", "ASC"],
+                        ["diagnosticos","his_labs", "id", "ASC"],
                     ] 
                     
                
