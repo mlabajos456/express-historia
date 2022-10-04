@@ -18,7 +18,10 @@ class ReportesController {
         let hojaAtencion = {}
         try {        
             await hojaAtencionService.getOneHojaAtencion(req.params.id).then(( hojaA ) => {
-                hojaAtencion = hojaA    
+                hojaAtencion = hojaA  
+                if(!hojaAtencion){
+                    response.sendNotFound(res, "No se encontró la hoja atención")
+                }
                 //   response.sendData(res,hojaAtencion, "success");                
             }).catch((err) => {
                 response.sendBadRequest(res, err);
