@@ -37,6 +37,7 @@ module.exports = (sequelize, type) => {
                 name: "id_detalle"
             },
             onDelete: "CASCADE", 
+            /*   as: "lab" */
         });
     };
     return DetalleDiag;
