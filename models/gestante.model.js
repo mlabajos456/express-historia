@@ -1,4 +1,4 @@
-const moment = require("moment");
+/* const moment = require("moment"); */
 module.exports = (sequelize, type) => {
     var Gestante = sequelize.define(
         "gestante_doc",
@@ -35,20 +35,6 @@ module.exports = (sequelize, type) => {
         Gestante.hasOne(models.paciente, {
             foreignKey: "documento",            
         }); 
-        /*  Gestante.belongsTo(models.paciente, {
-            foreignKey: "documento",            
-        });  */
-        /* Paciente.hasOne(models.his_atencion, {
-            foreignKey: {
-                name: "id_paciente",
-            },
-        }); */
-        /*  Paciente.belongsTo(models.maestro_his_etnia, {
-            foreignKey: {
-                name: "id_etnia"
-            },
-            as: "etnia"
-        });   */    
     };
     return Gestante;
 };
