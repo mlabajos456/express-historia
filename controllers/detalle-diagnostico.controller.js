@@ -40,14 +40,7 @@ class DetalleDiagnosticoController {
                 .findOne({
                     order: [["id_cie10", "DESC"]],
                     where: { id_detalle: req.body.id_detalle },
-                    /*  include: [
-            { model: db["his_turno"] },
-            {
-              model: db["t_usuario"],
-              attributes: { exclude: ["pass_usuario"] },
-              as: "responsable",
-            },
-          ], */
+              
                 })
                 .then((val) => {
                     response.sendData(res, val, "success");

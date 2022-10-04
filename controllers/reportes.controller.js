@@ -31,7 +31,7 @@ class ReportesController {
         try {
             await atencionService.getAllAtencionByHojaReport(1, 1000, req.params.id).then((val) => {
                 listPacientes = new ReportesController().getPositionAndPage(val.rows)                
-                        
+                response.sendData(res,listPacientes, "success");      
             })
         } catch (error) {
             response.sendBadRequest(res, error);
@@ -54,7 +54,7 @@ class ReportesController {
             }
             pacienteAnterior = atencion.paciente.id_paciente
             id_atencion = atencion.paciente.id_atencion
-            
+            console.log("________________________________________________",atencion.position)
             pdfService.printBodyPDF(doc, atencion, atencion.diag, atencion.position, tachar) 
            
         }
