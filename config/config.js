@@ -1,7 +1,7 @@
 const defaultConfig = {
     appVersion: "v1",
     db_test: {
-        host: "172.16.102.206",
+        host: "192.168.21.11",
         name: "simys",
         user: "postgres",
         password: "postgres",
