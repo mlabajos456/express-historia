@@ -3,7 +3,6 @@ const Joi = require("joi");
 module.exports = (options) => {
     return (req, res, next) => {
         let result = null;
-       
         if (options.header) {
             result = Joi.validate(req.header, options.header);
         }

@@ -5,8 +5,8 @@ const Sequelize = require("sequelize");
 
 const basename = path.basename(__filename);
 const db = {};
-//const basedatos = config.db_production
-const basedatos = config.db_test
+const basedatos = config.db_production
+//const basedatos = config.db_test
 const sequelize = new Sequelize(
     basedatos.name, 
     basedatos.user, 
