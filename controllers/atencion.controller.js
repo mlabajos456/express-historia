@@ -95,9 +95,20 @@ class AtencionController {
                     "No existe la atención: " + req.body.id_atencion
                 );
             }
+
+            for (const diag of atencion.diagnosticos) {
+                await db["his_lab"].destroy({
+                    where :{id_detalle : diag.id_detalle},
+                    transaction: t
+                }) 
+            }   
+            await db["his_detalle_diagnostico"].destroy({
+                where: {id_atencion : atencion.id_atencion},transaction: t
+            },) 
+
             atencion = await atencion.update(req.body, {}, { transaction: t });
             for (const detail of req.body.diagnosticos) {
-                if (detail.id_detalle) {
+                /*  if (detail.id_detalle) {
                     var beforeDetail = await db["his_detalle_diagnostico"].findOne({
                         where: { id_detalle: detail.id_detalle },
                     });
@@ -115,11 +126,11 @@ class AtencionController {
                         {},
                         { transaction: t }
                     );
-                } else {
-                    var detailDiag = await db["his_detalle_diagnostico"].build(detail);
-                    detailDiag.id_atencion = atencion.id_atencion;
-                    await detailDiag.save({ transaction: t });
-                }
+                } else { */
+                var detailDiag = await db["his_detalle_diagnostico"].build(detail);
+                detailDiag.id_atencion = atencion.id_atencion;
+                await detailDiag.save({ transaction: t });
+                /* } */
             }
 
             t.commit();

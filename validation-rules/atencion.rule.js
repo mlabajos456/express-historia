@@ -9,11 +9,12 @@ const labs = Joi.object().keys({
     descripcion: Joi.string().required().allow("").label("descripcion")});
 
 const editLabs = Joi.object().keys({   
-    id_lab : Joi.number().required().label("id_lab"),
+    id : Joi.number().optional(),
+    id_detalle : Joi.number().optional(),
     descripcion: Joi.string().required().allow("").label("descripcion")});
 
 const listaDiagnosticoEdit = Joi.object().keys({
-    id_detalle: Joi.number().label("id detalle"),
+    id_detalle: Joi.number().optional(),
     valor_lab: Joi.array()
         .min(1)
         .items(editLabs)
