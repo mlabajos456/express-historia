@@ -75,6 +75,7 @@ class AtencionPrenatalController {
                         var newLab = await db["his_lab"].build(lab);
                         await newLab.save({ transaction: t });
                     }
+                    /* se registra los tratamientos de los diagnosticos */
                     for (const tratamiento of detail.tratamientos) {
                         tratamiento.id_detalle = newDetail.id_detalle
                         var newTratamiento = await db["his_tratamiento_diagnostico"].build(tratamiento);
