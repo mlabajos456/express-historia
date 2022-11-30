@@ -21,7 +21,7 @@ async function authenticate(req, res) {
     const data = await db["his_detalle_usuario"].findOne({
         where: {
             "$t_usuario.nom_usuario$": { [Op.eq]: req.body.usuario },
-            estado : "t"
+            estado: "t"
         },
         include: [
             {
@@ -54,7 +54,7 @@ async function authenticate(req, res) {
     res.json({
         success: true,
         message: "Token created.",
-        token: "Bearer "+jwt.sign(
+        token: "Bearer " + jwt.sign(
             {
                 id: data.id_usuario,
             },
@@ -64,7 +64,7 @@ async function authenticate(req, res) {
             }
         ),
     });
-   
+
 }
 
 module.exports = {
