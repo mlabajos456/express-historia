@@ -8,11 +8,14 @@ module.exports = (sequelize, type) => {
                 autoIncrement: true,
             },
             id_atencion: type.INTEGER,
+            tipo_cie: type.STRING,
             diagnostico_tipo: type.STRING,
-            id_cie: { type: type.STRING, field: "id_cie10",  references: {
-                model: "maestro_his_cie_cpms",
-                key: "id"
-            } },
+            id_cie: {
+                type: type.STRING, field: "id_cie10", references: {
+                    model: "maestro_his_cie_cpms",
+                    key: "id"
+                }
+            },
         },
         {
             timestamps: false,
@@ -23,9 +26,9 @@ module.exports = (sequelize, type) => {
     DetalleDiag.associate = function (models) {
         DetalleDiag.belongsTo(models.maestro_his_cie_cpms, {
             foreignKey: "id_cie",
-            as :"cie"
+            as: "cie"
         });
-        
+
         DetalleDiag.belongsTo(models.his_atencion, {
             foreignKey: {
                 name: "id_atencion",
@@ -33,11 +36,17 @@ module.exports = (sequelize, type) => {
             onDelete: "CASCADE",
         });
         DetalleDiag.hasMany(models.his_lab, {
-            foreignKey:  {
+            foreignKey: {
                 name: "id_detalle"
             },
-            onDelete: "CASCADE", 
-            /*   as: "lab" */
+            onDelete: "CASCADE",
+        });
+        DetalleDiag.hasMany(models.his_tratamiento_diagnostico, {
+            foreignKey: {
+                name: "id_detalle"
+            },
+            onDelete: "CASCADE",
+
         });
     };
     return DetalleDiag;

@@ -74,6 +74,12 @@ class AtencionPrenatalController {
                         var newLab = await db["his_lab"].build(lab);
                         await newLab.save({ transaction: t });
                     }
+                    /* se registra los tratamientos de los diagnosticos */
+                    for (const tratamiento of detail.tratamientos) {
+                        tratamiento.id_detalle = newDetail.id_detalle
+                        var newTratamiento = await db["his_tratamiento_diagnostico"].build(tratamiento);
+                        await newTratamiento.save({ transaction: t });
+                    }
                 }
                 await t.commit();
                 response.sendCreated(res, req.body);
@@ -108,6 +114,10 @@ class AtencionPrenatalController {
                     where: { id_detalle: diag.id_detalle },
                     transaction: t
                 })
+                await db["his_tratamiento_diagnostico"].destroy({
+                    where: { id_detalle: diag.id_detalle },
+                    transaction: t
+                })
             }
             await db["his_detalle_diagnostico"].destroy({
                 where: { id_atencion: atencion.id_atencion }, transaction: t
@@ -122,6 +132,11 @@ class AtencionPrenatalController {
                     lab.id_detalle = newDetail.id_detalle
                     var newLab = await db["his_lab"].build(lab);
                     await newLab.save({ transaction: t });
+                }
+                for (const tratamiento of detail.tratamientos) {
+                    tratamiento.id_detalle = newDetail.id_detalle
+                    var newTratamiento = await db["his_tratamiento_diagnostico"].build(tratamiento);
+                    await newTratamiento.save({ transaction: t });
                 }
             }
             t.commit();

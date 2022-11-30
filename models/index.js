@@ -6,6 +6,7 @@ const Sequelize = require("sequelize");
 const basename = path.basename(__filename);
 const db = {};
 //const basedatos = config.db_production
+<<<<<<< HEAD
 const basedatos = config.db_test;
 const sequelize = new Sequelize(
   basedatos.name,
@@ -20,6 +21,23 @@ const sequelize = new Sequelize(
 
     //logging: false
   }
+=======
+const basedatos = config.db_test
+const sequelize = new Sequelize(
+    basedatos.name,
+    basedatos.user,
+    basedatos.password,
+    {
+        host: basedatos.host,
+        dialect: basedatos.dialect,
+        operatorsAliases: false,
+        timezone: "+05:00", // set time zone to UTC
+        port: basedatos.port,
+
+        //logging: false
+    },
+
+>>>>>>> 834a0a3f31553ce1cf740bd572fdda09fac93515
 );
 
 // check database connection

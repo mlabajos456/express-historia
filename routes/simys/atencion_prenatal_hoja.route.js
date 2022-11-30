@@ -7,13 +7,13 @@ const atencionPrenatalController = require("../../controllers/simys/atencion_pre
 
 require("express-async-errors");
 
-router.get("/", validateMiddleware(atencionPrenatalRule.findOneAtencionPrenatal),atencionPrenatalController.getOneAtencionPrenatal);
+router.get("/", validateMiddleware(atencionPrenatalRule.findOneAtencionPrenatal), atencionPrenatalController.getOneAtencionPrenatal);
 /* router.get("/detalle-diagnostico", DetalleDiagController.getAllDetalleDiagnostico);
 router.get(
     "/detalle-diagnostico/:id",
     DetalleDiagController.getOneDetalleDiagnostico
 ); */
-router.post("/", validateMiddleware(atencionPrenatalRule.createAtencionPrenatal),atencionPrenatalController.postAtencionPrenatal)
-router.put("/", validateMiddleware(atencionPrenatalRule.editAtencionPrenatal),atencionPrenatalController.putAtencionPrenatal)
+router.post("/", /* validateMiddleware(atencionPrenatalRule.createAtencionPrenatal), */atencionPrenatalController.postAtencionPrenatal)
+router.put("/", validateMiddleware(atencionPrenatalRule.editAtencionPrenatal), atencionPrenatalController.putAtencionPrenatal)
 
 module.exports = router;
