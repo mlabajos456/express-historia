@@ -28,7 +28,6 @@ module.exports = (sequelize, type) => {
             foreignKey: "id_cie",
             as: "cie"
         });
-
         DetalleDiag.belongsTo(models.his_atencion, {
             foreignKey: {
                 name: "id_atencion",
@@ -46,7 +45,7 @@ module.exports = (sequelize, type) => {
                 name: "id_detalle"
             },
             onDelete: "CASCADE",
-
+            as: "tratamientos",
         });
     };
     return DetalleDiag;

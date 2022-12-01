@@ -7,10 +7,16 @@ module.exports = (sequelize, type) => {
                 primaryKey: true,
                 autoIncrement: true,
             },
-            observacion: { type: type.STRING },
-            via_administracion: { type: type.INTEGER },
+            id_detalle: { type: type.INTEGER },
+            indicaciones: { type: type.STRING, field: "observacion" },
+            //via_administracion: { type: type.INTEGER },
+            via_administracion: {
+                type: type.INTEGER, references: {
+                    model: "his_epidural",
+                    key: "id"
+                }
+            },
             cod_sismed: { type: type.STRING },
-            id_detalle: { type: type.INTEGER, field: "id_detalle_diagnostico" },
         },
         {
             timestamps: false,
@@ -22,6 +28,10 @@ module.exports = (sequelize, type) => {
         TratamientoDiagnostico.belongsTo(models.his_detalle_diagnostico, {
             foreignKey: "id_detalle",
             onDelete: "CASCADE"
+        });
+        TratamientoDiagnostico.belongsTo(models.his_epidural, {
+            foreignKey: "via_administracion",
+            as: "epidural"
         });
     };
     return TratamientoDiagnostico;

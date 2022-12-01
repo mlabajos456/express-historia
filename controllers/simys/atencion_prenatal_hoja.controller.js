@@ -21,9 +21,11 @@ class AtencionPrenatalController {
             atencionPrenatalService.getOneAtencionPrenatal(id_gestante, id_num).then((val) => {
                 response.sendData(res, val, "success");
             }).catch((err) => {
+                console.log(err)
                 response.sendBadRequest(res, err.message);
             });
         } catch (error) {
+            console.log(error)
             response.sendBadRequest(res, error
             );
         }
@@ -76,10 +78,12 @@ class AtencionPrenatalController {
                         await newLab.save({ transaction: t });
                     }
                     /* se registra los tratamientos de los diagnosticos */
-                    for (const tratamiento of detail.tratamientos) {
-                        tratamiento.id_detalle = newDetail.id_detalle
-                        var newTratamiento = await db["his_tratamiento_diagnostico"].build(tratamiento);
-                        await newTratamiento.save({ transaction: t });
+                    if (detail.tratamientos.length > 0) {
+                        for (const tratamiento of detail.tratamientos) {
+                            tratamiento.id_detalle = newDetail.id_detalle
+                            var newTratamiento = await db["his_tratamiento_diagnostico"].build(tratamiento);
+                            await newTratamiento.save({ transaction: t });
+                        }
                     }
                 }
                 await t.commit();
@@ -134,10 +138,12 @@ class AtencionPrenatalController {
                     var newLab = await db["his_lab"].build(lab);
                     await newLab.save({ transaction: t });
                 }
-                for (const tratamiento of detail.tratamientos) {
-                    tratamiento.id_detalle = newDetail.id_detalle
-                    var newTratamiento = await db["his_tratamiento_diagnostico"].build(tratamiento);
-                    await newTratamiento.save({ transaction: t });
+                if (detail.tratamientos.length > 0) {
+                    for (const tratamiento of detail.tratamientos) {
+                        tratamiento.id_detalle = newDetail.id_detalle
+                        var newTratamiento = await db["his_tratamiento_diagnostico"].build(tratamiento);
+                        await newTratamiento.save({ transaction: t });
+                    }
                 }
             }
             t.commit();
