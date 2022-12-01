@@ -58,7 +58,7 @@ class AtencionService {
                     {
                         model: db["his_detalle_diagnostico"], as: "diagnosticos",
                         include: [
-                            { model: db["his_tratamiento_diagnostico"] },
+                            { model: db["his_tratamiento_diagnostico"], as: "tratamientos", include: [{ model: db["his_epidural"], as: "epidural" },] },
                             { model: db["his_lab"] },
                             { model: db["maestro_his_cie_cpms"], as: "cie" },
                         ]
@@ -86,7 +86,7 @@ class AtencionService {
                     {
                         model: db["his_detalle_diagnostico"], as: "diagnosticos",
                         include: [
-                            { model: db["his_tratamiento_diagnostico"] },
+                            { model: db["his_tratamiento_diagnostico"], as: "tratamientos", include: [{ model: db["his_epidural"], as: "epidural" },] },
                             { model: db["his_lab"] },
                             { model: db["maestro_his_cie_cpms"], as: "cie" },
                         ]
@@ -125,7 +125,7 @@ class AtencionService {
                             {
                                 model: db["his_detalle_diagnostico"], as: "diagnosticos",
                                 include: [
-                                    { model: db["his_tratamiento_diagnostico"] },
+                                    { model: db["his_tratamiento_diagnostico"], as: "tratamientos", include: [{ model: db["his_epidural"], as: "epidural" },] },
                                     { model: db["his_lab"] },
                                     { model: db["maestro_his_cie_cpms"], as: "cie" },
                                 ]
