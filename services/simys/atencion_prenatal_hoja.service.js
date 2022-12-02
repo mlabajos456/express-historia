@@ -7,7 +7,6 @@ class AtencionService {
                 where: { id_gestante: id_gestante, id_num: id_num },
                 include: [
                     {
-
                         model: db["his_atencion"],
                         include: [
 
@@ -26,6 +25,7 @@ class AtencionService {
                                 model: db["his_detalle_diagnostico"], as: "diagnosticos",
                                 include: [
                                     { model: db["his_tratamiento_diagnostico"], as: "tratamientos", include: [{ model: db["his_epidural"], as: "epidural" },] },
+                                    { model: db["his_procedimiento_diagnostico"], as: "procedimientos", include: [{ model: db["maestro_his_cie_cpms"], as: "cie" },] },
                                     { model: db["his_lab"] },
                                     { model: db["maestro_his_cie_cpms"], as: "cie" },
 
@@ -136,6 +136,17 @@ class AtencionService {
                 ]
             })
         return resp;
+    }
+
+    async getTratamientosProcedimientos(id_diagnostico){
+        var resp=   await db["his_detalle_diagnostico"].findAll({
+            where: { id_detalle: id_diagnostico},
+            include: [
+                { model: db["his_tratamiento_diagnostico"], as: "tratamientos", include: [{ model: db["his_epidural"], as: "epidural" },] },
+                { model: db["his_procedimiento_diagnostico"], as: "procedimientos", include: [{ model: db["maestro_his_cie_cpms"], as: "cie" },] },
+            ],
+        })
+        return resp
     }
 }
 

@@ -47,6 +47,13 @@ module.exports = (sequelize, type) => {
             onDelete: "CASCADE",
             as: "tratamientos",
         });
+        DetalleDiag.hasMany(models.his_procedimiento_diagnostico, {
+            foreignKey: {
+                name: "id_detalle"
+            },
+            onDelete: "CASCADE",
+            as: "procedimientos",
+        });
     };
     return DetalleDiag;
 };

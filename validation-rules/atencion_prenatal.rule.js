@@ -18,10 +18,14 @@ const listaDiagnostico = Joi.object().keys({
 });
 module.exports = {
     findOneAtencionPrenatal:{
-        query:{
-           
+        query:{           
             id_gestante:Joi.number().required().label("id gestante"),
             id_num:Joi.number().required().label("id control"),
+        }
+    },
+    findTratamientoProcedimiento:{
+        query:{           
+            id_detalle:Joi.number().required().label("id detalle de diagnostico"),
         }
     },
     createAtencionPrenatal : {

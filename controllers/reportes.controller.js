@@ -1,78 +1,77 @@
 const response = require("../helpers/response");
 const atencionService = require("../services/atencion.service");
 const pdfService = require("../services/pdf.service")
-const PDFDocument  = require("pdfkit-construct");
+const PDFDocument = require("pdfkit-construct");
 const hojaAtencionService = require("../services/hoja-atencion.service");
 class ReportesController {
-    async getReportes(req, res) {       
+    async getReportes(req, res) {
         const limit = req.body.limit
-        /* let befPage = req.body.page */
         let page = req.body.page
-        if(page == 1){
+        if (page == 1) {
             page = 0
-        }else{
-            page = (page -1) * limit
-        }  
-        const doc = new PDFDocument ({size:"a4",bufferPages: true, margin: 0});      
-        doc.image(__dirname+"/../services/his.jpg", 0, 5, {width: 595, height: 842})
+        } else {
+            page = (page - 1) * limit
+        }
+        const doc = new PDFDocument({ size: "a4", bufferPages: true, margin: 0 });
+        doc.image(__dirname + "/../services/his.jpg", 0, 5, { width: 595, height: 842 })
         let hojaAtencion = {}
-        try {        
-            await hojaAtencionService.getOneHojaAtencion(req.params.id).then(( hojaA ) => {
-                hojaAtencion = hojaA  
-                if(!hojaAtencion){
+        try {
+            await hojaAtencionService.getOneHojaAtencion(req.params.id).then((hojaA) => {
+                hojaAtencion = hojaA
+                if (!hojaAtencion) {
                     response.sendNotFound(res, "No se encontró la hoja atención")
                 }
                 //   response.sendData(res,hojaAtencion, "success");                
             }).catch((err) => {
                 response.sendBadRequest(res, err);
             })
-        }catch (error) {
+        } catch (error) {
             response.sendBadRequest(res, error);
         }
-        pdfService.printHeadPDF(doc, hojaAtencion)  
+        pdfService.printHeadPDF(doc, hojaAtencion)
         /* HEAD */
         let listPacientes = []
         try {
             await atencionService.getAllAtencionByHojaReport(1, 1000, req.params.id).then((val) => {
-                listPacientes = new ReportesController().getPositionAndPage(val.rows)                
+                listPacientes = new ReportesController().getPositionAndPage(val.rows)
                 //   response.sendData(res,val.rows, "success");      
             })
         } catch (error) {
             response.sendBadRequest(res, error);
         }
-        let pageBefore = 1;       
+        let pageBefore = 1;
         let pacienteAnterior = 0;
         let id_atencion = 0
         let tachar = false;
         for (let index = 0; index < listPacientes.length; index++) {
             var atencion = listPacientes[index];
-            if(pageBefore !== atencion.page){
+            if (pageBefore !== atencion.page) {
                 pageBefore = atencion.page
                 doc.addPage()
-                doc.image(__dirname+"/../services/his.jpg", 0, 5, {width: 595, height: 842})
-                pdfService.printHeadPDF(doc, hojaAtencion)    
-                
+                doc.image(__dirname + "/../services/his.jpg", 0, 5, { width: 595, height: 842 })
+                pdfService.printHeadPDF(doc, hojaAtencion)
+
             }
-            if(pacienteAnterior === atencion.paciente.id_paciente && id_atencion === atencion.paciente.id_atencion){
+            if (pacienteAnterior === atencion.paciente.id_paciente && id_atencion === atencion.paciente.id_atencion) {
                 tachar = true
             }
             pacienteAnterior = atencion.paciente.id_paciente
             id_atencion = atencion.paciente.id_atencion
-            pdfService.printBodyPDF(doc, atencion, atencion.diag, atencion.position, tachar) 
-           
+            pdfService.printBodyPDF(doc, atencion, atencion.diag, atencion.position, tachar)
+
         }
         /*  response.sendData(res,listPacientes, "success"); */
         /* HEAD */
         /* BODY */
-       
+
         doc.pipe(res);
         doc.end()
 
 
-           
+
         /* BODY */
-       
-       
+
+
         /*  doc.addPage()
         doc.image(__dirname+"/../services/his.jpg", 0, 0, {width: 595, height: 842})
         doc.fontSize(6).text("2022", 72.65, 135)
@@ -94,8 +93,8 @@ class ReportesController {
         })
         pdfService.createPDF((chunk ) => stream.write(chunk)
             , () => stream.end(), res) */
-        
-        
+
+
         /*  try {
             await hojaAtencionService.getOneHojaAtencion(req.params.id).then(( hojaA ) => {
                 
@@ -119,24 +118,24 @@ class ReportesController {
         } */
     }
 
-    getPositionAndPage(data){        
+    getPositionAndPage(data) {
         let numberPage = 1
         let positionPage = 0
         let listPosition = []
         let tempPositionPage = 0
         for (let index = 0; index < data.length; index++) {
-            tempPositionPage = positionPage  
+            tempPositionPage = positionPage
             const element = data[index];
 
             const diag = element.diagnosticos;
             const totalDiag = diag.length
-            tempPositionPage +=1
+            tempPositionPage += 1
             if (totalDiag <= 3) {
-                if(tempPositionPage > 12){
+                if (tempPositionPage > 12) {
                     positionPage = 1
-                    numberPage +=1
+                    numberPage += 1
                 }
-                positionPage  = tempPositionPage
+                positionPage = tempPositionPage
                 listPosition.push(
                     {
                         page: numberPage,
@@ -148,26 +147,26 @@ class ReportesController {
                         diag: diag
                     }
                 )
-            }else{
+            } else {
                 let totalGrupos = totalDiag / 3
                 if (totalGrupos % 1 != 0) {
-                    totalGrupos = Math.trunc(totalGrupos) + 1 
-                }        
+                    totalGrupos = Math.trunc(totalGrupos) + 1
+                }
 
-                let tempPositionPage = positionPage 
-                let tempNumberPage = numberPage   
-   
+                let tempPositionPage = positionPage
+                let tempNumberPage = numberPage
+
                 for (let index = 0; index < totalGrupos; index++) {
-                    tempPositionPage +=1
-                    if(tempPositionPage > 12){
+                    tempPositionPage += 1
+                    if (tempPositionPage > 12) {
                         positionPage = 1
-                        numberPage +=1
+                        numberPage += 1
                     }
-      
-                    if(tempPositionPage > 12){
-                        tempNumberPage +=1
+
+                    if (tempPositionPage > 12) {
+                        tempNumberPage += 1
                         tempPositionPage = 1
-                    }      
+                    }
                     positionPage = tempPositionPage
                     numberPage = tempNumberPage
                     listPosition.push(
@@ -177,7 +176,7 @@ class ReportesController {
                             totalDiag: totalDiag,
                             totalGrupos: totalGrupos,
                             paciente: element,
-                            grupo: index+1,
+                            grupo: index + 1,
                             diag: diag.slice(index * 3, (index * 3) + 3)
                         }
                     )
