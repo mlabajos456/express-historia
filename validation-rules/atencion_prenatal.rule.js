@@ -6,6 +6,7 @@ const cie = Joi.object().keys({
     descripcion: Joi.string().required().label("descripcion")});
 const labs = Joi.object().keys({   
     descripcion: Joi.string().required().allow("").label("descripcion")});
+    
 const listaDiagnostico = Joi.object().keys({
     id_cie: cie,
     valor_lab: Joi.array()
