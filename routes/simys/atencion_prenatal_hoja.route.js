@@ -9,6 +9,7 @@ require("express-async-errors");
 
 router.get("/", validateMiddleware(atencionPrenatalRule.findOneAtencionPrenatal), atencionPrenatalController.getOneAtencionPrenatal);
 router.get("/tratamiento_procedimiento", validateMiddleware(atencionPrenatalRule.findTratamientoProcedimiento), atencionPrenatalController.getTratamientoProcedimiento);
+
 /* router.get("/detalle-diagnostico", DetalleDiagController.getAllDetalleDiagnostico);
 router.get(
     "/detalle-diagnostico/:id",
