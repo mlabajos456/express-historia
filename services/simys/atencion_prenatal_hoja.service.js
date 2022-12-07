@@ -1,7 +1,6 @@
 const db = require("../../models/index");
 class AtencionService {
     async getOneAtencionPrenatal(id_gestante, id_num) {
-
         var resp = await db["his_atencion_prenatal_hoja"]
             .findOne({
                 where: { id_gestante: id_gestante, id_num: id_num },
@@ -24,8 +23,11 @@ class AtencionService {
                             {
                                 model: db["his_detalle_diagnostico"], as: "diagnosticos",
                                 include: [
-                                    { model: db["his_tratamiento_diagnostico"], as: "tratamientos", include: [{ model: db["his_epidural"], as: "epidural" },] },
-                                    { model: db["his_procedimiento_diagnostico"], as: "procedimientos", include: [{ model: db["maestro_his_cie_cpms"], as: "cie" },] },
+                                    { model: db["his_tratamiento_diagnostico"], as: "tratamientos", 
+                                        include: [{ model: db["his_epidural"], as: "epidural" },] 
+                                    },
+                                    { model: db["his_procedimiento_diagnostico"], as: "procedimientos", 
+                                        include: [{ model: db["maestro_his_cie_cpms"], as: "cie" }, { model: db["his_lab_procedimiento"], as: "labProc" },] },
                                     { model: db["his_lab"] },
                                     { model: db["maestro_his_cie_cpms"], as: "cie" },
 
@@ -59,6 +61,7 @@ class AtencionService {
                         model: db["his_detalle_diagnostico"], as: "diagnosticos",
                         include: [
                             { model: db["his_tratamiento_diagnostico"], as: "tratamientos", include: [{ model: db["his_epidural"], as: "epidural" },] },
+                            { model: db["his_procedimiento_diagnostico"], as: "procedimientos", include: [{ model: db["maestro_his_cie_cpms"], as: "cie" }, { model: db["his_lab_procedimiento"] },] },
                             { model: db["his_lab"] },
                             { model: db["maestro_his_cie_cpms"], as: "cie" },
                         ]
@@ -87,6 +90,7 @@ class AtencionService {
                         model: db["his_detalle_diagnostico"], as: "diagnosticos",
                         include: [
                             { model: db["his_tratamiento_diagnostico"], as: "tratamientos", include: [{ model: db["his_epidural"], as: "epidural" },] },
+                            { model: db["his_procedimiento_diagnostico"], as: "procedimientos", include: [{ model: db["maestro_his_cie_cpms"], as: "cie" }, { model: db["his_lab_procedimiento"] },] },
                             { model: db["his_lab"] },
                             { model: db["maestro_his_cie_cpms"], as: "cie" },
                         ]
@@ -126,6 +130,7 @@ class AtencionService {
                                 model: db["his_detalle_diagnostico"], as: "diagnosticos",
                                 include: [
                                     { model: db["his_tratamiento_diagnostico"], as: "tratamientos", include: [{ model: db["his_epidural"], as: "epidural" },] },
+                                    { model: db["his_procedimiento_diagnostico"], as: "procedimientos", include: [{ model: db["maestro_his_cie_cpms"], as: "cie" }, { model: db["his_lab_procedimiento"] },] },
                                     { model: db["his_lab"] },
                                     { model: db["maestro_his_cie_cpms"], as: "cie" },
                                 ]

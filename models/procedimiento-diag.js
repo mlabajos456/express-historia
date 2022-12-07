@@ -32,8 +32,9 @@ module.exports = (sequelize, type) => {
         });
         ProcedimientoDiagnostico.hasMany(models.his_lab_procedimiento, {
             foreignKey: {
-                name: "id_procedimiento"
+                name: "idProc"
             },
+            as:"labProc",
             onDelete: "CASCADE",
         });
     };

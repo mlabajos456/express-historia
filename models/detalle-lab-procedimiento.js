@@ -8,7 +8,7 @@ module.exports = (sequelize, type) => {
                 field: "id_lab_procedimiento",
                 autoIncrement: true,
             },
-            id_procedimiento: { type: type.INTEGER },
+            idProc: { type: type.INTEGER, field : "id_procedimiento" },
             descripcion: { type: type.STRING, field: "valor_lab_procedimiento" },
         },
         {
@@ -19,7 +19,7 @@ module.exports = (sequelize, type) => {
     );
     LabProcedimiento.associate = function (models) {
         LabProcedimiento.belongsTo(models.his_procedimiento_diagnostico, {
-            foreignKey: "id_procedimiento",
+            foreignKey: "idProc",
             onDelete: "CASCADE" 
         });
     };
