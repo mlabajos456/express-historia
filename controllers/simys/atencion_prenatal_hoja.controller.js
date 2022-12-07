@@ -21,6 +21,7 @@ class AtencionPrenatalController {
             atencionPrenatalService
                 .getOneAtencionPrenatal(id_gestante, id_num)
                 .then((val) => {
+                    
                     response.sendData(res, val, "success");
                 })
                 .catch((err) => {
@@ -46,6 +47,7 @@ class AtencionPrenatalController {
         }
     }
     async postAtencionPrenatal(req, res) {
+        
         const t = await db.sequelize.transaction();
         let newAtencion = req.body.atencion;
         let newHojaAtencion = req.body.hoja_atencion;
@@ -94,33 +96,42 @@ class AtencionPrenatalController {
                 await atencionPrenatalService.postAtencionPrenatal(t, atencionPrenatal);
                 /* se registra los diagnoticos de la atencion */
                 for (const detail of newAtencion.diagnosticos) {
-                    detail.id_cie = detail.id_cie.id;
+                    //detail.id_cie = detail.id_cie.id;
                     var detailDiag = await db["his_detalle_diagnostico"].build(detail);
                     detailDiag.id_atencion = newAtencionCreated.id_atencion;
                     /* se registra los valores lab de los diagnosticos */
                     var newDetail = await detailDiag.save({ transaction: t });
-                    for (const lab of detail.valor_lab) {
+                    for (const lab of detail.his_labs) {
                         lab.id_detalle = newDetail.id_detalle;
                         var newLab = await db["his_lab"].build(lab);
                         await newLab.save({ transaction: t });
                     }
-                    /* se registra los tratamientos de los diagnosticos */
-                    if (detail.tratamientos.length > 0) {
-                        for (const tratamiento of detail.tratamientos) {
-                            tratamiento.id_detalle = newDetail.id_detalle;
-                            var newTratamiento = await db[
-                                "his_tratamiento_diagnostico"
-                            ].build(tratamiento);
-                            await newTratamiento.save({ transaction: t });
-                        }
-                    }
-                    if (detail.procedimientos.length > 0) {
-                        for (const procedimiento of detail.procedimientos) {
-                            procedimiento.id_detalle = newDetail.id_detalle;
-                            var newProcedimiento = await db[
-                                "his_procedimiento_diagnostico"
-                            ].build(procedimiento);
-                            await newProcedimiento.save({ transaction: t });
+                    /* se registra los tratamientos de los diagnosticos */  
+                    if ("tratamientos" in detail) {    
+                        if (detail.tratamientos.length > 0) {
+                            for (const tratamiento of detail.tratamientos) {
+                                tratamiento.id_detalle = newDetail.id_detalle;
+                                var newTratamiento = await db[
+                                    "his_tratamiento_diagnostico"
+                                ].build(tratamiento);
+                                await newTratamiento.save({ transaction: t });
+                            }
+                        }  }
+                    if ("procedimientos" in detail) {  
+                        console.log("qwe", detail.procedimientos)
+                        if (detail.procedimientos.length > 0) {
+                            for (const procedimiento of detail.procedimientos) {
+                                procedimiento.id_detalle = newDetail.id_detalle;
+                                var newProcedimiento = await db[
+                                    "his_procedimiento_diagnostico"
+                                ].build(procedimiento);
+                                await newProcedimiento.save({ transaction: t });
+                                for (const labP of procedimiento.labProc) {
+                                    labP.idProc = newProcedimiento.id_procedimiento;
+                                    var newLabP = await db["his_lab_procedimiento"].build(labP);
+                                    await newLabP.save({ transaction: t });
+                                }
+                            }
                         }
                     }
                 }
@@ -144,6 +155,7 @@ class AtencionPrenatalController {
     }
     async putAtencionPrenatal(req, res) {
         const t = await db.sequelize.transaction();
+
         try {
             let atencion = await atencionService.getOneAtencion(
                 req.body.atencion.id_atencion
@@ -159,14 +171,32 @@ class AtencionPrenatalController {
                     where: { id_detalle: diag.id_detalle },
                     transaction: t,
                 });
-                await db["his_tratamiento_diagnostico"].destroy({
-                    where: { id_detalle: diag.id_detalle },
-                    transaction: t,
-                });
-                await db["his_procedimiento_diagnostico"].destroy({
-                    where: { id_detalle: diag.id_detalle },
-                    transaction: t,
-                });
+                if (diag.tratamientos.length > 0) {
+                    for (const tratamiento of diag.tratamientos) {                        
+                        await db["his_tratamiento_diagnostico"].destroy({
+                            where: { id_detalle: tratamiento.id_detalle },
+                            transaction: t,
+                        });
+                    }
+                }   
+                if (diag.procedimientos.length > 0) {
+                    for (const procedimiento of diag.procedimientos) {
+
+                        /*  for(const labsDiag of procedimiento.labProc){ */
+                        await db["his_lab_procedimiento"].destroy({
+                            where: { idProc: procedimiento.id_procedimiento },
+                            transaction: t,
+                        });
+                        /*   } */
+
+                        await db["his_procedimiento_diagnostico"].destroy({
+                            where: { id_procedimiento: procedimiento.id_procedimiento },
+                            transaction: t,
+                        });
+                    }
+                }              
+
+               
             }
             await db["his_detalle_diagnostico"].destroy({
                 where: { id_atencion: atencion.id_atencion },
@@ -178,33 +208,44 @@ class AtencionPrenatalController {
                 { transaction: t }
             );
             for (const detail of req.body.atencion.diagnosticos) {
-                detail.id_cie = detail.id_cie.id;
+                //detail.id_cie = detail.id_cie.id;
                 var detailDiag = await db["his_detalle_diagnostico"].build(detail);
                 detailDiag.id_atencion = atencion.id_atencion;
                 let newDetail = await detailDiag.save({ transaction: t });
-                for (const lab of detail.valor_lab) {
+                for (const lab of detail.his_labs) {
                     lab.id_detalle = newDetail.id_detalle;
                     var newLab = await db["his_lab"].build(lab);
                     await newLab.save({ transaction: t });
                 }
-                if (detail.tratamientos.length > 0) {
-                    for (const tratamiento of detail.tratamientos) {
-                        tratamiento.id_detalle = newDetail.id_detalle;
-                        var newTratamiento = await db["his_tratamiento_diagnostico"].build(
-                            tratamiento
-                        );
-                        await newTratamiento.save({ transaction: t });
+                if ("tratamientos" in detail) {                    
+                    if (detail.tratamientos.length > 0) {
+                        for (const tratamiento of detail.tratamientos) {
+                            tratamiento.id_detalle = newDetail.id_detalle;
+                            var newTratamiento = await db["his_tratamiento_diagnostico"].build(
+                                tratamiento
+                            );
+                            await newTratamiento.save({ transaction: t });
+                        }
+                    }                    
+                }
+                
+                if ("procedimientos" in detail) {  
+                    if (detail.procedimientos.length > 0) {
+                        for (const procedimiento of detail.procedimientos) {
+                            procedimiento.id_detalle = newDetail.id_detalle;
+                            var newProcedimiento = await db[
+                                "his_procedimiento_diagnostico"
+                            ].build(procedimiento);
+                            await newProcedimiento.save({ transaction: t });
+                            for (const labP of procedimiento.labProc) {
+                                labP.idProc = newProcedimiento.id_procedimiento;
+                                var newLabP = await db["his_lab_procedimiento"].build(labP);
+                                await newLabP.save({ transaction: t });
+                            }
+                        }
                     }
                 }
-                if (detail.procedimientos.length > 0) {
-                    for (const procedimiento of detail.procedimientos) {
-                        procedimiento.id_detalle = newDetail.id_detalle;
-                        var newProcedimiento = await db[
-                            "his_procedimiento_diagnostico"
-                        ].build(procedimiento);
-                        await newProcedimiento.save({ transaction: t });
-                    }
-                }
+               
             }
             t.commit();
 

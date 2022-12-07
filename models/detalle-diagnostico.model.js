@@ -8,7 +8,6 @@ module.exports = (sequelize, type) => {
                 autoIncrement: true,
             },
             id_atencion: type.INTEGER,
-            tipo_cie: type.STRING,
             diagnostico_tipo: type.STRING,
             id_cie: {
                 type: type.STRING, field: "id_cie10", references: {
