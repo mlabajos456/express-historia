@@ -47,7 +47,6 @@ class AtencionPrenatalController {
         }
     }
     async postAtencionPrenatal(req, res) {
-        
         const t = await db.sequelize.transaction();
         let newAtencion = req.body.atencion;
         let newHojaAtencion = req.body.hoja_atencion;
@@ -118,7 +117,6 @@ class AtencionPrenatalController {
                             }
                         }  }
                     if ("procedimientos" in detail) {  
-                        console.log("qwe", detail.procedimientos)
                         if (detail.procedimientos.length > 0) {
                             for (const procedimiento of detail.procedimientos) {
                                 procedimiento.id_detalle = newDetail.id_detalle;
